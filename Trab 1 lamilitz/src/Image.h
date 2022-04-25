@@ -15,10 +15,11 @@ class Image {
       void imgRender();
 
       Vector2* pos1;
-      State imgInputManagement(float mouseX, float mouseY, int mouseState);
+      bool checkCollision(float mouseX, float mouseY);
+
+      State getImgState(float mouseX, float mouseY, int mouseState);
       int getIndex();
       void setIndex(int idx);
-      bool checkCollision(float mouseX, float mouseY);
       void setImgFront(bool isFront);
       void setCurrent(bool isCurrent);
 

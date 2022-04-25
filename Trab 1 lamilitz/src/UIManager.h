@@ -11,9 +11,9 @@
 
 #include "Button.h"
 #include "ImageEditor.h"
+#include "ButtonManager.h"
 
-class UIManager
-{
+class UIManager {
    public:
       UIManager(int screenWidth, int screenHeight);
       void uiKeyboardInputManagement(int key, bool keyUp);
@@ -22,8 +22,8 @@ class UIManager
       void uiCreate();
 
    private:
-      std::vector<Button*> buttons;
       ImageEditor* imgEditor;
+      ButtonManager* btnManager;
 
       int mouseButton, mouseWheel, mouseDirection, mouseX, mouseY;
       int mouseState, screenHeight, screenWidth;

@@ -19,7 +19,7 @@ bool Image::checkCollision(float mouseX, float mouseY) {
    return (*pos1 <= mouse && *pos2 >= mouse);
 }
 
-Image::State Image::imgInputManagement(float mouseX, float mouseY, int mouseState) {
+Image::State Image::getImgState(float mouseX, float mouseY, int mouseState) {
    Vector2* posMouse = new Vector2(mouseX, mouseY);
    imgState = standard;
 

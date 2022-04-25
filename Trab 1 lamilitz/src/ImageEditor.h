@@ -7,13 +7,16 @@
 
 class ImageEditor {
    public:
-      std::vector<Image*> images;
-
       ImageEditor();
       void addImage(float x, float y);
       void setCurrentImage(int idx);
       int checkClickedImagesPriority(float mouseX, float mouseY);
+      void inputManagement(float mouseX, float mouseY, int mouseState);
+      void renderImages();
+      std::vector<Image*> getImages();
+
    private:
+      std::vector<Image*> images;
       int currentIndex;
 };
 

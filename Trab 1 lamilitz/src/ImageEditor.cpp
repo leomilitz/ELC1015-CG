@@ -48,3 +48,24 @@ void ImageEditor::setCurrentImage(int idx) {
    }
 }
 
+void ImageEditor::renderImages() {
+   for (Image* image : images) {
+      if (image != NULL)
+         image->imgRender();
+   }
+}
+
+void ImageEditor::inputManagement(float mouseX, float mouseY, int mouseState) {
+   for (Image* image : images) {
+      if (image != NULL) {
+         Image::State st = image->getImgState(mouseX, mouseY, mouseState);
+
+         if (mouseState == 1 && st == Image::clicked) {
+            int idx = checkClickedImagesPriority(mouseX, mouseY);
+            setCurrentImage(idx);
+         }
+      }
+   }
+}
+
+std::vector<Image*> ImageEditor::getImages() { return images; };

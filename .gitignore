@@ -1,14 +1,4 @@
-
-__bin/Debug/canvas.exe
-__obj/Debug/src/Bmp.o
-__obj/Debug/src/Button.o
-__obj/Debug/src/gl_canvas2d.o
-__obj/Debug/src/Image.o
-__obj/Debug/src/ImageEditor.o
-__obj/Debug/src/main.o
-__obj/Debug/src/UIManager.o
-Trab 1 lamilitz/trab_1.depend
-Trab 1 lamilitz/trab_1.layout
+*.exe
+*.o
 *.layout
-*.depend
 *.depend

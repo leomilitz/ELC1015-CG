@@ -28,6 +28,9 @@ class Image {
       void setImgFront(bool isFront);
       void setCurrent(bool isCurrent);
       void setFilter(Filter filter);
+      void flipHorizontal();
+      void flipVertical();
+      void rotateImg();
 
    private:
       void imgLoad();

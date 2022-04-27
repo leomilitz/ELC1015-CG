@@ -73,15 +73,15 @@ void UIManager::uiCreate() {
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - 5*(btnHeight + btnOffsetY)),
                          new Vector2(btnOffsetX + medBtnWidth, screenHeight - (4*btnHeight + 5*btnOffsetY)), "Flip Hor.",
-                         [this]() { printf("\nFlip Horizontal"); });
+                         [this]() { imgEditor->flipHorizontal(); });
 
    btnManager->addButton(new Vector2(2*btnOffsetX + medBtnWidth, screenHeight - 5*(btnHeight + btnOffsetY)),
                          new Vector2(2*btnOffsetX + 2*medBtnWidth, screenHeight - (4*btnHeight + 5*btnOffsetY)), "Flip Ver.",
-                         [this]() { printf("\nFlip vertical"); });
+                         [this]() { imgEditor->flipVertical(); });
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - 6*(btnHeight + btnOffsetY)),
                          new Vector2(btnOffsetX + btnWidth, screenHeight - (5*btnHeight + 6*btnOffsetY)), "Rotate Image",
-                         [this]() { printf("\nRotate"); });
+                         [this]() { imgEditor->rotateImg(); });
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - 7*(btnHeight + btnOffsetY)),
                          new Vector2(btnOffsetX + medBtnWidth, screenHeight - (6*btnHeight + 7*btnOffsetY)), "Scale 200%",

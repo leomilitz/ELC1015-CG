@@ -15,8 +15,11 @@ class ImageEditor {
       void deleteImage();
       void resizeImage(double scale);
       bool listenToImageChange();
-      std::vector<Image*> getImages();
+      void flipHorizontal();
+      void flipVertical();
+      void rotateImg();
 
+      std::vector<Image*> getImages();
       int getCurrentImageIndex();
       void setColorFilter(Image::Filter filter);
       void setCurrentImage(int idx);

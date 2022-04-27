@@ -101,6 +101,13 @@ void Image::updatePosition(float x, float y) {
    pos2->y = pos1->y + height;
 }
 
+void Image::imgDragAround(Vector2* posMouse) {
+   if (isCurrent && isFront && isHolding) {
+      Vector2 newPos = *posMouse - *offset;
+      updatePosition(newPos.x, newPos.y);
+   }
+}
+
 void Image::imgDrawSelectionOutline() {
    for (int i=1; i <= outline; i++) {
       float alpha = 1.0 - ((float) i / outline);
@@ -120,13 +127,6 @@ void Image::imgDrawHoveringOutline() {
       CV::line(pos1->x - i, pos2->y + i, pos2->x + i, pos2->y + i); // cima
       CV::line(pos2->x + i, pos2->y + i, pos2->x + i, pos1->y - i); // direita
       CV::line(pos2->x + i, pos1->y - i, pos1->x - i, pos1->y - i); // baixo
-   }
-}
-
-void Image::imgDragAround(Vector2* posMouse) {
-   if (isCurrent && isFront && isHolding) {
-      Vector2 newPos = *posMouse - *offset;
-      updatePosition(newPos.x, newPos.y);
    }
 }
 
@@ -151,13 +151,14 @@ void Image::resizeImage(double scale) {
    int h1 = height, w1 = width;
    int h2 = h1*scale, w2 = w1*scale;
 
+   if (h2 > bmp->getHeight()*2 || w2 > bmp->getWidth()*2) return;
+
    uchar* temp = new unsigned char[w2*h2*3];
    double xRatio = w1/(double) w2;
    double yRatio = h1/(double) h2;
-
    double px, py;
-   for (int i = 0; i < h2; i ++) {
-      for (int j = 0 ; j < w2*3; j+=3) {
+   for (int i = 0; i < h2; i++) {
+      for (int j = 0; j < w2*3; j+=3) {
          px = floor(j*xRatio/3);   //
          py = floor(i*yRatio);
          int idx = i*(w2*3) + j;
@@ -174,6 +175,40 @@ void Image::resizeImage(double scale) {
    pos2->y = pos1->y + height;
    delete[] imgString;
    imgString = temp;
+}
+
+void Image::flipHorizontal() {
+   for (int i = 0; i <= height; i++) {
+      int left  = i*width*3;
+      int right = width*3*(i+1) - 1;
+      while(left <= right) {
+         std::swap(imgString[left],   imgString[right-2]);
+         std::swap(imgString[left+1], imgString[right-1]);
+         std::swap(imgString[left+2], imgString[right]);
+         left += 3;
+         right -= 3;
+      }
+   }
+}
+
+void Image::flipVertical() {
+   for (int i = 0; i < width*3; i++) {
+      for (int j = 0; j < floor(height/2); j++) {
+         int inv = height - 1 - j;
+         std::swap(imgString[j*width*3 + i], imgString[inv*width*3 + i]);
+      }
+   }
+}
+
+void Image::rotateImg() {
+   int k = 0;
+   for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width*3; j+=3) {
+         int idx1 = (i*width*3) + j;
+         int idx2 = (j*height) + i;
+         std::swap(imgString[idx1], imgString[idx2]);
+      }
+   }
 }
 
 void Image::setIndex(int idx) { index = idx; };

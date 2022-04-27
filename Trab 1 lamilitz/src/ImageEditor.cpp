@@ -100,16 +100,11 @@ void ImageEditor::deleteImage() {
    }
 }
 
-bool ImageEditor::listenToImageChange() {
-   return imgChanged;
-}
-
 void ImageEditor::setColorFilter(Image::Filter filter) {
    if (checkUserInputError())
       return;
 
    int idx = getCurrentImageIndex();
-
    images[idx]->setFilter(filter);
 }
 
@@ -118,8 +113,31 @@ void ImageEditor::resizeImage(double scale) {
       return;
 
    int idx = getCurrentImageIndex();
-
    images[idx]->resizeImage(scale);
+}
+
+void ImageEditor::flipHorizontal() {
+   if (checkUserInputError())
+      return;
+
+   int idx = getCurrentImageIndex();
+   images[idx]->flipHorizontal();
+}
+
+void ImageEditor::flipVertical() {
+   if (checkUserInputError())
+      return;
+
+   int idx = getCurrentImageIndex();
+   images[idx]->flipVertical();
+}
+
+void ImageEditor::rotateImg() {
+   if (checkUserInputError())
+      return;
+
+   int idx = getCurrentImageIndex();
+   images[idx]->rotateImg();
 }
 
 int ImageEditor::getCurrentImageIndex() {
@@ -132,4 +150,5 @@ int ImageEditor::getCurrentImageIndex() {
    return -1;
 }
 
+bool ImageEditor::listenToImageChange() { return imgChanged; }
 std::vector<Image*> ImageEditor::getImages() { return images; };

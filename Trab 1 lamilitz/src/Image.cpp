@@ -12,6 +12,16 @@ Image::Image(std::string path, int idx, float x, float y) {
    outline = 10;
    index = idx;
    imgState = standard;
+   activeFilters.push_back(red);
+   activeFilters.push_back(green);
+   activeFilters.push_back(blue);
+   brightness = 0.0;
+}
+
+float Image::truncateColor(float val) {
+   if (val < 0) return 0.0;
+   if (val > 1) return 1.0;
+   return val;
 }
 
 bool Image::checkCollision(float mouseX, float mouseY) {
@@ -58,11 +68,23 @@ void Image::imgRender() {
 
       // render
       for (int i = 0; i < bmp->getHeight(); i += 1 ) {
-         for (int j = 0; j < bmp->getWidth() * 3; j += 3) {
+         for (int j = 0; j < bmp->getWidth()*3; j += 3) {
             int idx = i*(bmp->getWidth()*3) + j;
-            float r = (float) imgString[idx + 2] / 255;
-            float g = (float) imgString[idx + 1] / 255;
-            float b = (float) imgString[idx]     / 255;
+            float r = 0, g = 0, b = 0;
+            for (Filter f : activeFilters) {
+               switch (f) {
+                  case red:       r = imgString[idx + 2] / 255.0;             break;
+                  case green:     g = imgString[idx + 1] / 255.0;             break;
+                  case blue:      b = imgString[idx]     / 255.0;             break;
+                  case luminance: r = g = b = 0.299*r + 0.587*g + 0.113*b;    break;
+                  case inverted:  r = 1 - r; g = 1 - g; b = 1 - b;            break;
+                  case bgr:       r = r + b; b = r - b; b = r - b;            break;
+               }
+            }
+
+            r = truncateColor(r + brightness);
+            g = truncateColor(g + brightness);
+            b = truncateColor(b + brightness);
 
             CV::color(r,g,b);
             CV::point(pos1->x + j/3, pos1->y + i);
@@ -106,8 +128,27 @@ void Image::imgDragAround(Vector2* posMouse) {
    }
 }
 
-int Image::getIndex() { return index; };
+void Image::setFilter(Filter filter) {
+   int idx = -1;
+   for (Filter f : activeFilters) {
+      if (f == filter)
+         idx = std::distance(activeFilters.begin(), std::find(activeFilters.begin(), activeFilters.end(), filter));
+   }
+
+   if (idx == -1) {
+      if (filter == red || filter == green || filter == blue)
+         activeFilters.insert(activeFilters.begin(), filter);
+      else
+         activeFilters.push_back(filter);
+   }
+   else activeFilters.erase(activeFilters.begin() + idx);
+}
+
 void Image::setIndex(int idx) { index = idx; };
 void Image::setImgFront(bool isFront) { this->isFront = isFront; };
+void Image::setScale(float val) { scale = val; };
 void Image::setCurrent(bool isCurrent) { this->isCurrent = isCurrent; }
+bool Image::isCurrentImg() { return isCurrent; };
+int Image::getIndex() { return index; };
+std::vector<Image::Filter> Image::getActiveFilters() { return activeFilters; };
 

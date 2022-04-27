@@ -6,7 +6,7 @@ ImageEditor::ImageEditor() {
 
 void ImageEditor::addImage(float x, float y) {
    if (images.size() < 3) {
-      images.push_back(new Image("D:\\UFSM\\cg\\Trabs Leo\\cg-leomilitz\\Trab 1 lamilitz\\resources\\normal_1.bmp", currentIndex, x, y));
+      images.push_back(new Image(".\\Trab 1 lamilitz\\resources\\normal_1.bmp", currentIndex, x, y));
       setCurrentImage(currentIndex);
       currentIndex++;
    } else {
@@ -49,6 +49,8 @@ void ImageEditor::setCurrentImage(int idx) {
 }
 
 void ImageEditor::renderImages() {
+   if (images.size() == 0) return;
+
    for (Image* image : images) {
       if (image != NULL)
          image->imgRender();
@@ -56,6 +58,7 @@ void ImageEditor::renderImages() {
 }
 
 void ImageEditor::inputManagement(float mouseX, float mouseY, int mouseState) {
+   imgChanged = false;
    for (Image* image : images) {
       if (image != NULL) {
          Image::State st = image->getImgState(mouseX, mouseY, mouseState);
@@ -63,9 +66,70 @@ void ImageEditor::inputManagement(float mouseX, float mouseY, int mouseState) {
          if (mouseState == 1 && st == Image::clicked) {
             int idx = checkClickedImagesPriority(mouseX, mouseY);
             setCurrentImage(idx);
+            imgChanged = true;
          }
       }
    }
+}
+
+bool ImageEditor::checkUserInputError() {
+   if (images.size() == 0) {
+      printf("\nThere are no images in the editor.");
+      return true;
+   }
+
+   int idx = getCurrentImageIndex();
+
+   if (idx == -1) {
+      printf("\nThere are no images selected.");
+      return true;
+   }
+
+   return false;
+}
+
+void ImageEditor::deleteImage() {
+   if (checkUserInputError())
+      return;
+
+   for (Image* img : images) {
+      if (img->isCurrentImg()) {
+         images.erase(images.begin()+img->getIndex());
+         currentIndex--;
+      }
+   }
+}
+
+bool ImageEditor::listenToImageChange() {
+   return imgChanged;
+}
+
+void ImageEditor::setColorFilter(Image::Filter filter) {
+   if (checkUserInputError())
+      return;
+
+   int idx = getCurrentImageIndex();
+
+   images[idx]->setFilter(filter);
+}
+
+void ImageEditor::setScale(float val) {
+   if (checkUserInputError())
+      return;
+
+   int idx = getCurrentImageIndex();
+
+   images[idx]->setScale(val);
+}
+
+int ImageEditor::getCurrentImageIndex() {
+   for (Image* img : images) {
+      if (img->isCurrentImg()) {
+         return img->getIndex();
+      }
+   }
+
+   return -1;
 }
 
 std::vector<Image*> ImageEditor::getImages() { return images; };

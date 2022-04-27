@@ -92,10 +92,10 @@
 	<stdio.h>
 	<stdlib.h>
 
-1650831327 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\button.cpp
+1651016815 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\button.cpp
 	"Button.h"
 
-1650831926 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\button.h
+1651016405 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\button.h
 	<string>
 	<functional>
 	"gl_canvas2d.h"
@@ -130,12 +130,14 @@
 1650924795 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\vector2.h
 	"math.h"
 
-1650922947 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.h
+1651018309 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.h
 	<vector>
 	"Image.h"
 
-1650925448 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.h
+1651021592 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.h
 	<string>
+	<vector>
+	<algorithm>
 	"Bmp.h"
 	"Vector2.h"
 	"gl_canvas2d.h"
@@ -144,7 +146,7 @@
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1650925455 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.cpp
+1651021756 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.cpp
 	"Image.h"
 
 1650927956 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\main.cpp
@@ -153,25 +155,25 @@
 	"gl_canvas2d.h"
 	"UIManager.h"
 
-1650924746 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.h
+1650936171 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.h
 	<vector>
-	"Button.h"
 	"ImageEditor.h"
 	"ButtonManager.h"
 
-1650928584 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.cpp
+1651018352 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.cpp
 	"UIManager.h"
 
-1650925464 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.cpp
+1651018278 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.cpp
 	"ImageEditor.h"
 
-1650924130 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\buttonmanager.cpp
+1651014140 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\buttonmanager.cpp
 	"ButtonManager.h"
 
-1650924102 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\buttonmanager.h
+1651014146 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\buttonmanager.h
 	<string>
 	<functional>
 	<vector>
+	<algorithm>
 	"Vector2.h"
 	"Button.h"
 

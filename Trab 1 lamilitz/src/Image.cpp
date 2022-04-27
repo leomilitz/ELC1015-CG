@@ -1,10 +1,22 @@
 #include "Image.h"
 
+void Image::modelData() {
+   uchar* img = bmp->getImage();
+   data.resize(bmp->getHeight() * bmp->getWidth());
+   for (int i = 0; i < bmp->getHeight(); i++) {
+      for (int j = 0; j < bmp->getWidth()*3; j+=3) {
+         int idx = (i*width*3) + j;
+         data[(i*bmp->getWidth()) + j/3] = new Pixel(img[idx+2], img[idx+1], img[idx]);
+      }
+   }
+}
+
 Image::Image(std::string path, int idx, float x, float y) {
+   imgPath = path;
    bmp = new Bmp(path.c_str());
-   imgString = bmp->getImage();
    width = bmp->getWidth();
    height = bmp->getHeight();
+   modelData();
    pos1 = new Vector2(0,0);
    pos2 = new Vector2(0,0);
    offset = new Vector2(0,0);
@@ -58,7 +70,7 @@ Image::State Image::getImgState(float mouseX, float mouseY, int mouseState) {
 }
 
 void Image::imgRender() {
-   if (bmp != NULL && imgString != NULL) {
+   if (bmp != NULL && data.size() > 0) {
       // outline
       if (isCurrent && isFront) {
          imgDrawSelectionOutline();
@@ -68,16 +80,15 @@ void Image::imgRender() {
          imgDrawHoveringOutline();
       }
 
-      // render
-      for (int i = 0; i < width; i += 1 ) {
-         for (int j = 0; j < height*3; j += 3) {
-            int idx = i*(width*3) + j;
+      for (int i = 0; i < height; i ++) {
+         for (int j = 0; j < width; j++) {
+            int idx = i*width + j;
             float r = 0, g = 0, b = 0;
             for (Filter f : activeFilters) {
                switch (f) {
-                  case red:       r = imgString[idx + 2] / 255.0;             break;
-                  case green:     g = imgString[idx + 1] / 255.0;             break;
-                  case blue:      b = imgString[idx]     / 255.0;             break;
+                  case red:       r = data[idx]->r / 255.0;                   break;
+                  case green:     g = data[idx]->g / 255.0;                   break;
+                  case blue:      b = data[idx]->b / 255.0;                   break;
                   case luminance: r = g = b = 0.299*r + 0.587*g + 0.113*b;    break;
                   case inverted:  r = 1 - r; g = 1 - g; b = 1 - b;            break;
                   case bgr:       r = r + b; b = r - b; r = r - b;            break;
@@ -89,7 +100,7 @@ void Image::imgRender() {
             b = truncateColor(b + brightness);
 
             CV::color(r,g,b);
-            CV::point(pos1->x + j/3, pos1->y + i);
+            CV::point(pos1->x + j, pos1->y + i);
          }
       }
    }
@@ -153,62 +164,58 @@ void Image::resizeImage(double scale) {
 
    if (h2 > bmp->getHeight()*2 || w2 > bmp->getWidth()*2) return;
 
-   uchar* temp = new unsigned char[w2*h2*3];
+   std::vector<Pixel*> temp(h2*w2);
    double xRatio = w1/(double) w2;
    double yRatio = h1/(double) h2;
    double px, py;
    for (int i = 0; i < h2; i++) {
-      for (int j = 0; j < w2*3; j+=3) {
-         px = floor(j*xRatio/3);   //
+      for (int j = 0; j < w2; j++) {
+         px = floor(j*xRatio);
          py = floor(i*yRatio);
-         int idx = i*(w2*3) + j;
-         int nearest = (int)((py*w1) + px)*3;
-         temp[idx] = imgString[nearest];
-         temp[idx+1] = imgString[nearest+1];
-         temp[idx+2] = imgString[nearest+2];
+         int idx = i*w2 + j;
+         int nearest = (int)((py*w1) + px);
+         temp[idx] = data[nearest];
       }
    }
 
-   width = w2;
+   width  = w2;
    height = h2;
    pos2->x = pos1->x + width;
    pos2->y = pos1->y + height;
-   delete[] imgString;
-   imgString = temp;
+   data = temp;
 }
 
 void Image::flipHorizontal() {
-   for (int i = 0; i <= height; i++) {
-      int left  = i*width*3;
-      int right = width*3*(i+1) - 1;
+   for (int i = 0; i < height; i++) {
+      int left  = i*width;
+      int right = width*(i+1) - 1;
       while(left <= right) {
-         std::swap(imgString[left],   imgString[right-2]);
-         std::swap(imgString[left+1], imgString[right-1]);
-         std::swap(imgString[left+2], imgString[right]);
-         left += 3;
-         right -= 3;
+         std::swap(data[left], data[right]);
+         left++;
+         right--;
       }
    }
 }
 
 void Image::flipVertical() {
-   for (int i = 0; i < width*3; i++) {
+   for (int i = 0; i < width; i++) {
       for (int j = 0; j < floor(height/2); j++) {
          int inv = height - 1 - j;
-         std::swap(imgString[j*width*3 + i], imgString[inv*width*3 + i]);
+         std::swap(data[j*width + i], data[inv*width + i]);
       }
    }
 }
 
-void Image::rotateImg() {
-   int k = 0;
-   for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width*3; j+=3) {
-         int idx1 = (i*width*3) + j;
+void Image::rotateImg(int side) {
+   for (int i = 0; i < height; ++i) {
+      for (int j = i+1; j < width; ++j) {
+         int idx1 = (i*width)  + j;
          int idx2 = (j*height) + i;
-         std::swap(imgString[idx1], imgString[idx2]);
+         std::swap(data[idx2], data[idx1]);
       }
    }
+
+   (side) ? flipVertical() : flipHorizontal();
 }
 
 void Image::setIndex(int idx) { index = idx; };

@@ -8,6 +8,7 @@
 #include "Bmp.h"
 #include "Vector2.h"
 #include "gl_canvas2d.h"
+#include "Pixel.h"
 
 class Image {
    public:
@@ -30,7 +31,7 @@ class Image {
       void setFilter(Filter filter);
       void flipHorizontal();
       void flipVertical();
-      void rotateImg();
+      void rotateImg(int side);
 
    private:
       void imgLoad();
@@ -39,14 +40,15 @@ class Image {
       void imgDragAround(Vector2* posMouse);
       void updatePosition(float x, float y);
       float truncateColor(float val);
+      void modelData();
 
       Bmp* bmp;
-      std::string path;
-      uchar* imgString;
+      std::string imgPath;
+      std::vector<Pixel*> data;
       int outline, index, width, height;
       float scale, brightness, contrast;
       Vector2* pos1, *pos2, *offset;
-      bool isHolding, isFront, isCurrent, isFlippedVert, isFlippedHor;
+      bool isHolding, isFront, isCurrent;
       State imgState;
       std::vector<Filter> activeFilters;
 };

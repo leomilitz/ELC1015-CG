@@ -17,7 +17,7 @@ class ImageEditor {
       bool listenToImageChange();
       void flipHorizontal();
       void flipVertical();
-      void rotateImg();
+      void rotateImg(int side);
 
       std::vector<Image*> getImages();
       int getCurrentImageIndex();

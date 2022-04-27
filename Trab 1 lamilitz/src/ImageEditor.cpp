@@ -132,12 +132,12 @@ void ImageEditor::flipVertical() {
    images[idx]->flipVertical();
 }
 
-void ImageEditor::rotateImg() {
+void ImageEditor::rotateImg(int side) {
    if (checkUserInputError())
       return;
 
    int idx = getCurrentImageIndex();
-   images[idx]->rotateImg();
+   images[idx]->rotateImg(side);
 }
 
 int ImageEditor::getCurrentImageIndex() {

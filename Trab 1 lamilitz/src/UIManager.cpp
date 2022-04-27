@@ -80,8 +80,12 @@ void UIManager::uiCreate() {
                          [this]() { imgEditor->flipVertical(); });
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - 6*(btnHeight + btnOffsetY)),
-                         new Vector2(btnOffsetX + btnWidth, screenHeight - (5*btnHeight + 6*btnOffsetY)), "Rotate Image",
-                         [this]() { imgEditor->rotateImg(); });
+                         new Vector2(btnOffsetX + medBtnWidth, screenHeight - (5*btnHeight + 6*btnOffsetY)), "Rotate Left",
+                         [this]() { imgEditor->rotateImg(0); });
+
+   btnManager->addButton(new Vector2(2*btnOffsetX + medBtnWidth, screenHeight - 6*(btnHeight + btnOffsetY)),
+                         new Vector2(2*btnOffsetX + 2*medBtnWidth, screenHeight - (5*btnHeight + 6*btnOffsetY)), "Rotate Right",
+                         [this]() { imgEditor->rotateImg(1); });
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - 7*(btnHeight + btnOffsetY)),
                          new Vector2(btnOffsetX + medBtnWidth, screenHeight - (6*btnHeight + 7*btnOffsetY)), "Scale 200%",

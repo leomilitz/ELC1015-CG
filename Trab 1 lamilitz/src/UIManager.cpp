@@ -30,7 +30,7 @@ void UIManager::uiRender() {
 
 void UIManager::uiCreate() {
    float btnOffsetX = 0.01*screenWidth, btnOffsetY = 0.02*screenHeight,
-         btnHeight = screenHeight*25/600, btnWidth = screenWidth*0.24,
+         btnHeight = screenHeight*0.0417, btnWidth = screenWidth*0.2845,
          smallBtnWidth = (btnWidth - 3*btnOffsetX)/4,
          medBtnWidth = (btnWidth - btnOffsetX)/2;
 
@@ -41,7 +41,7 @@ void UIManager::uiCreate() {
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - (btnHeight + btnOffsetY)),
                          new Vector2(btnOffsetX + btnWidth, screenHeight - btnOffsetY), "Open Image",
-                         [this]() { imgEditor->addImage(this->screenWidth*0.7, 0); });
+                         [this]() { imgEditor->addImage(this->screenWidth*0.7, 1); });
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - 2*(btnHeight + btnOffsetY)),
                          new Vector2(btnOffsetX + btnWidth, screenHeight - (btnHeight + 2*btnOffsetY)), "Delete Image",
@@ -84,12 +84,12 @@ void UIManager::uiCreate() {
                          [this]() { printf("\nRotate"); });
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - 7*(btnHeight + btnOffsetY)),
-                         new Vector2(btnOffsetX + medBtnWidth, screenHeight - (6*btnHeight + 7*btnOffsetY)), "Scale 1/2",
-                         [this]() { imgEditor->setScale(2.0); });
+                         new Vector2(btnOffsetX + medBtnWidth, screenHeight - (6*btnHeight + 7*btnOffsetY)), "Scale 200%",
+                         [this]() { imgEditor->resizeImage(2); });
 
    btnManager->addButton(new Vector2(2*btnOffsetX + medBtnWidth, screenHeight - 7*(btnHeight + btnOffsetY)),
-                         new Vector2(2*btnOffsetX + 2*medBtnWidth, screenHeight - (6*btnHeight + 7*btnOffsetY)), "Scale 1/4",
-                         [this]() { printf("\nScale 1/4"); });
+                         new Vector2(2*btnOffsetX + 2*medBtnWidth, screenHeight - (6*btnHeight + 7*btnOffsetY)), "Scale 50%",
+                         [this]() { imgEditor->resizeImage(0.5); });
 }
 
 UIManager::UIManager(int screenWidth, int screenHeight) {

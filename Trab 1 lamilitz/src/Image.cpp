@@ -3,6 +3,8 @@
 Image::Image(std::string path, int idx, float x, float y) {
    bmp = new Bmp(path.c_str());
    imgString = bmp->getImage();
+   width = bmp->getWidth();
+   height = bmp->getHeight();
    pos1 = new Vector2(0,0);
    pos2 = new Vector2(0,0);
    offset = new Vector2(0,0);
@@ -67,9 +69,9 @@ void Image::imgRender() {
       }
 
       // render
-      for (int i = 0; i < bmp->getHeight(); i += 1 ) {
-         for (int j = 0; j < bmp->getWidth()*3; j += 3) {
-            int idx = i*(bmp->getWidth()*3) + j;
+      for (int i = 0; i < width; i += 1 ) {
+         for (int j = 0; j < height*3; j += 3) {
+            int idx = i*(width*3) + j;
             float r = 0, g = 0, b = 0;
             for (Filter f : activeFilters) {
                switch (f) {
@@ -78,7 +80,7 @@ void Image::imgRender() {
                   case blue:      b = imgString[idx]     / 255.0;             break;
                   case luminance: r = g = b = 0.299*r + 0.587*g + 0.113*b;    break;
                   case inverted:  r = 1 - r; g = 1 - g; b = 1 - b;            break;
-                  case bgr:       r = r + b; b = r - b; b = r - b;            break;
+                  case bgr:       r = r + b; b = r - b; r = r - b;            break;
                }
             }
 
@@ -95,8 +97,8 @@ void Image::imgRender() {
 
 void Image::updatePosition(float x, float y) {
    pos1->x = x; pos1->y = y;
-   pos2->x = pos1->x + bmp->getWidth();
-   pos2->y = pos1->y + bmp->getHeight();
+   pos2->x = pos1->x + width;
+   pos2->y = pos1->y + height;
 }
 
 void Image::imgDrawSelectionOutline() {
@@ -144,9 +146,38 @@ void Image::setFilter(Filter filter) {
    else activeFilters.erase(activeFilters.begin() + idx);
 }
 
+// Algoritmo Nearest Neighbor
+void Image::resizeImage(double scale) {
+   int h1 = height, w1 = width;
+   int h2 = h1*scale, w2 = w1*scale;
+
+   uchar* temp = new unsigned char[w2*h2*3];
+   double xRatio = w1/(double) w2;
+   double yRatio = h1/(double) h2;
+
+   double px, py;
+   for (int i = 0; i < h2; i ++) {
+      for (int j = 0 ; j < w2*3; j+=3) {
+         px = floor(j*xRatio/3);   //
+         py = floor(i*yRatio);
+         int idx = i*(w2*3) + j;
+         int nearest = (int)((py*w1) + px)*3;
+         temp[idx] = imgString[nearest];
+         temp[idx+1] = imgString[nearest+1];
+         temp[idx+2] = imgString[nearest+2];
+      }
+   }
+
+   width = w2;
+   height = h2;
+   pos2->x = pos1->x + width;
+   pos2->y = pos1->y + height;
+   delete[] imgString;
+   imgString = temp;
+}
+
 void Image::setIndex(int idx) { index = idx; };
 void Image::setImgFront(bool isFront) { this->isFront = isFront; };
-void Image::setScale(float val) { scale = val; };
 void Image::setCurrent(bool isCurrent) { this->isCurrent = isCurrent; }
 bool Image::isCurrentImg() { return isCurrent; };
 int Image::getIndex() { return index; };

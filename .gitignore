@@ -2,3 +2,5 @@
 *.o
 *.layout
 *.depend
+*.depend
+*.layout

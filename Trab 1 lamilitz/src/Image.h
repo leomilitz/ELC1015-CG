@@ -16,19 +16,18 @@ class Image {
 
       Image(std::string path, int idx, float x, float y);
       void imgRender();
+      void resizeImage(double scale);
 
-      Vector2* pos1;
       bool checkCollision(float mouseX, float mouseY);
-
       bool isCurrentImg();
       State getImgState(float mouseX, float mouseY, int mouseState);
       std::vector<Filter> getActiveFilters();
       int getIndex();
+
       void setIndex(int idx);
       void setImgFront(bool isFront);
       void setCurrent(bool isCurrent);
       void setFilter(Filter filter);
-      void setScale(float val);
 
    private:
       void imgLoad();
@@ -41,9 +40,9 @@ class Image {
       Bmp* bmp;
       std::string path;
       uchar* imgString;
-      int outline, index;
+      int outline, index, width, height;
       float scale, brightness, contrast;
-      Vector2* pos2, *offset;
+      Vector2* pos1, *pos2, *offset;
       bool isHolding, isFront, isCurrent, isFlippedVert, isFlippedHor;
       State imgState;
       std::vector<Filter> activeFilters;

@@ -113,13 +113,13 @@ void ImageEditor::setColorFilter(Image::Filter filter) {
    images[idx]->setFilter(filter);
 }
 
-void ImageEditor::setScale(float val) {
+void ImageEditor::resizeImage(double scale) {
    if (checkUserInputError())
       return;
 
    int idx = getCurrentImageIndex();
 
-   images[idx]->setScale(val);
+   images[idx]->resizeImage(scale);
 }
 
 int ImageEditor::getCurrentImageIndex() {

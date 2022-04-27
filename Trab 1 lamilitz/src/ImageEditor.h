@@ -13,13 +13,13 @@ class ImageEditor {
       void inputManagement(float mouseX, float mouseY, int mouseState);
       void renderImages();
       void deleteImage();
+      void resizeImage(double scale);
       bool listenToImageChange();
       std::vector<Image*> getImages();
 
       int getCurrentImageIndex();
       void setColorFilter(Image::Filter filter);
       void setCurrentImage(int idx);
-      void setScale(float val);
    private:
       std::vector<Image*> images;
       int currentIndex;

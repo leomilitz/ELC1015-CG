@@ -65,7 +65,7 @@ void Button::drawDefault(){
    CV::color(r, g, b);
 }
 
-Button::State Button::checkCollision(float mouseX, float mouseY, int mouseState) {
+Button::State Button::checkCollision(int mouseX, int mouseY, int mouseState) {
    Vector2* mousePos = new Vector2(mouseX, mouseY);
    if (*mousePos >= *v1 && *mousePos <= *v2 && mouseState == -2 && !isToggled)
       return hovered;

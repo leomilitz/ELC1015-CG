@@ -9,14 +9,14 @@ void ButtonManager::addButton(Vector2* p1, Vector2* p2, std::string caption, std
    buttons.push_back(btn);
 }
 
-void ButtonManager::renderButtons(float mouseX, float mouseY, int mouseState) {
+void ButtonManager::renderButtons(int mouseX, int mouseY, int mouseState) {
    for (Button* btn : buttons) {
       Button::State state = btn->checkCollision(mouseX, mouseY, mouseState);
       btn->draw(state);
    }
 }
 
-void ButtonManager::inputManagement(float mouseX, float mouseY, int* mouseState) {
+void ButtonManager::inputManagement(int mouseX, int mouseY, int* mouseState) {
    for (Button* btn : buttons) {
       Button::State state = btn->checkCollision(mouseX, mouseY, *mouseState);
 

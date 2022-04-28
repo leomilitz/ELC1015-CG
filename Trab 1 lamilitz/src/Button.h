@@ -22,21 +22,21 @@ class Button {
 
       Button(Vector2 *v1, Vector2 *v2, std::string text, std::function<void ()> action, Color color, bool canToggle);
       void draw(State state);
-      State checkCollision(float mouseX, float mouseY, int mouseState);
+      State checkCollision(int mouseX, int mouseY, int mouseState);
       void onClick();
       std::string getCaption();
       void setToggled(bool isToggled);
    private:
       Vector2 *v1, *v2, *edge;
-      int charHalfSize;                      // Metade do tamanho lateral do caractere do texto
-      std::string text;                      // texto do botão
-      std::function<void()> action;          // ação do botão
+      int charHalfSize;                         // Metade do tamanho lateral do caractere do texto
+      std::string text;                         // texto do botão
+      std::function<void()> action;             // ação do botão
       Color btnColor;
       bool isToggled, canToggle;
 
-      void drawHover();                      // efeito on hover do botão
-      void drawDefault();                    // visual padrão do botão
-      void drawClick();                      // visual do botão ao ser clicado
+      void drawHover();                         // efeito on hover do botão
+      void drawDefault();                       // visual padrão do botão
+      void drawClick();                         // visual do botão ao ser clicado
       void drawEdge(float r, float g, float b);
 };
 

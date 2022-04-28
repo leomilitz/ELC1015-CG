@@ -13,8 +13,19 @@ void Image::modelData() {
    }
 }
 
-Image::Image(std::string path, int idx, float x, float y) {
+std::string parseFileName(std::string path) {
+   std::vector<std::string> tokens;
+   std::string token;
+   std::stringstream ss(path);
+   while (std::getline(ss, token, '\\'))
+      tokens.push_back(token);
+
+   return tokens[tokens.size()-1];
+}
+
+Image::Image(std::string path, int idx, int x, int y) {
    imgPath = path;
+   imgName = parseFileName(path);
    bmp = new Bmp(path.c_str());
    width = bmp->getWidth();
    height = bmp->getHeight();
@@ -40,12 +51,12 @@ float Image::truncateColor(float val) {
    return val;
 }
 
-bool Image::checkCollision(float mouseX, float mouseY) {
+bool Image::checkCollision(int mouseX, int mouseY) {
    Vector2 mouse; mouse.x = mouseX; mouse.y = mouseY;
    return (*pos1 <= mouse && *pos2 >= mouse);
 }
 
-Image::State Image::getImgState(float mouseX, float mouseY, int mouseState) {
+Image::State Image::getImgState(int mouseX, int mouseY, int mouseState) {
    Vector2* posMouse = new Vector2(mouseX, mouseY);
    imgState = standard;
 
@@ -108,7 +119,7 @@ void Image::imgRender() {
    }
 }
 
-void Image::updatePosition(float x, float y) {
+void Image::updatePosition(int x, int y) {
    pos1->x = x; pos1->y = y;
    pos2->x = pos1->x + width;
    pos2->y = pos1->y + height;
@@ -164,7 +175,8 @@ void Image::resizeImage(double scale) {
    int h1 = height, w1 = width;
    int h2 = h1*scale, w2 = w1*scale;
 
-   if (h2 > bmp->getHeight()*2 || w2 > bmp->getWidth()*2) return;
+   if (h2 > bmp->getHeight()*2   || w2 > bmp->getWidth()*2 ||
+       h2 < bmp->getHeight()*0.5 || w2 < bmp->getWidth()*0.5) return;
 
    std::vector<Pixel*> temp(h2*w2);
    double xRatio = w1/(double) w2;
@@ -182,8 +194,9 @@ void Image::resizeImage(double scale) {
 
    width  = w2;
    height = h2;
-   pos2->x = pos1->x + width;
-   pos2->y = pos1->y + height;
+   int offsetX = (w1-w2)/2;
+   int offsetY = (h1-h2)/2;
+   updatePosition(pos1->x + offsetX, pos1->y + offsetY);
    data = temp;
 }
 

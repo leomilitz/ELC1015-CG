@@ -1,11 +1,13 @@
 #include "ImageEditor.h"
 
+#define MAX_IMAGES 3
+
 ImageEditor::ImageEditor() {
    currentIndex = 0;
 }
 
-void ImageEditor::addImage(float x, float y) {
-   if (images.size() < 3) {
+void ImageEditor::addImage(int x, int y) {
+   if (images.size() < MAX_IMAGES) {
       images.push_back(new Image(".\\Trab 1 lamilitz\\resources\\normal_1.bmp", currentIndex, x, y));
       setCurrentImage(currentIndex);
       currentIndex++;
@@ -57,7 +59,7 @@ void ImageEditor::renderImages() {
    }
 }
 
-void ImageEditor::inputManagement(float mouseX, float mouseY, int mouseState) {
+void ImageEditor::inputManagement(int mouseX, int mouseY, int mouseState) {
    imgChanged = false;
    for (Image* image : images) {
       if (image != NULL) {

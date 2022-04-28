@@ -15,8 +15,8 @@ class ButtonManager
       ButtonManager();
       void addButton(Vector2* p1, Vector2* p2, std::string caption, std::function<void()> action,
                      Button::Color color=Button::Color::grey, bool canToggle=false);
-      void renderButtons(float mouseX, float mouseY, int mouseState);
-      void inputManagement(float mouseX, float mouseY, int* mouseState);
+      void renderButtons(int mouseX, int mouseY, int mouseState);
+      void inputManagement(int mouseX, int mouseY, int* mouseState);
 
       void setButtonState(std::vector<Image::Filter> filters);
       void resetButtonState();

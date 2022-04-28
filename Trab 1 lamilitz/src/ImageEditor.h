@@ -8,9 +8,9 @@
 class ImageEditor {
    public:
       ImageEditor();
-      void addImage(float x, float y);
+      void addImage(int x, int y);
       int checkClickedImagesPriority(float mouseX, float mouseY);
-      void inputManagement(float mouseX, float mouseY, int mouseState);
+      void inputManagement(int mouseX, int mouseY, int mouseState);
       void renderImages();
       void deleteImage();
       void resizeImage(double scale);

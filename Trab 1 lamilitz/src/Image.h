@@ -9,18 +9,20 @@
 #include "Vector2.h"
 #include "gl_canvas2d.h"
 
+#include <sstream>
+
 class Image {
    public:
       enum State { clicked, hovered, holding, standard };
       enum Filter { red, green, blue, luminance, inverted, bgr };
 
-      Image(std::string path, int idx, float x, float y);
+      Image(std::string path, int idx, int x, int y);
       void imgRender();
       void resizeImage(double scale);
 
-      bool checkCollision(float mouseX, float mouseY);
+      bool checkCollision(int mouseX, int mouseY);
       bool isCurrentImg();
-      State getImgState(float mouseX, float mouseY, int mouseState);
+      State getImgState(int mouseX, int mouseY, int mouseState);
       std::vector<Filter> getActiveFilters();
       int getIndex();
 
@@ -39,12 +41,12 @@ class Image {
       void imgDrawSelectionOutline();
       void imgDrawHoveringOutline();
       void imgDragAround(Vector2* posMouse);
-      void updatePosition(float x, float y);
+      void updatePosition(int x, int y);
       float truncateColor(float val);
       void modelData();
 
       Bmp* bmp;
-      std::string imgPath;
+      std::string imgPath, imgName;
       std::vector<Pixel*> data;
       int outline, index, width, height;
       float scale, brightness, contrast;

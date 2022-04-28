@@ -8,7 +8,6 @@
 #include "Bmp.h"
 #include "Vector2.h"
 #include "gl_canvas2d.h"
-#include "Pixel.h"
 
 class Image {
    public:
@@ -34,6 +33,8 @@ class Image {
       void rotateImg(int side);
 
    private:
+      typedef struct { int r, g, b; } Pixel;
+
       void imgLoad();
       void imgDrawSelectionOutline();
       void imgDrawHoveringOutline();

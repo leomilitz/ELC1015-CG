@@ -134,20 +134,19 @@
 	<vector>
 	"Image.h"
 
-1651101306 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.h
+1651103990 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.h
 	<string>
 	<vector>
 	<algorithm>
 	"Bmp.h"
 	"Vector2.h"
 	"gl_canvas2d.h"
-	"Pixel.h"
 
 1650835036 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1651100416 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.cpp
+1651103772 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.cpp
 	"Image.h"
 
 1650927956 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\main.cpp

@@ -6,7 +6,9 @@ void Image::modelData() {
    for (int i = 0; i < bmp->getHeight(); i++) {
       for (int j = 0; j < bmp->getWidth()*3; j+=3) {
          int idx = (i*width*3) + j;
-         data[(i*bmp->getWidth()) + j/3] = new Pixel(img[idx+2], img[idx+1], img[idx]);
+         Pixel* px = new Pixel();
+         px->r = img[idx+2]; px->g = img[idx+1]; px->b = img[idx];
+         data[(i*bmp->getWidth()) + j/3] = px;
       }
    }
 }

@@ -2,8 +2,9 @@
 
 #define MAX_IMAGES 3
 
-ImageEditor::ImageEditor() {
+ImageEditor::ImageEditor(ColorHistogram* histogram) {
    currentIndex = 0;
+   this->histogram = histogram;
 }
 
 void ImageEditor::addImage(int x, int y) {
@@ -51,6 +52,7 @@ void ImageEditor::setCurrentImage(int idx) {
 }
 
 void ImageEditor::renderImages() {
+   histogram->draw();
    if (images.size() == 0) return;
 
    for (Image* image : images) {
@@ -80,9 +82,7 @@ bool ImageEditor::checkUserInputError() {
       return true;
    }
 
-   int idx = getCurrentImageIndex();
-
-   if (idx == -1) {
+   if (getCurrentImageIndex() == -1) {
       printf("\nThere are no images selected.");
       return true;
    }
@@ -91,8 +91,7 @@ bool ImageEditor::checkUserInputError() {
 }
 
 void ImageEditor::deleteImage() {
-   if (checkUserInputError())
-      return;
+   if (checkUserInputError()) return;
 
    for (Image* img : images) {
       if (img->isCurrentImg()) {
@@ -103,59 +102,79 @@ void ImageEditor::deleteImage() {
 }
 
 void ImageEditor::setColorFilter(Image::Filter filter) {
-   if (checkUserInputError())
-      return;
-
-   int idx = getCurrentImageIndex();
-   images[idx]->setFilter(filter);
+   if (checkUserInputError()) return;
+   images[getCurrentImageIndex()]->setFilter(filter);
+   updateHistogram();
 }
 
 void ImageEditor::setBrightness(int value) {
-   if (checkUserInputError())
-      return;
-
-   int idx = getCurrentImageIndex();
-   images[idx]->setBrightness(value);
+   if (checkUserInputError()) return;
+   images[getCurrentImageIndex()]->setBrightness(value);
+   updateHistogram();
 }
 
 void ImageEditor::setContrast(int value) {
-   if (checkUserInputError())
-      return;
-
-   int idx = getCurrentImageIndex();
-   images[idx]->setContrast(value);
+   if (checkUserInputError()) return;
+   images[getCurrentImageIndex()]->setContrast(value);
+   updateHistogram();
 }
 
 void ImageEditor::resizeImage(double scale) {
-   if (checkUserInputError())
-      return;
-
-   int idx = getCurrentImageIndex();
-   images[idx]->resizeImage(scale);
+   if (checkUserInputError()) return;
+   images[getCurrentImageIndex()]->resizeImage(scale);
 }
 
 void ImageEditor::flipHorizontal() {
-   if (checkUserInputError())
-      return;
-
-   int idx = getCurrentImageIndex();
-   images[idx]->flipHorizontal();
+   if (checkUserInputError()) return;
+   images[getCurrentImageIndex()]->flipHorizontal();
 }
 
 void ImageEditor::flipVertical() {
-   if (checkUserInputError())
-      return;
-
-   int idx = getCurrentImageIndex();
-   images[idx]->flipVertical();
+   if (checkUserInputError())return;
+   images[getCurrentImageIndex()]->flipVertical();
 }
 
 void ImageEditor::rotateImg(int side) {
-   if (checkUserInputError())
-      return;
+   if (checkUserInputError()) return;
+   images[getCurrentImageIndex()]->rotateImg(side);
+}
 
+void ImageEditor::updateHistogram() {
    int idx = getCurrentImageIndex();
-   images[idx]->rotateImg(side);
+
+   if (idx == -1) return;
+
+   int width = images[idx]->getWidth();
+   int height = images[idx]->getHeight();
+   histogram->setSizeX(width);
+   histogram->setSizeY(height);
+
+   std::vector<Pixel*> data = images[idx]->getData();
+   std::vector<int> valuesR(width);
+   std::vector<int> valuesG(width);
+   std::vector<int> valuesB(width);
+
+   for (int i = 0; i < height; i++) {
+      int rCount = 0, gCount = 0, bCount = 0;
+
+      for (int j = 0; j < width; j++) {
+         int r = data[j*width + i]->r;
+         int g = data[j*width + i]->g;
+         int b = data[j*width + i]->b;
+
+         if (r > (r + g + b)/3) rCount++;
+         if (g > (r + g + b)/3) gCount++;
+         if (b > (r + g + b)/3) bCount++;
+      }
+
+      valuesR[i] = rCount;
+      valuesG[i] = gCount;
+      valuesB[i] = bCount;
+   }
+
+   histogram->setColorValues(valuesR, 'r');
+   histogram->setColorValues(valuesG, 'g');
+   histogram->setColorValues(valuesB, 'b');
 }
 
 int ImageEditor::getCurrentImageIndex() {

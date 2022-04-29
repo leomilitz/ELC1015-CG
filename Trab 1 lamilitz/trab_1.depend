@@ -130,11 +130,12 @@
 1650924795 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\vector2.h
 	"math.h"
 
-1651237212 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.h
+1651259876 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.h
 	<vector>
 	"Image.h"
+	"ColorHistogram.h"
 
-1651238824 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.h
+1651263249 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.h
 	<string>
 	<vector>
 	<algorithm>
@@ -147,7 +148,7 @@
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1651238887 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.cpp
+1651263215 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.cpp
 	"Image.h"
 
 1650927956 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\main.cpp
@@ -162,10 +163,10 @@
 	"ButtonManager.h"
 	"SliderManager.h"
 
-1651237384 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.cpp
+1651259888 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.cpp
 	"UIManager.h"
 
-1651237244 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.cpp
+1651262613 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.cpp
 	"ImageEditor.h"
 
 1651187638 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\buttonmanager.cpp
@@ -184,17 +185,24 @@
 1651098138 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\pixel.cpp
 	"Pixel.h"
 
-1651237077 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\slider.cpp
+1651255795 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\slider.cpp
 	"Slider.h"
 
-1651205288 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\slider.h
+1651254139 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\slider.h
 	<functional>
 	"gl_canvas2d.h"
 
-1651201240 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\slidermanager.cpp
+1651254994 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\slidermanager.cpp
 	"SliderManager.h"
 
-1651200886 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\slidermanager.h
+1651254939 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\slidermanager.h
 	"Slider.h"
 	<vector>
+
+1651258345 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\colorhistogram.h
+	<vector>
+	"gl_canvas2d.h"
+
+1651261573 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\colorhistogram.cpp
+	"ColorHistogram.h"
 

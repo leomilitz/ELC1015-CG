@@ -16,6 +16,10 @@ void UIManager::uiMouseInputManagement(int button, int state, int wheel, int dir
       std::vector<Image*> images = imgEditor->getImages();
       std::vector<Image::Filter> filters = images[imgEditor->getCurrentImageIndex()]->getActiveFilters();
       btnManager->setButtonState(filters);
+      int brightness = images[imgEditor->getCurrentImageIndex()]->getBrightness();
+      int contrast   = images[imgEditor->getCurrentImageIndex()]->getContrast();
+      sldManager->setSliderState(brightness, contrast);
+      imgEditor->updateHistogram();
    }
 }
 
@@ -38,9 +42,7 @@ void UIManager::uiCreate() {
 
    btnManager = new ButtonManager();
    sldManager = new SliderManager();
-   imgEditor  = new ImageEditor();
-
-   // -------------------------- Botões -------------------------- //
+   imgEditor  = new ImageEditor(new ColorHistogram(btnOffsetX, btnOffsetY, 200, 200));
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - (btnHeight + btnOffsetY)),
                          new Vector2(btnOffsetX + btnWidth, screenHeight - btnOffsetY), "Open Image",
@@ -48,7 +50,7 @@ void UIManager::uiCreate() {
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - 2*(btnHeight + btnOffsetY)),
                          new Vector2(btnOffsetX + btnWidth, screenHeight - (btnHeight + 2*btnOffsetY)), "Delete Image",
-                         [this]() { imgEditor->deleteImage(); btnManager->resetButtonState(); });
+                         [this]() { imgEditor->deleteImage(); btnManager->resetButtonState(); sldManager->resetSliders(); });
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - 3*(btnHeight + btnOffsetY)),
                          new Vector2(btnOffsetX + smallBtnWidth, screenHeight - (2*btnHeight + 3*btnOffsetY)), "R",
@@ -103,6 +105,7 @@ void UIManager::uiCreate() {
 
    sldManager->addSlider(-255, 255, btnOffsetX, screenHeight - 9*(btnHeight + btnOffsetY), sldLength, "Contrast",
                          [this]() { imgEditor->setContrast(sldManager->getValue()); });
+
 }
 
 UIManager::UIManager(int screenWidth, int screenHeight) {

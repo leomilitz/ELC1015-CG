@@ -11,6 +11,8 @@
 
 #include <sstream>
 
+typedef struct { int r, g, b; } Pixel;
+
 class Image {
    public:
       enum State { clicked, hovered, holding, standard };
@@ -25,6 +27,11 @@ class Image {
       State getImgState(int mouseX, int mouseY, int mouseState);
       std::vector<Filter> getActiveFilters();
       int getIndex();
+      int getBrightness();
+      int getContrast();
+      int getWidth();
+      int getHeight();
+      std::vector<Pixel*>& getData();
 
       void setIndex(int idx);
       void setImgFront(bool isFront);
@@ -37,8 +44,6 @@ class Image {
       void rotateImg(int side);
 
    private:
-      typedef struct { int r, g, b; } Pixel;
-
       void imgLoad();
       void imgDrawSelectionOutline();
       void imgDrawHoveringOutline();

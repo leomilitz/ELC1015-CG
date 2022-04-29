@@ -104,7 +104,7 @@ void Image::imgRender() {
                   case green:     g = data[idx]->g;                           break;
                   case blue:      b = data[idx]->b;                           break;
                   case luminance: r = g = b = 0.299*r + 0.587*g + 0.113*b;    break;
-                  case inverted:  r = 1 - r; g = 1 - g; b = 1 - b;            break;
+                  case inverted:  r = 255 - r; g = 255 - g; b = 255 - b;      break;
                   case bgr:       r = r + b; b = r - b; r = r - b;            break;
                }
             }
@@ -184,7 +184,7 @@ void Image::resizeImage(double scale) {
    int h2 = h1*scale, w2 = w1*scale;
 
    if (h2 > bmp->getHeight()*2   || w2 > bmp->getWidth()*2 ||
-       h2 < bmp->getHeight()*0.5 || w2 < bmp->getWidth()*0.5) return;
+       h2 < bmp->getHeight()*0.25 || w2 < bmp->getWidth()*0.25) return;
 
    std::vector<Pixel*> temp(h2*w2);
    double xRatio = w1/(double) w2;
@@ -241,12 +241,18 @@ void Image::rotateImg(int side) {
    (side) ? flipVertical() : flipHorizontal();
 }
 
-void Image::setIndex(int idx) { index = idx; };
-void Image::setImgFront(bool isFront) { this->isFront = isFront; };
+void Image::setIndex(int idx) { index = idx; }
+void Image::setImgFront(bool isFront) { this->isFront = isFront; }
 void Image::setCurrent(bool isCurrent) { this->isCurrent = isCurrent; }
 void Image::setContrast(int value) { this->contrast = value; }
 void Image::setBrightness(int value) { this->brightness = value; }
-bool Image::isCurrentImg() { return isCurrent; };
-int Image::getIndex() { return index; };
-std::vector<Image::Filter> Image::getActiveFilters() { return activeFilters; };
+
+bool Image::isCurrentImg() { return isCurrent; }
+int  Image::getIndex() { return index; }
+int  Image::getBrightness() { return brightness; }
+int  Image::getContrast() { return contrast; }
+int  Image::getWidth() { return width; }
+int  Image::getHeight() { return height; }
+std::vector<Image::Filter> Image::getActiveFilters() { return activeFilters; }
+std::vector<Pixel*>& Image::getData() { return data; }
 

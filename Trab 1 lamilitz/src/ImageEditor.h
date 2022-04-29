@@ -4,10 +4,11 @@
 #include <vector>
 
 #include "Image.h"
+#include "ColorHistogram.h"
 
 class ImageEditor {
    public:
-      ImageEditor();
+      ImageEditor(ColorHistogram* histogram);
       void addImage(int x, int y);
       int checkClickedImagesPriority(float mouseX, float mouseY);
       void inputManagement(int mouseX, int mouseY, int mouseState);
@@ -25,9 +26,11 @@ class ImageEditor {
       int getCurrentImageIndex();
       void setColorFilter(Image::Filter filter);
       void setCurrentImage(int idx);
+      void updateHistogram();
    private:
       std::vector<Image*> images;
       int currentIndex;
+      ColorHistogram* histogram;
 
       bool checkUserInputError();
       bool imgChanged;

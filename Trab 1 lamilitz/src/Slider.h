@@ -11,8 +11,10 @@ class Slider {
       int getValue();
       void checkInput(int mouseX, int mouseY, int* mouseState);
       void draw();
+      void setValue(int value);
 
       bool canGetValue;
+      std::string caption;
    private:
       enum State { clicked, hovered, standard, holding };
       int value, startValue, endValue, length, charSize, btnLength, btnHeight, currentValue;
@@ -20,7 +22,6 @@ class Slider {
       Vector2* startPos, *btnPos1, *btnPos2, *offset;
       State btnState;
       bool isHolding;
-      std::string caption;
       std::function<void()> action;
       void sliderDrag(Vector2* posMouse);
       void updatePosition(int x);

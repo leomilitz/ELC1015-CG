@@ -20,11 +20,11 @@ Slider::Slider(int startValue, int endValue, int x, int y, int length, std::stri
 }
 
 void Slider::updatePosition(int x) {
-   currentValue = startValue + (currentPosition * (abs(startValue) + abs(endValue)));
    btnPos1->x = x;
    btnPos1->y = startPos->y - (btnHeight/2);
    btnPos2->x = btnPos1->x + btnLength;
    btnPos2->y = startPos->y + (btnHeight/2);
+   currentValue = startValue + (currentPosition * (abs(startValue) + abs(endValue)));
    currentPosition = (btnPos1->x - startPos->x)/length;
 }
 
@@ -67,6 +67,11 @@ int Slider::getValue() {
    return currentValue;
 }
 
+void Slider::setValue(int value) {
+   currentPosition = (float) (value - startValue)/(abs(startValue) + abs(endValue));
+   updatePosition((int) (currentPosition * (startPos->x + length + btnLength)));
+}
+
 void Slider::draw() {
    canGetValue = false;
 
@@ -74,8 +79,8 @@ void Slider::draw() {
    int txtSize = valueStr.length();
    // barra
    CV::color(1,1,1);
-   CV::text(startPos->x + 2, startPos->y + 20, caption.c_str());
-   CV::text(startPos->x + length - (txtSize*charSize), startPos->y + 20, valueStr.c_str());
+   CV::text(startPos->x + 2, startPos->y + 15, caption.c_str());
+   CV::text(startPos->x + length - (txtSize*charSize), startPos->y + 15, valueStr.c_str());
    CV::rectFill(startPos->x, startPos->y-1, startPos->x + length, startPos->y+1);
 
    // botão

@@ -1,8 +1,6 @@
 #include "ButtonManager.h"
 
-ButtonManager::ButtonManager() {
-
-}
+ButtonManager::ButtonManager() {}
 
 void ButtonManager::addButton(Vector2* p1, Vector2* p2, std::string caption, std::function<void()> action, Button::Color color, bool canToggle) {
    Button* btn = new Button(p1, p2, caption, action, color, canToggle);

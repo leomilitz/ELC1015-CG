@@ -8,7 +8,7 @@ ImageEditor::ImageEditor() {
 
 void ImageEditor::addImage(int x, int y) {
    if (images.size() < MAX_IMAGES) {
-      images.push_back(new Image(".\\Trab 1 lamilitz\\resources\\normal_1.bmp", currentIndex, x, y));
+      images.push_back(new Image(".\\Trab 1 lamilitz\\resources\\arizona.bmp", currentIndex, x, y));
       setCurrentImage(currentIndex);
       currentIndex++;
    } else {
@@ -108,6 +108,22 @@ void ImageEditor::setColorFilter(Image::Filter filter) {
 
    int idx = getCurrentImageIndex();
    images[idx]->setFilter(filter);
+}
+
+void ImageEditor::setBrightness(int value) {
+   if (checkUserInputError())
+      return;
+
+   int idx = getCurrentImageIndex();
+   images[idx]->setBrightness(value);
+}
+
+void ImageEditor::setContrast(int value) {
+   if (checkUserInputError())
+      return;
+
+   int idx = getCurrentImageIndex();
+   images[idx]->setContrast(value);
 }
 
 void ImageEditor::resizeImage(double scale) {

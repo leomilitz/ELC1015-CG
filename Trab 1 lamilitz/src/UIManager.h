@@ -11,6 +11,7 @@
 
 #include "ImageEditor.h"
 #include "ButtonManager.h"
+#include "SliderManager.h"
 
 class UIManager {
    public:
@@ -23,6 +24,7 @@ class UIManager {
    private:
       ImageEditor* imgEditor;
       ButtonManager* btnManager;
+      SliderManager* sldManager;
 
       int mouseButton, mouseWheel, mouseDirection, mouseX, mouseY;
       int mouseState, screenHeight, screenWidth;

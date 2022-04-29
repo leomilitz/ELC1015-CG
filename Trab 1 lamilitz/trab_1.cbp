@@ -58,6 +58,8 @@
 		<Unit filename="src/ImageEditor.h" />
 		<Unit filename="src/Slider.cpp" />
 		<Unit filename="src/Slider.h" />
+		<Unit filename="src/SliderManager.cpp" />
+		<Unit filename="src/SliderManager.h" />
 		<Unit filename="src/UIManager.cpp" />
 		<Unit filename="src/UIManager.h" />
 		<Unit filename="src/Vector2.h" />

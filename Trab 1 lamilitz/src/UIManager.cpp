@@ -10,6 +10,7 @@ void UIManager::uiMouseInputManagement(int button, int state, int wheel, int dir
 
    btnManager->inputManagement(x, y, &state);
    imgEditor->inputManagement(x, y, state);
+   sldManager->inputManagement(x, y, &state);
 
    if (imgEditor->listenToImageChange()) {
       std::vector<Image*> images = imgEditor->getImages();
@@ -26,15 +27,17 @@ void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
 void UIManager::uiRender() {
    btnManager->renderButtons(mouseX, mouseY, mouseState);
    imgEditor->renderImages();
+   sldManager->renderSliders();
 }
 
 void UIManager::uiCreate() {
-   float btnOffsetX = 0.01*screenWidth, btnOffsetY = 0.02*screenHeight,
+   int btnOffsetX = 0.01*screenWidth, btnOffsetY = 0.02*screenHeight,
          btnHeight = screenHeight*0.0417, btnWidth = screenWidth*0.2845,
          smallBtnWidth = (btnWidth - 3*btnOffsetX)/4,
-         medBtnWidth = (btnWidth - btnOffsetX)/2;
+         medBtnWidth = (btnWidth - btnOffsetX)/2, sldLength = btnWidth;
 
    btnManager = new ButtonManager();
+   sldManager = new SliderManager();
    imgEditor  = new ImageEditor();
 
    // -------------------------- Botões -------------------------- //
@@ -94,6 +97,12 @@ void UIManager::uiCreate() {
    btnManager->addButton(new Vector2(2*btnOffsetX + medBtnWidth, screenHeight - 7*(btnHeight + btnOffsetY)),
                          new Vector2(2*btnOffsetX + 2*medBtnWidth, screenHeight - (6*btnHeight + 7*btnOffsetY)), "Scale 50%",
                          [this]() { imgEditor->resizeImage(0.5); });
+
+   sldManager->addSlider(-255, 255, btnOffsetX, screenHeight - 8*(btnHeight + btnOffsetY), sldLength, "Brightness",
+                         [this]() { imgEditor->setBrightness(sldManager->getValue()); });
+
+   sldManager->addSlider(-255, 255, btnOffsetX, screenHeight - 9*(btnHeight + btnOffsetY), sldLength, "Contrast",
+                         [this]() { imgEditor->setContrast(sldManager->getValue()); });
 }
 
 UIManager::UIManager(int screenWidth, int screenHeight) {

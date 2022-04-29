@@ -9,8 +9,7 @@
 #include "Vector2.h"
 #include "Button.h"
 
-class ButtonManager
-{
+class ButtonManager {
    public:
       ButtonManager();
       void addButton(Vector2* p1, Vector2* p2, std::string caption, std::function<void()> action,

@@ -30,6 +30,8 @@ class Image {
       void setImgFront(bool isFront);
       void setCurrent(bool isCurrent);
       void setFilter(Filter filter);
+      void setBrightness(int value);
+      void setContrast(int value);
       void flipHorizontal();
       void flipVertical();
       void rotateImg(int side);
@@ -42,14 +44,14 @@ class Image {
       void imgDrawHoveringOutline();
       void imgDragAround(Vector2* posMouse);
       void updatePosition(int x, int y);
-      float truncateColor(float val);
+      int truncateColor(int val);
       void modelData();
 
       Bmp* bmp;
       std::string imgPath, imgName;
       std::vector<Pixel*> data;
-      int outline, index, width, height;
-      float scale, brightness, contrast;
+      int outline, index, width, height, contrast, brightness;
+      float scale;
       Vector2* pos1, *pos2, *offset;
       bool isHolding, isFront, isCurrent;
       State imgState;

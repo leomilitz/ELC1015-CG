@@ -18,6 +18,8 @@ class ImageEditor {
       void flipHorizontal();
       void flipVertical();
       void rotateImg(int side);
+      void setBrightness(int value);
+      void setContrast(int value);
 
       std::vector<Image*> getImages();
       int getCurrentImageIndex();

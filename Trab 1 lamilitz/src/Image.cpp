@@ -42,12 +42,13 @@ Image::Image(std::string path, int idx, int x, int y) {
    activeFilters.push_back(red);
    activeFilters.push_back(green);
    activeFilters.push_back(blue);
-   brightness = 0.0;
+   brightness = 0;
+   contrast = 0;
 }
 
-float Image::truncateColor(float val) {
-   if (val < 0) return 0.0;
-   if (val > 1) return 1.0;
+int Image::truncateColor(int val) {
+   if (val < 0) return 0;
+   if (val > 255) return 255;
    return val;
 }
 
@@ -99,20 +100,27 @@ void Image::imgRender() {
             float r = 0, g = 0, b = 0;
             for (Filter f : activeFilters) {
                switch (f) {
-                  case red:       r = data[idx]->r / 255.0;                   break;
-                  case green:     g = data[idx]->g / 255.0;                   break;
-                  case blue:      b = data[idx]->b / 255.0;                   break;
+                  case red:       r = data[idx]->r;                           break;
+                  case green:     g = data[idx]->g;                           break;
+                  case blue:      b = data[idx]->b;                           break;
                   case luminance: r = g = b = 0.299*r + 0.587*g + 0.113*b;    break;
                   case inverted:  r = 1 - r; g = 1 - g; b = 1 - b;            break;
                   case bgr:       r = r + b; b = r - b; r = r - b;            break;
                }
             }
 
+            // Aplica Brilho
             r = truncateColor(r + brightness);
             g = truncateColor(g + brightness);
             b = truncateColor(b + brightness);
 
-            CV::color(r,g,b);
+            // Aplica Contraste
+            float factor = (float) (259*(contrast + 255))/(255*(259 - contrast));
+            r = truncateColor(factor*(r - 128) + 128);
+            g = truncateColor(factor*(g - 128) + 128);
+            b = truncateColor(factor*(b - 128) + 128);
+
+            CV::color(r/255.0, g/255.0, b/255.0);
             CV::point(pos1->x + j, pos1->y + i);
          }
       }
@@ -236,6 +244,8 @@ void Image::rotateImg(int side) {
 void Image::setIndex(int idx) { index = idx; };
 void Image::setImgFront(bool isFront) { this->isFront = isFront; };
 void Image::setCurrent(bool isCurrent) { this->isCurrent = isCurrent; }
+void Image::setContrast(int value) { this->contrast = value; }
+void Image::setBrightness(int value) { this->brightness = value; }
 bool Image::isCurrentImg() { return isCurrent; };
 int Image::getIndex() { return index; };
 std::vector<Image::Filter> Image::getActiveFilters() { return activeFilters; };

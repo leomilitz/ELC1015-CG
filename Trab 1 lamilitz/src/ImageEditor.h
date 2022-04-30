@@ -22,7 +22,7 @@ class ImageEditor {
       void setBrightness(int value);
       void setContrast(int value);
 
-      std::vector<Image*> getImages();
+      std::vector<Image*>& getImages();
       int getCurrentImageIndex();
       void setColorFilter(Image::Filter filter);
       void setCurrentImage(int idx);

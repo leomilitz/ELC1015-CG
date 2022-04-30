@@ -19,7 +19,6 @@ void UIManager::uiMouseInputManagement(int button, int state, int wheel, int dir
       int brightness = images[imgEditor->getCurrentImageIndex()]->getBrightness();
       int contrast   = images[imgEditor->getCurrentImageIndex()]->getContrast();
       sldManager->setSliderState(brightness, contrast);
-      imgEditor->updateHistogram();
    }
 }
 
@@ -42,7 +41,7 @@ void UIManager::uiCreate() {
 
    btnManager = new ButtonManager();
    sldManager = new SliderManager();
-   imgEditor  = new ImageEditor(new ColorHistogram(btnOffsetX, btnOffsetY, 200, 200));
+   imgEditor  = new ImageEditor(new ColorHistogram(btnOffsetX, btnOffsetY, screenWidth*0.2834, screenHeight*0.3666));
 
    btnManager->addButton(new Vector2(btnOffsetX, screenHeight - (btnHeight + btnOffsetY)),
                          new Vector2(btnOffsetX + btnWidth, screenHeight - btnOffsetY), "Open Image",

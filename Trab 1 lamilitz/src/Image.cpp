@@ -42,6 +42,10 @@ Image::Image(std::string path, int idx, int x, int y) {
    activeFilters.push_back(red);
    activeFilters.push_back(green);
    activeFilters.push_back(blue);
+   redValues.resize(256);
+   greenValues.resize(256);
+   blueValues.resize(256);
+   luminanceValues.resize(256);
    brightness = 0;
    contrast = 0;
 }
@@ -85,27 +89,29 @@ Image::State Image::getImgState(int mouseX, int mouseY, int mouseState) {
 
 void Image::imgRender() {
    if (bmp != NULL && data.size() > 0) {
-      // outline
-      if (isCurrent && isFront) {
+      if (isCurrent && isFront)
          imgDrawSelectionOutline();
-      }
 
-      if (!isCurrent && imgState == hovered) {
+      if (!isCurrent && imgState == hovered)
          imgDrawHoveringOutline();
-      }
+
+      fill(redValues.begin(), redValues.end(), 0);
+      fill(greenValues.begin(), greenValues.end(), 0);
+      fill(blueValues.begin(), blueValues.end(), 0);
+      fill(luminanceValues.begin(), luminanceValues.end(), 0);
 
       for (int i = 0; i < height; i ++) {
          for (int j = 0; j < width; j++) {
-            int idx = i*width + j;
-            float r = 0, g = 0, b = 0;
+            int idx = (i*width) + j;
+            float r = 0, g = 0, b = 0, l = 0;
             for (Filter f : activeFilters) {
                switch (f) {
-                  case red:       r = data[idx]->r;                           break;
-                  case green:     g = data[idx]->g;                           break;
-                  case blue:      b = data[idx]->b;                           break;
-                  case luminance: r = g = b = 0.299*r + 0.587*g + 0.113*b;    break;
-                  case inverted:  r = 255 - r; g = 255 - g; b = 255 - b;      break;
-                  case bgr:       r = r + b; b = r - b; r = r - b;            break;
+                  case red:       r = data[idx]->r;                              break;
+                  case green:     g = data[idx]->g;                              break;
+                  case blue:      b = data[idx]->b;                              break;
+                  case inverted:  r = 255 - r; g = 255 - g; b = 255 - b;         break;
+                  case bgr:       r = r + b; b = r - b; r = r - b;               break;
+                  case luminance: r = g = b = l = 0.299*r + 0.587*g + 0.113*b;   break;
                }
             }
 
@@ -119,6 +125,11 @@ void Image::imgRender() {
             r = truncateColor(factor*(r - 128) + 128);
             g = truncateColor(factor*(g - 128) + 128);
             b = truncateColor(factor*(b - 128) + 128);
+
+            redValues[r]++;
+            greenValues[g]++;
+            blueValues[b]++;
+            luminanceValues[l]++;
 
             CV::color(r/255.0, g/255.0, b/255.0);
             CV::point(pos1->x + j, pos1->y + i);
@@ -164,18 +175,27 @@ void Image::imgDrawHoveringOutline() {
 
 void Image::setFilter(Filter filter) {
    int idx = -1;
-   for (Filter f : activeFilters) {
+   for (Filter f : activeFilters)
       if (f == filter)
          idx = std::distance(activeFilters.begin(), std::find(activeFilters.begin(), activeFilters.end(), filter));
-   }
 
    if (idx == -1) {
-      if (filter == red || filter == green || filter == blue)
+      if (filter == red || filter == green || filter == blue) {
          activeFilters.insert(activeFilters.begin(), filter);
-      else
-         activeFilters.push_back(filter);
-   }
-   else activeFilters.erase(activeFilters.begin() + idx);
+      } else {
+         if (filter == luminance) {
+            activeFilters.push_back(filter);
+         } else {
+            int lastIdx = activeFilters.size()-1;
+            if (activeFilters[lastIdx] == luminance) {
+               activeFilters.insert(activeFilters.begin() + lastIdx, filter);
+            } else {
+               activeFilters.push_back(filter);
+            }
+         }
+      }
+   } else
+      activeFilters.erase(activeFilters.begin() + idx);
 }
 
 // Algoritmo Nearest Neighbor
@@ -206,6 +226,7 @@ void Image::resizeImage(double scale) {
    int offsetY = (h1-h2)/2;
    updatePosition(pos1->x + offsetX, pos1->y + offsetY);
    data = temp;
+
 }
 
 void Image::flipHorizontal() {
@@ -254,5 +275,11 @@ int  Image::getContrast() { return contrast; }
 int  Image::getWidth() { return width; }
 int  Image::getHeight() { return height; }
 std::vector<Image::Filter> Image::getActiveFilters() { return activeFilters; }
-std::vector<Pixel*>& Image::getData() { return data; }
+std::vector<int> Image::getRGBValues(char color) {
+   if (color == 'r') return redValues;
+   if (color == 'g') return greenValues;
+   if (color == 'b') return blueValues;
+
+   return luminanceValues;
+}
 

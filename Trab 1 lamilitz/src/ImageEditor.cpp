@@ -9,7 +9,7 @@ ImageEditor::ImageEditor(ColorHistogram* histogram) {
 
 void ImageEditor::addImage(int x, int y) {
    if (images.size() < MAX_IMAGES) {
-      images.push_back(new Image(".\\Trab 1 lamilitz\\resources\\arizona.bmp", currentIndex, x, y));
+      images.push_back(new Image(".\\Trab 1 lamilitz\\resources\\demon.bmp", currentIndex, x, y));
       setCurrentImage(currentIndex);
       currentIndex++;
    } else {
@@ -53,12 +53,15 @@ void ImageEditor::setCurrentImage(int idx) {
 
 void ImageEditor::renderImages() {
    histogram->draw();
+
    if (images.size() == 0) return;
 
    for (Image* image : images) {
       if (image != NULL)
          image->imgRender();
    }
+
+   updateHistogram();
 }
 
 void ImageEditor::inputManagement(int mouseX, int mouseY, int mouseState) {
@@ -97,6 +100,7 @@ void ImageEditor::deleteImage() {
       if (img->isCurrentImg()) {
          images.erase(images.begin()+img->getIndex());
          currentIndex--;
+         histogram->clearHistogram();
       }
    }
 }
@@ -104,19 +108,16 @@ void ImageEditor::deleteImage() {
 void ImageEditor::setColorFilter(Image::Filter filter) {
    if (checkUserInputError()) return;
    images[getCurrentImageIndex()]->setFilter(filter);
-   updateHistogram();
 }
 
 void ImageEditor::setBrightness(int value) {
    if (checkUserInputError()) return;
    images[getCurrentImageIndex()]->setBrightness(value);
-   updateHistogram();
 }
 
 void ImageEditor::setContrast(int value) {
    if (checkUserInputError()) return;
    images[getCurrentImageIndex()]->setContrast(value);
-   updateHistogram();
 }
 
 void ImageEditor::resizeImage(double scale) {
@@ -144,37 +145,34 @@ void ImageEditor::updateHistogram() {
 
    if (idx == -1) return;
 
-   int width = images[idx]->getWidth();
-   int height = images[idx]->getHeight();
-   histogram->setSizeX(width);
-   histogram->setSizeY(height);
-
-   std::vector<Pixel*> data = images[idx]->getData();
-   std::vector<int> valuesR(width);
-   std::vector<int> valuesG(width);
-   std::vector<int> valuesB(width);
-
-   for (int i = 0; i < height; i++) {
-      int rCount = 0, gCount = 0, bCount = 0;
-
-      for (int j = 0; j < width; j++) {
-         int r = data[j*width + i]->r;
-         int g = data[j*width + i]->g;
-         int b = data[j*width + i]->b;
-
-         if (r > (r + g + b)/3) rCount++;
-         if (g > (r + g + b)/3) gCount++;
-         if (b > (r + g + b)/3) bCount++;
-      }
-
-      valuesR[i] = rCount;
-      valuesG[i] = gCount;
-      valuesB[i] = bCount;
+   std::vector<Image::Filter> filters = images[idx]->getActiveFilters();
+   bool redOn = false, greenOn = false, blueOn = false, luminanceOn = false;
+   for (Image::Filter f : filters) {
+      if (f == Image::Filter::red)        redOn = true;
+      if (f == Image::Filter::green)      greenOn = true;
+      if (f == Image::Filter::blue)       blueOn = true;
+      if (f == Image::Filter::luminance)  luminanceOn = true;
    }
 
+   std::vector<int> valuesR = images[idx]->getRGBValues('r');
+   std::vector<int> valuesG = images[idx]->getRGBValues('g');
+   std::vector<int> valuesB = images[idx]->getRGBValues('b');
+   std::vector<int> valuesL = images[idx]->getRGBValues('l');
+
+   int highestValue = 0;
+   for (int i = 0; i <= 255; i++) {
+      if (redOn && valuesR[i] > highestValue)        highestValue = valuesR[i];
+      if (greenOn && valuesG[i] > highestValue)      highestValue = valuesG[i];
+      if (blueOn && valuesB[i] > highestValue)       highestValue = valuesB[i];
+      if (luminanceOn && valuesL[i] > highestValue)  highestValue = valuesL[i];
+   }
+
+   histogram->setSizeYScale(highestValue);
+   histogram->setActiveChannels(redOn, greenOn, blueOn, luminanceOn);
    histogram->setColorValues(valuesR, 'r');
    histogram->setColorValues(valuesG, 'g');
    histogram->setColorValues(valuesB, 'b');
+   histogram->setColorValues(valuesL, 'l');
 }
 
 int ImageEditor::getCurrentImageIndex() {
@@ -188,4 +186,4 @@ int ImageEditor::getCurrentImageIndex() {
 }
 
 bool ImageEditor::listenToImageChange() { return imgChanged; }
-std::vector<Image*> ImageEditor::getImages() { return images; };
+std::vector<Image*>& ImageEditor::getImages() { return images; };

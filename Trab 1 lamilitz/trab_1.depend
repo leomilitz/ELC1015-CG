@@ -130,12 +130,12 @@
 1650924795 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\vector2.h
 	"math.h"
 
-1651259876 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.h
+1651347664 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.h
 	<vector>
 	"Image.h"
 	"ColorHistogram.h"
 
-1651263249 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.h
+1651353643 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.h
 	<string>
 	<vector>
 	<algorithm>
@@ -148,7 +148,7 @@
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1651263215 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.cpp
+1651355189 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.cpp
 	"Image.h"
 
 1650927956 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\main.cpp
@@ -163,10 +163,10 @@
 	"ButtonManager.h"
 	"SliderManager.h"
 
-1651259888 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.cpp
+1651357102 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.cpp
 	"UIManager.h"
 
-1651262613 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.cpp
+1651357852 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.cpp
 	"ImageEditor.h"
 
 1651187638 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\buttonmanager.cpp
@@ -199,10 +199,11 @@
 	"Slider.h"
 	<vector>
 
-1651258345 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\colorhistogram.h
+1651355604 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\colorhistogram.h
 	<vector>
 	"gl_canvas2d.h"
+	"image.h"
 
-1651261573 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\colorhistogram.cpp
+1651357728 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\colorhistogram.cpp
 	"ColorHistogram.h"
 

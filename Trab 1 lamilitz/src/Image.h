@@ -31,7 +31,7 @@ class Image {
       int getContrast();
       int getWidth();
       int getHeight();
-      std::vector<Pixel*>& getData();
+      std::vector<int> getRGBValues(char color);
 
       void setIndex(int idx);
       void setImgFront(bool isFront);
@@ -55,6 +55,7 @@ class Image {
       Bmp* bmp;
       std::string imgPath, imgName;
       std::vector<Pixel*> data;
+      std::vector<int> redValues, greenValues, blueValues, luminanceValues;
       int outline, index, width, height, contrast, brightness;
       float scale;
       Vector2* pos1, *pos2, *offset;

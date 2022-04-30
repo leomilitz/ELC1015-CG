@@ -101,7 +101,7 @@
 	"gl_canvas2d.h"
 	"ImageEditor.h"
 
-1603974868 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\gl_canvas2d.h
+1651361441 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -144,26 +144,26 @@
 	"gl_canvas2d.h"
 	<sstream>
 
-1650835036 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\gl_canvas2d.cpp
+1651361569 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1651355189 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.cpp
+1651361805 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\image.cpp
 	"Image.h"
 
-1650927956 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\main.cpp
+1651361697 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	"gl_canvas2d.h"
 	"UIManager.h"
 
-1651188072 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.h
+1651360828 d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.h
 	<vector>
 	"ImageEditor.h"
 	"ButtonManager.h"
 	"SliderManager.h"
 
-1651357102 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.cpp
+1651361220 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\uimanager.cpp
 	"UIManager.h"
 
 1651357852 source:d:\ufsm\cg\trabs leo\cg-leomilitz\trab 1 lamilitz\src\imageeditor.cpp

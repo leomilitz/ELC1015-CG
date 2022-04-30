@@ -27,10 +27,23 @@ void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
    this->keyUp = keyUp;
 }
 
+void UIManager::drawBackground() {
+   int offsetX = 0.01*screenWidth, offsetY = 0.02* screenHeight,
+   thickness = 5;
+
+   collisionX = screenWidth*0.2845 + thickness + offsetX*3;
+   collisionY = screenHeight - screenHeight*0.0417 - offsetY - thickness;
+
+   CV::color(1,1,1);
+   CV::rectFill(collisionX - thickness, 0, collisionX, screenHeight);
+   CV::rectFill(collisionX, collisionY + thickness, screenWidth, collisionY);
+}
+
 void UIManager::uiRender() {
    btnManager->renderButtons(mouseX, mouseY, mouseState);
    imgEditor->renderImages();
    sldManager->renderSliders();
+   drawBackground();
 }
 
 void UIManager::uiCreate() {

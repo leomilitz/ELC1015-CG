@@ -1,18 +1,5 @@
 #include "Image.h"
 
-void Image::modelData() {
-   uchar* img = bmp->getImage();
-   data.resize(bmp->getHeight() * bmp->getWidth());
-   for (int i = 0; i < bmp->getHeight(); i++) {
-      for (int j = 0; j < bmp->getWidth()*3; j+=3) {
-         int idx = (i*width*3) + j;
-         Pixel* px = new Pixel();
-         px->r = img[idx+2]; px->g = img[idx+1]; px->b = img[idx];
-         data[(i*bmp->getWidth()) + j/3] = px;
-      }
-   }
-}
-
 std::string parseFileName(std::string path) {
    std::vector<std::string> tokens;
    std::string token;
@@ -48,6 +35,19 @@ Image::Image(std::string path, int idx, int x, int y) {
    luminanceValues.resize(256);
    brightness = 0;
    contrast = 0;
+}
+
+void Image::modelData() {
+   uchar* img = bmp->getImage();
+   data.resize(bmp->getHeight() * bmp->getWidth());
+   for (int i = 0; i < bmp->getHeight(); i++) {
+      for (int j = 0; j < bmp->getWidth()*3; j+=3) {
+         int idx = (i*width*3) + j;
+         Pixel* px = new Pixel();
+         px->r = img[idx+2]; px->g = img[idx+1]; px->b = img[idx];
+         data[(i*bmp->getWidth()) + j/3] = px;
+      }
+   }
 }
 
 int Image::truncateColor(int val) {
@@ -198,7 +198,6 @@ void Image::setFilter(Filter filter) {
       activeFilters.erase(activeFilters.begin() + idx);
 }
 
-// Algoritmo Nearest Neighbor
 void Image::resizeImage(double scale) {
    int h1 = height, w1 = width;
    int h2 = h1*scale, w2 = w1*scale;
@@ -275,6 +274,7 @@ int  Image::getContrast() { return contrast; }
 int  Image::getWidth() { return width; }
 int  Image::getHeight() { return height; }
 std::vector<Image::Filter> Image::getActiveFilters() { return activeFilters; }
+
 std::vector<int> Image::getRGBValues(char color) {
    if (color == 'r') return redValues;
    if (color == 'g') return greenValues;

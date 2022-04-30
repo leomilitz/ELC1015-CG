@@ -4,8 +4,8 @@
 #include "gl_canvas2d.h"
 #include "UIManager.h"
 
-//variavel global para selecao do que sera exibido na canvas.
-int screenWidth = 900, screenHeight = 600; //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
+#define SCREEN_WIDTH 900
+#define SCREEN_HEIGHT 600
 
 UIManager *uiManager = NULL;
 
@@ -28,11 +28,10 @@ void keyboardUp(int key) {
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y) {
    uiManager->uiMouseInputManagement(button, state, wheel, direction, x, y);
-   //printf("\nMouse (X: %d, Y: %d) state: %d", x, y, state);
 }
 
 int main(void) {
-   uiManager = new UIManager(screenWidth, screenHeight);
-   CV::init(&screenWidth, &screenHeight, "LM - Image Editor");
+   uiManager = new UIManager(SCREEN_WIDTH, SCREEN_HEIGHT);
+   CV::init(SCREEN_WIDTH, SCREEN_HEIGHT, "LM - Image Viewer");
    CV::run();
 }

@@ -297,20 +297,19 @@ void display (void)
 ////////////////////////////////////////////////////////////////////////////////////////
 //  inicializa o OpenGL
 ////////////////////////////////////////////////////////////////////////////////////////
-void CV::init(int *w, int *h, const char *title)
+void CV::init(int w, int h, const char *title)
 {
    int argc = 0;
    glutInit(&argc, NULL);
 
-   scrHeight = h;
-   scrWidth = w;
+   scrHeight = &h;
+   scrWidth  = &w;
 
    //habilita MSAA
    glutSetOption(GLUT_MULTISAMPLE, 8);
    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
-   //glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
 
-   glutInitWindowSize (*w, *h);
+   glutInitWindowSize (w, h);
    glutInitWindowPosition (50, 50);
    glutCreateWindow (title);
 
@@ -332,8 +331,6 @@ void CV::init(int *w, int *h, const char *title)
    // Enable nas funções de transparência
    glEnable(GL_BLEND);
    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-   printf("GL Version: %s", glGetString(GL_VERSION));
 }
 
 void CV::run()

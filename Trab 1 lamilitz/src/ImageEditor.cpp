@@ -9,7 +9,7 @@ ImageEditor::ImageEditor(ColorHistogram* histogram) {
 
 void ImageEditor::addImage(int x, int y) {
    if (images.size() < MAX_IMAGES) {
-      images.push_back(new Image(".\\Trab 1 lamilitz\\resources\\demon.bmp", currentIndex, x, y));
+      images.push_back(new Image(".\\Trab 1 lamilitz\\resources\\chess.bmp", currentIndex, x, y));
       setCurrentImage(currentIndex);
       currentIndex++;
    } else {

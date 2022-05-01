@@ -2,7 +2,6 @@
 
 SliderManager::SliderManager() {}
 
-//----------------- Funções nativas do slider -----------------//
 void SliderManager::addSlider(int startValue, int endValue, int x, int y, int length, std::string caption, std::function<void()> action) {
    sliders.push_back(new Slider(startValue, endValue, x, y, length, caption, action));
 }
@@ -25,10 +24,10 @@ int SliderManager::getValue() {
    for (Slider* slider : sliders)
       if (slider->canGetValue)
          return slider->getValue();
+
+   return 0;
 }
 
-
-//----------- Funções personalizadas do slider -------------//
 void SliderManager::setSliderState(int brightness, int contrast) {
    for (Slider* slider : sliders) {
       if (slider->caption == "Brightness")
@@ -40,7 +39,5 @@ void SliderManager::setSliderState(int brightness, int contrast) {
 }
 
 void SliderManager::resetSliders() {
-   for (Slider* slider: sliders) {
-      slider->setValue(0);
-   }
+   for (Slider* slider: sliders) slider->setValue(0);
 }

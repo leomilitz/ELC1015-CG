@@ -5,7 +5,7 @@ ColorHistogram::ColorHistogram(int x, int y, int length, int height) {
    this->y = y;
    this->length = length;
    this->height = height;
-   this->sizeYScale = ((float) height/(y + height));
+   this->sizeYScale = (float) height;
    this->sizeXScale = ((float) length/255);
    plotRed = plotGreen = plotBlue = true;
    plotLuminance = false;
@@ -49,9 +49,9 @@ void ColorHistogram::setActiveChannels(bool r, bool g, bool b, bool l) {
 
 void ColorHistogram::setColorValues(std::vector<int> &values, char color) {
    switch (color) {
-      case 'r':   redValues   = values;      break;
-      case 'g':   greenValues = values;      break;
-      case 'b':   blueValues  = values;      break;
+      case 'r':   redValues       = values;  break;
+      case 'g':   greenValues     = values;  break;
+      case 'b':   blueValues      = values;  break;
       case 'l':   luminanceValues = values;  break;
    }
 }

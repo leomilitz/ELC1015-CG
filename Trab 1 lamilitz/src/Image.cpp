@@ -1,6 +1,6 @@
 #include "Image.h"
 
-std::string parseFileName(std::string path) {
+std::string parseFileName(std::string &path) {
    std::vector<std::string> tokens;
    std::string token;
    std::stringstream ss(path);
@@ -10,8 +10,7 @@ std::string parseFileName(std::string path) {
    return tokens[tokens.size()-1];
 }
 
-Image::Image(std::string path, int idx, int x, int y) {
-   imgPath = path;
+Image::Image(std::string& path, int idx, int x, int y) {
    imgName = parseFileName(path);
    bmp = new Bmp(path.c_str());
    width = bmp->getWidth();
@@ -273,6 +272,7 @@ int  Image::getBrightness() { return brightness; }
 int  Image::getContrast() { return contrast; }
 int  Image::getWidth() { return width; }
 int  Image::getHeight() { return height; }
+std::string Image::getImgName() { return imgName; }
 std::vector<Image::Filter> Image::getActiveFilters() { return activeFilters; }
 
 std::vector<int> Image::getRGBValues(char color) {

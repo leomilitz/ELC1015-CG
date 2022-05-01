@@ -24,13 +24,15 @@ class UIManager {
    private:
       void drawBackground();
 
-      ImageEditor* imgEditor;
+      ImageEditor*   imgEditor;
       ButtonManager* btnManager;
       SliderManager* sldManager;
-      int mouseButton, mouseWheel, mouseDirection, mouseX, mouseY,
-          mouseState, screenHeight, screenWidth, key;
+
+      int mouseX, mouseY, mouseState;
+      int screenWidth, screenHeight, collisionX, collisionY;
+      int btnSmallWidth, btnMedWidth, btnBigWidth, btnSwitch, btnSpacingX,
+          btnSpacingY, btnHeight, bgLineThickness;
       bool keyUp;
-      int collisionX, collisionY;
 };
 
 #endif // UIMANAGER_H

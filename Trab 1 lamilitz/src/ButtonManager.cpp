@@ -48,8 +48,5 @@ void ButtonManager::setButtonState(std::vector<Image::Filter> filters) {
 
 void ButtonManager::resetButtonState() {
    if (buttons.size() == 0) return;
-
-   for (Button* btn : buttons) {
-      btn->setToggled(false);
-   }
+   for (Button* btn : buttons) btn->setToggled(false);
 }

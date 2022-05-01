@@ -14,7 +14,8 @@ class SliderManager
       void inputManagement(int mouseX, int mouseY, int* mouseState);
       void setSliderState(int brightness, int contrast);
       void resetSliders();
-      int getValue();
+      int  getValue();
+
    private:
       std::vector<Slider*> sliders;
 };

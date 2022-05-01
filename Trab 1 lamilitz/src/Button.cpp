@@ -1,9 +1,9 @@
 #include "Button.h"
 
-Button::Button(Vector2 *v1, Vector2 *v2, std::string text, std::function<void()> action, Color color, bool canToggle) {
+Button::Button(Vector2 *v1, Vector2 *v2, std::string &caption, std::function<void()> &action, Color color, bool canToggle) {
    this->v1 = v1;
    this->v2 = v2;
-   this->text = text;
+   this->caption = caption;
    this->edge = new Vector2(2, 2);
    this->action = std::bind(action);
    this->charHalfSize = 5;
@@ -95,8 +95,8 @@ void Button::draw(State state) {
       case toggled:     drawClick();      break;
    }
 
-   int textSize = this->text.length();
-   const char* text = this->text.c_str();
+   int captionSize = this->caption.length();
+   const char* caption = this->caption.c_str();
    CV::rectFill(*v1, *v2);
 
    if (btnColor == light)
@@ -104,12 +104,11 @@ void Button::draw(State state) {
    else
       CV::color(1,1,1);
 
-   CV::text((v1->x + v2->x)/2 - textSize*charHalfSize, ((v1->y + v2->y)/2) - charHalfSize + 1, text);
+   CV::text((v1->x + v2->x)/2 - captionSize*charHalfSize, ((v1->y + v2->y)/2) - charHalfSize + 1, caption);
 }
 
-std::string Button::getCaption() { return text; };
+std::string Button::getCaption() { return caption; }
 
 void Button::setToggled(bool isToggled) {
-   if (canToggle)
-      this->isToggled = isToggled;
-};
+   if (canToggle) this->isToggled = isToggled;
+}

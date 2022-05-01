@@ -6,31 +6,35 @@
 #include "Image.h"
 #include "ColorHistogram.h"
 
+#define MAX_IMAGES 4
+
 class ImageEditor {
    public:
-      ImageEditor(ColorHistogram* histogram);
-      void addImage(int x, int y);
-      int checkClickedImagesPriority(float mouseX, float mouseY);
+      ImageEditor(ColorHistogram *histogram);
+      void addImage(int x, int y, std::string path);
       void inputManagement(int mouseX, int mouseY, int mouseState);
+      int  checkClickedImagesPriority(float mouseX, float mouseY);
       void renderImages();
       void deleteImage();
       void resizeImage(double scale);
-      bool listenToImageChange();
       void flipHorizontal();
       void flipVertical();
       void rotateImg(int side);
+      void updateHistogram();
+      bool listenToImageChange();
+
+      std::vector<Image*> &getImages();
+      std::string getImageName();
+      int getCurrentImageIndex();
+
       void setBrightness(int value);
       void setContrast(int value);
-
-      std::vector<Image*>& getImages();
-      int getCurrentImageIndex();
       void setColorFilter(Image::Filter filter);
       void setCurrentImage(int idx);
-      void updateHistogram();
    private:
       std::vector<Image*> images;
       int currentIndex;
-      ColorHistogram* histogram;
+      ColorHistogram *histogram;
 
       bool checkUserInputError();
       bool imgChanged;

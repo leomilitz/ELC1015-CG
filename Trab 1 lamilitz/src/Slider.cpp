@@ -1,6 +1,6 @@
 #include "Slider.h"
 
-Slider::Slider(int startValue, int endValue, int x, int y, int length, std::string caption, std::function<void()> action) {
+Slider::Slider(int startValue, int endValue, int x, int y, int length, std::string &caption, std::function<void()> &action) {
    this->startValue = startValue;
    this->endValue = endValue;
    this->length = length;
@@ -36,9 +36,7 @@ void Slider::sliderDrag(Vector2* posMouse) {
          updatePosition(newPos.x);
          canGetValue = true;
 
-         if (action) {
-            action();
-         }
+         if (action) action();
       }
    }
 }
@@ -63,30 +61,27 @@ void Slider::checkInput(int mouseX, int mouseY, int* mouseState) {
    sliderDrag(posMouse);
 }
 
-int Slider::getValue() {
-   return currentValue;
-}
-
-void Slider::setValue(int value) {
-   currentPosition = (float) (value - startValue)/(abs(startValue) + abs(endValue));
-   updatePosition((int) (currentPosition * (startPos->x + length + btnLength)));
-}
-
 void Slider::draw() {
    canGetValue = false;
 
    std::string valueStr = std::to_string((int) (currentPosition*100)) + "%";
    int txtSize = valueStr.length();
-   // barra
+
    CV::color(1,1,1);
    CV::text(startPos->x + 2, startPos->y + 15, caption.c_str());
    CV::text(startPos->x + length - (txtSize*charSize), startPos->y + 15, valueStr.c_str());
    CV::rectFill(startPos->x, startPos->y-1, startPos->x + length, startPos->y+1);
 
-   // botão
    updatePosition(btnPos1->x);
    CV::color(0.5,0.5,0.5);
    CV::rectFill(*btnPos1, *btnPos2);
    CV::color(0.7,0.7,0.7);
    CV::rectFill(btnPos1->x + 2, startPos->y - (btnHeight/2) + 2, btnPos1->x + btnLength - 2, startPos->y + (btnHeight/2) - 2);
+}
+
+int Slider::getValue() { return currentValue; }
+
+void Slider::setValue(int value) {
+   currentPosition = (float) (value - startValue)/(abs(startValue) + abs(endValue));
+   updatePosition((int) (currentPosition * (startPos->x + length + btnLength)));
 }

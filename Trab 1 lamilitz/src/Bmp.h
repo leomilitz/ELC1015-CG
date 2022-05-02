@@ -39,7 +39,6 @@ typedef struct {
    unsigned int impcolours;                  /* Important colours             */
 } INFOHEADER;
 
-
 class Bmp {
    private:
       int width, height, imagesize, bytesPerLine, bits;

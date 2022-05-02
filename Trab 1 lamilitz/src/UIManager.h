@@ -1,7 +1,15 @@
 /*
-   Classe para gerenciar a User Interface do programa. Seu functionamento básico envolve
-   guardar todos objetos que abrangem a UI e loopar por eles, fazendo verificação
-   de colisão e executando suas respectivas ações quando os objetos forem clicados.
+   User Interface Manager
+
+   Essa classe recebe todas as funções de render e input da main, e integra as
+   outras classes de gerenciamento de interface de usuário. Nessa classe são
+   adicionados os botões, sliders, background, e faz os seus tamanhos padrão
+   escalarem com o tamanho da tela.
+   ---------------------------------------------------------------------------
+   - imageChangeControl: Esse método recebe do image editor a flag que indica se
+   houve alguma mudança de imagem pelo usuário ou não. Se a mudança existir,
+   será buscado o estado da nova imagem selecionada, e em seguida aplica essas
+   mudanças no visual dos botões da UI.
 */
 
 #ifndef UIMANAGER_H
@@ -23,6 +31,7 @@ class UIManager {
 
    private:
       void drawBackground();
+      void imageChangeControl();
 
       ImageEditor*   imgEditor;
       ButtonManager* btnManager;

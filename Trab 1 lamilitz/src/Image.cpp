@@ -125,6 +125,7 @@ void Image::imgRender() {
             g = truncateColor(factor*(g - 128) + 128);
             b = truncateColor(factor*(b - 128) + 128);
 
+            // Guarda recorrência das cores para representar no histograma
             redValues[r]++;
             greenValues[g]++;
             blueValues[b]++;
@@ -260,22 +261,22 @@ void Image::rotateImg(int side) {
    (side) ? flipVertical() : flipHorizontal();
 }
 
-void Image::setIndex(int idx) { index = idx; }
-void Image::setImgFront(bool isFront) { this->isFront = isFront; }
-void Image::setCurrent(bool isCurrent) { this->isCurrent = isCurrent; }
-void Image::setContrast(int value) { this->contrast = value; }
-void Image::setBrightness(int value) { this->brightness = value; }
+void Image::setIndex(int idx)          { this->index      = idx;       }
+void Image::setImgFront(bool isFront)  { this->isFront    = isFront;   }
+void Image::setCurrent(bool isCurrent) { this->isCurrent  = isCurrent; }
+void Image::setContrast(int value)     { this->contrast   = value;     }
+void Image::setBrightness(int value)   { this->brightness = value;     }
 
-bool Image::isCurrentImg() { return isCurrent; }
-int  Image::getIndex() { return index; }
-int  Image::getBrightness() { return brightness; }
-int  Image::getContrast() { return contrast; }
-int  Image::getWidth() { return width; }
-int  Image::getHeight() { return height; }
-std::string Image::getImgName() { return imgName; }
-std::vector<Image::Filter> Image::getActiveFilters() { return activeFilters; }
+bool Image::isCurrentImg()       { return isCurrent;  }
+int  Image::getIndex()           { return index;      }
+int  Image::getBrightness()      { return brightness; }
+int  Image::getContrast()        { return contrast;   }
+int  Image::getWidth()           { return width;      }
+int  Image::getHeight()          { return height;     }
+std::string& Image::getImgName() { return imgName;    }
+std::vector<Image::Filter>& Image::getActiveFilters() { return activeFilters; }
 
-std::vector<int> Image::getRGBValues(char color) {
+std::vector<int>& Image::getRGBValues(char color) {
    if (color == 'r') return redValues;
    if (color == 'g') return greenValues;
    if (color == 'b') return blueValues;

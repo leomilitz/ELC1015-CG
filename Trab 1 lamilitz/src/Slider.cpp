@@ -47,14 +47,12 @@ void Slider::checkInput(int mouseX, int mouseY, int* mouseState) {
    if (*btnPos1 <= *posMouse && *btnPos2 >= *posMouse) {
       if (*mouseState == 1) {
          isHolding = false;
-         btnState = clicked;
       }
 
       if (*mouseState == 0 && !isHolding) {
          isHolding = true;
          Vector2 _offset = *posMouse - *btnPos1;
          offset->x = _offset.x; offset->y = _offset.y;
-         btnState = holding;
       }
    } else if (*mouseState == 1) isHolding = false;
 

@@ -1,3 +1,25 @@
+/*
+   Image Editor
+
+   Classe que representa o editor de imagens e faz o controle delas. O objetivo do image
+   editor é aplicar os métodos de manipulação de imagem na imagem selecionada pelo usuário
+   e também integrar o estado da imagem com o histograma de cores. Foram implementados
+   controles que garantem que a imagem selecionada sempre estará na frente das outras,
+   facilitando a visualização pelo usuário. Para isso, cada imagem tem um índice para
+   auxiliar nesse tipo de controle.
+   ---------------------------------------------------------------------------------------
+   - checkClickedImagesPriority: Recebe as cordenadas do clique do usuário e busca qual imagem
+   é a que está na frente das outras.
+
+   - updateHistogram: Atualiza o histograma de cores a partir dos dados recebidos da imagem
+   corrente. Fora a coleta e envio de dados para a classe do histograma, esse método
+   tabém define o scaling que o eixo Y do histograma vai ter, verificando a cor mais
+   recorrente na imagem.
+
+   - listenToImageChange: é chamada pelo UIManager para saber se houve uma mudança de imagem
+   selecionada pelo usuário.
+*/
+
 #ifndef IMAGEEDITOR_H
 #define IMAGEEDITOR_H
 
@@ -35,9 +57,9 @@ class ImageEditor {
       std::vector<Image*> images;
       int currentIndex;
       ColorHistogram *histogram;
+      bool imgChanged;
 
       bool checkUserInputError();
-      bool imgChanged;
 };
 
 #endif // IMAGEEDITOR_H

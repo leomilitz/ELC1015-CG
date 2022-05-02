@@ -1,3 +1,16 @@
+/*
+   Color Histogram
+
+   Classe que representa o histograma de cores que recebe os dados de cor da imagem
+   selecionada. Ele exibe os canais de cores e a luminância com base em quais estão
+   ativos. O histograma realiza a escala do eixo X de forma que a visualização
+   continue a mesma independentemente do tamanho da tela, e a escala do eixo Y com
+   base no valor de cor mais recorrente, garantindo uma boa visualização na tela.
+   --------------------------------------------------------------------------------
+   - setSizeYScale: define a escala do eixo Y com base no valor de cor mais recorrente
+   nos canais de cor.
+*/
+
 #ifndef COLORHISTOGRAM_H
 #define COLORHISTOGRAM_H
 

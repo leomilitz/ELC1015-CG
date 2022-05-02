@@ -1,3 +1,12 @@
+/*
+   Slider Manager
+
+   Classe que gerencia os sliders da UI. Ela verifica qual slider o usuário está interagindo.
+   ------------------------------------------------------------------------------------------
+   - setSliderState: Usado para receber os valores do brilho e contraste da imagem selecionada,
+   e atualizar a posição do slider. É chamado pelo UIManager ao trocar de imagem.
+*/
+
 #ifndef SLIDERMANAGER_H
 #define SLIDERMANAGER_H
 

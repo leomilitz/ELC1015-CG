@@ -1,10 +1,31 @@
 #include "UIManager.h"
 
+UIManager::UIManager(int screenWidth, int screenHeight) {
+   this->screenWidth  = screenWidth;
+   this->screenHeight = screenHeight;
+
+   bgLineThickness      = 5;
+   btnSpacingX    = 0.01*screenWidth;
+   btnSpacingY    = 0.02*screenHeight;
+   btnHeight      = screenHeight*0.0417;
+   btnBigWidth    = screenWidth*0.2845;
+   btnMedWidth    = (btnBigWidth - btnSpacingX)/2;
+   btnSwitch      = (btnBigWidth - 2*btnSpacingX)/3;
+   btnSmallWidth  = (btnBigWidth - 3*btnSpacingX)/4;
+   collisionX     = btnBigWidth + bgLineThickness + btnSpacingX*3;
+   collisionY     = screenHeight - btnHeight - btnSpacingY - bgLineThickness;
+
+   btnManager = new ButtonManager();
+   sldManager = new SliderManager();
+   imgEditor  = new ImageEditor(new ColorHistogram(btnSpacingX, btnSpacingY, screenWidth*0.2834, screenHeight*0.3666));
+
+   uiCreate();
+}
+
 void UIManager::uiMouseInputManagement(int button, int state, int wheel, int direction, int x, int y) {
    btnManager->inputManagement(x, y, &state);
    imgEditor->inputManagement(x, y, state);
    sldManager->inputManagement(x, y, &state);
-
    mouseX = x; mouseY = y; mouseState = state;
 }
 
@@ -19,28 +40,19 @@ void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
       imgEditor->addImage(this->screenWidth*0.7, 1, ".\\Trab 1 lamilitz\\resources\\baboon.bmp");
 }
 
+void UIManager::uiRender() {
+   btnManager->renderButtons(mouseX, mouseY, mouseState);
+   imgEditor->renderImages();
+   sldManager->renderSliders();
+   imageChangeControl();
+   drawBackground();
+}
+
 void UIManager::drawBackground() {
    CV::color(1,1,1);
    CV::rectFill(collisionX - bgLineThickness, 0, collisionX, screenHeight);
    CV::rectFill(collisionX, collisionY + bgLineThickness, screenWidth, collisionY);
    CV::text(collisionX + btnSpacingX, collisionY + btnSpacingY + bgLineThickness*2, imgEditor->getImageName().c_str());
-}
-
-void UIManager::uiRender() {
-   btnManager->renderButtons(mouseX, mouseY, mouseState);
-   imgEditor->renderImages();
-   sldManager->renderSliders();
-
-   if (imgEditor->listenToImageChange()) {
-      std::vector<Image*> images = imgEditor->getImages();
-      std::vector<Image::Filter> filters = images[imgEditor->getCurrentImageIndex()]->getActiveFilters();
-      btnManager->setButtonState(filters);
-      int brightness = images[imgEditor->getCurrentImageIndex()]->getBrightness();
-      int contrast   = images[imgEditor->getCurrentImageIndex()]->getContrast();
-      sldManager->setSliderState(brightness, contrast);
-   }
-
-   drawBackground();
 }
 
 void UIManager::uiCreate() {
@@ -115,24 +127,13 @@ void UIManager::uiCreate() {
                          [this]() { imgEditor->setContrast(sldManager->getValue()); });
 }
 
-UIManager::UIManager(int screenWidth, int screenHeight) {
-   this->screenWidth  = screenWidth;
-   this->screenHeight = screenHeight;
-
-   bgLineThickness      = 5;
-   btnSpacingX    = 0.01*screenWidth;
-   btnSpacingY    = 0.02*screenHeight;
-   btnHeight      = screenHeight*0.0417;
-   btnBigWidth    = screenWidth*0.2845;
-   btnMedWidth    = (btnBigWidth - btnSpacingX)/2;
-   btnSwitch      = (btnBigWidth - 2*btnSpacingX)/3;
-   btnSmallWidth  = (btnBigWidth - 3*btnSpacingX)/4;
-   collisionX     = btnBigWidth + bgLineThickness + btnSpacingX*3;
-   collisionY     = screenHeight - btnHeight - btnSpacingY - bgLineThickness;
-
-   btnManager = new ButtonManager();
-   sldManager = new SliderManager();
-   imgEditor  = new ImageEditor(new ColorHistogram(btnSpacingX, btnSpacingY, screenWidth*0.2834, screenHeight*0.3666));
-
-   uiCreate();
+void UIManager::imageChangeControl() {
+   if (imgEditor->listenToImageChange()) {
+      std::vector<Image*> images = imgEditor->getImages();
+      std::vector<Image::Filter> filters = images[imgEditor->getCurrentImageIndex()]->getActiveFilters();
+      btnManager->setButtonState(filters);
+      int brightness = images[imgEditor->getCurrentImageIndex()]->getBrightness();
+      int contrast   = images[imgEditor->getCurrentImageIndex()]->getContrast();
+      sldManager->setSliderState(brightness, contrast);
+   }
 }

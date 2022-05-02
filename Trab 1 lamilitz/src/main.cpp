@@ -1,5 +1,5 @@
 #include <GL/glut.h>
-#include <GL/freeglut_ext.h> //callback da wheel do mouse.
+#include <GL/freeglut_ext.h>
 
 #include "gl_canvas2d.h"
 #include "UIManager.h"

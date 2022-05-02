@@ -18,10 +18,8 @@ void ButtonManager::inputManagement(int mouseX, int mouseY, int* mouseState) {
    for (Button* btn : buttons) {
       Button::State state = btn->checkCollision(mouseX, mouseY, *mouseState);
 
-      if (*mouseState == 1 && state == Button::clicked) {
+      if (*mouseState == 1 && state == Button::clicked)
          btn->onClick();
-         *mouseState = -2;
-      }
    }
 }
 

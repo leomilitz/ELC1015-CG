@@ -1,5 +1,6 @@
 /*
    Image
+   Autor: Leonardo Militz
 
    Classe que representa a imagem que o usuário está interagindo. Ela é lida a partir de um
    bitmap (BGR) e guarda os dados da imagem em pixels (RGB). Podem existir multiplas imagens

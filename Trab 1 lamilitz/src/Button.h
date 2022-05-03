@@ -1,5 +1,6 @@
 /*
    Button
+   Autor: Leonardo Militz
 
    Classe genérica que implementa um botão na API Canvas2D. A biblioteca "functional"
    de C++ é usada para fazer funções callback (funções lambda registradas no UIManager)

@@ -1,5 +1,6 @@
 /*
    Button Manager
+   Autor: Leonardo Militz
 
    Classe para gerenciamento dos botões da UI. A partir dela, é possível verificar
    qual botão o usuário clicou, e controla o estado de botões do tipo "toggle".

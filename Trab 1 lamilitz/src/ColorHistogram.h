@@ -1,5 +1,6 @@
 /*
    Color Histogram
+   Autor: Leonardo Militz
 
    Classe que representa o histograma de cores que recebe os dados de cor da imagem
    selecionada. Ele exibe os canais de cores e a luminância com base em quais estão

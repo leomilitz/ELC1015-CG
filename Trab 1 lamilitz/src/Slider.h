@@ -1,5 +1,6 @@
 /*
    Slider
+   Autor: Leonardo Militz
 
    Slider é uma implementação genérica de um slider usando a API Canvas2D. Ele recebe
    um range, e a partir desse range, ele retornará um valor inteiro para ser utilizado

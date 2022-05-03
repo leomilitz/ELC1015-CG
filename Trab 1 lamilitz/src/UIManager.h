@@ -1,5 +1,6 @@
 /*
    User Interface Manager
+   Autor: Leonardo Militz
 
    Essa classe recebe todas as funções de render e input da main, e integra as
    outras classes de gerenciamento de interface de usuário. Nessa classe são

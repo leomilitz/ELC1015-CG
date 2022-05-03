@@ -1,5 +1,6 @@
 /*
    Tooltip
+   Autor: Leonardo Militz
 
    Implementação de uma tooltip para propósitos informativos - é usado no botão help. A
    tooltip pode ser visível ou invisível, e com hitbox circular ou retangular, garantindo

@@ -1,5 +1,6 @@
 /*
    Slider Manager
+   Autor: Leonardo Militz
 
    Classe que gerencia os sliders da UI. Ela verifica qual slider o usuário está interagindo.
    ------------------------------------------------------------------------------------------

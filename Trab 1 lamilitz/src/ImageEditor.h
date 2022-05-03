@@ -1,5 +1,6 @@
 /*
    Image Editor
+   Autor: Leonardo Militz
 
    Classe que representa o editor de imagens e faz o controle delas. O objetivo do image
    editor é aplicar os métodos de manipulação de imagem na imagem selecionada pelo usuário

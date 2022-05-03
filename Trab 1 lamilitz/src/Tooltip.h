@@ -12,7 +12,7 @@
 #define TOOLTIP_H
 
 #include <string>
-#include <vector>
+#include <list>
 #include <sstream>
 
 #include "Vector2.h"
@@ -36,7 +36,7 @@ class Tooltip {
 
       Vector2 *p1, *p2;
       std::string text, btnText;
-      std::vector<std::string> splitText;
+      std::list<std::string> splitText;
       bool visible;
       int width, height, radius, direction;
 };

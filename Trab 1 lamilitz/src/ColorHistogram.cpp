@@ -5,8 +5,8 @@ ColorHistogram::ColorHistogram(int x, int y, int length, int height) {
    this->y = y;
    this->length = length;
    this->height = height;
-   this->sizeYScale = (float) height;
-   this->sizeXScale = ((float) length/255);
+   sizeYScale = (float) height;
+   sizeXScale = ((float) length/255);
    plotRed = plotGreen = plotBlue = true;
    plotLuminance = false;
 }

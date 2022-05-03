@@ -277,14 +277,17 @@ void Image::setLimitX(int value)       { this->limitX     = value;     }
 void Image::setLimitY(int value)       { this->limitY     = value;     }
 void Image::setHolding(bool value)     { this->isHolding  = value;     }
 
-bool Image::isCurrentImg()       { return isCurrent;  }
-int  Image::getIndex()           { return index;      }
-int  Image::getBrightness()      { return brightness; }
-int  Image::getContrast()        { return contrast;   }
-int  Image::getWidth()           { return width;      }
-int  Image::getHeight()          { return height;     }
-std::string& Image::getImgName() { return imgName;    }
-std::vector<Image::Filter>& Image::getActiveFilters() { return activeFilters; }
+bool Image::isCurrentImg()             { return isCurrent;  }
+int  Image::getIndex()                 { return index;      }
+int  Image::getBrightness()            { return brightness; }
+int  Image::getContrast()              { return contrast;   }
+int  Image::getWidth()                 { return width;      }
+int  Image::getHeight()                { return height;     }
+std::string& Image::getImgName()       { return imgName;    }
+
+std::vector<Image::Filter>& Image::getActiveFilters() {
+   return activeFilters;
+}
 
 std::vector<int>& Image::getRGBValues(char color) {
    if (color == 'r') return redValues;

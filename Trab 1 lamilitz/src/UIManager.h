@@ -43,7 +43,6 @@ class UIManager {
       int screenWidth, screenHeight, collisionX, collisionY;
       int btnSmallWidth, btnMedWidth, btnBigWidth, btnSwitch, btnSpacingX,
           btnSpacingY, btnHeight, bgLineThickness;
-      bool keyUp;
 };
 
 #endif // UIMANAGER_H

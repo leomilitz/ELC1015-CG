@@ -24,14 +24,18 @@ class Vector2 {
          y /= norm;
       }
 
+      float distance(const Vector2& v) {
+         return sqrt(((v.x - x)*(v.x - x)) + ((v.y - y)*(v.y - y)));
+      }
+
       Vector2 operator - (const Vector2 &v) {
-           Vector2 aux( x - v.x, y - v.y);
-           return( aux );
+         Vector2 aux( x - v.x, y - v.y);
+         return( aux );
       }
 
       Vector2 operator + (const Vector2 &v) {
-          Vector2 aux( x + v.x, y + v.y);
-          return( aux );
+         Vector2 aux( x + v.x, y + v.y);
+         return( aux );
       }
 
       //Adicionem os demais overloads de operadores aqui.

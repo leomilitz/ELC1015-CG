@@ -26,7 +26,7 @@
    em seu estado.
 
    - imgDragAround: Arrasta a imagem na tela com base na posição do mouse, e calcula o offset
-   para que ela seja arrastada suavemente.
+   para que ela seja arrastada suavemente. Verifica colisão com a UI.
 
    - modelData: Lê os dados do bitmap, e salva em um vetor de Pixels. É feita a conversão de BGR
    para RGB durante a leitura.
@@ -82,6 +82,9 @@ class Image {
       void setFilter(Filter filter);
       void setBrightness(int value);
       void setContrast(int value);
+      void setLimitX(int value);
+      void setLimitY(int value);
+      void setHolding(bool value);
 
    private:
       void imgDrawSelectionOutline();
@@ -96,7 +99,7 @@ class Image {
       std::vector<Pixel*> data;
       std::vector<Filter> activeFilters;
       std::vector<int> redValues, greenValues, blueValues, luminanceValues;
-      int outline, index, width, height, contrast, brightness;
+      int outline, index, width, height, contrast, brightness, limitX, limitY;
       float scale;
       bool isHolding, isFront, isCurrent;
       Vector2 *pos1, *pos2, *offset;

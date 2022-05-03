@@ -20,6 +20,7 @@
 #include "ImageEditor.h"
 #include "ButtonManager.h"
 #include "SliderManager.h"
+#include "Tooltip.h"
 
 class UIManager {
    public:
@@ -36,6 +37,7 @@ class UIManager {
       ImageEditor*   imgEditor;
       ButtonManager* btnManager;
       SliderManager* sldManager;
+      Tooltip*       help;
 
       int mouseX, mouseY, mouseState;
       int screenWidth, screenHeight, collisionX, collisionY;

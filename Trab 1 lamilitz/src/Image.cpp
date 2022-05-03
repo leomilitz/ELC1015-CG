@@ -147,7 +147,13 @@ void Image::updatePosition(int x, int y) {
 void Image::imgDragAround(Vector2* posMouse) {
    if (isCurrent && isFront && isHolding) {
       Vector2 newPos = *posMouse - *offset;
-      updatePosition(newPos.x, newPos.y);
+
+      if (newPos.x >= limitX && newPos.y + height <= limitY)
+         updatePosition(newPos.x, newPos.y);
+      else if (newPos.x >= limitX && newPos.y + height > limitY)
+         updatePosition(newPos.x, pos1->y);
+      else if (newPos.x < limitX && newPos.y + height <= limitY)
+         updatePosition(pos1->x, newPos.y);
    }
 }
 
@@ -223,9 +229,16 @@ void Image::resizeImage(double scale) {
    height = h2;
    int offsetX = (w1-w2)/2;
    int offsetY = (h1-h2)/2;
-   updatePosition(pos1->x + offsetX, pos1->y + offsetY);
-   data = temp;
 
+
+   int posX = pos1->x + offsetX;
+   int posY = pos1->y + offsetY;
+
+   if (posX < limitX) posX = limitX + 1;
+   if (posY + h2 > limitY) posY = limitY - h2;
+
+   updatePosition(posX, posY);
+   data = temp;
 }
 
 void Image::flipHorizontal() {
@@ -266,6 +279,9 @@ void Image::setImgFront(bool isFront)  { this->isFront    = isFront;   }
 void Image::setCurrent(bool isCurrent) { this->isCurrent  = isCurrent; }
 void Image::setContrast(int value)     { this->contrast   = value;     }
 void Image::setBrightness(int value)   { this->brightness = value;     }
+void Image::setLimitX(int value)       { this->limitX     = value;     }
+void Image::setLimitY(int value)       { this->limitY     = value;     }
+void Image::setHolding(bool value)     { this->isHolding  = value;     }
 
 bool Image::isCurrentImg()       { return isCurrent;  }
 int  Image::getIndex()           { return index;      }

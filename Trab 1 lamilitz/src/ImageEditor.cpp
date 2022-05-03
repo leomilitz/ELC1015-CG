@@ -9,6 +9,7 @@ void ImageEditor::addImage(int x, int y, std::string path) {
    if (images.size() < MAX_IMAGES) {
       images.push_back(new Image(path, currentIndex, x, y));
       setCurrentImage(currentIndex);
+      defineImgCollisions(images[currentIndex]);
       currentIndex++;
    }
 }
@@ -45,28 +46,35 @@ void ImageEditor::setCurrentImage(int idx) {
    }
 }
 
+void ImageEditor::defineImgCollisions(Image* img) {
+   img->setLimitX(collisionX);
+   img->setLimitY(collisionY);
+}
+
 void ImageEditor::renderImages() {
    histogram->draw();
 
    if (images.size() == 0) return;
 
    for (Image* image : images)
-      if (image != NULL)
-         image->imgRender();
+      image->imgRender();
 
    updateHistogram();
 }
 
 void ImageEditor::inputManagement(int mouseX, int mouseY, int mouseState) {
    imgChanged = false;
-   for (Image* image : images) {
-      if (image != NULL) {
-         Image::State st = image->getImgState(mouseX, mouseY, mouseState);
+   if (images.size() == 0) return;
 
-         if (mouseState == 1 && st == Image::clicked) {
-            setCurrentImage(checkClickedImagesPriority(mouseX, mouseY));
-            imgChanged = true;
-         }
+   for (Image* image : images) {
+      if (mouseX < collisionX || mouseY > collisionY)
+         image->setHolding(false);
+
+      Image::State st = image->getImgState(mouseX, mouseY, mouseState);
+
+      if (mouseState == 1 && st == Image::clicked) {
+         setCurrentImage(checkClickedImagesPriority(mouseX, mouseY));
+         imgChanged = true;
       }
    }
 }
@@ -180,3 +188,8 @@ int ImageEditor::getCurrentImageIndex() {
 bool ImageEditor::listenToImageChange() { return imgChanged; }
 
 std::vector<Image*>& ImageEditor::getImages() { return images; };
+
+void ImageEditor::setCollisions(int x, int y) {
+   collisionX = x;
+   collisionY = y;
+}

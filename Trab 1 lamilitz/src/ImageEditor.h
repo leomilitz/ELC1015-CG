@@ -44,6 +44,7 @@ class ImageEditor {
       void rotateImg(int side);
       void updateHistogram();
       bool listenToImageChange();
+      void defineImgCollisions(Image* image);
 
       std::vector<Image*> &getImages();
       std::string getImageName();
@@ -53,9 +54,11 @@ class ImageEditor {
       void setContrast(int value);
       void setColorFilter(Image::Filter filter);
       void setCurrentImage(int idx);
+      void setCollisions(int x, int y);
+
    private:
       std::vector<Image*> images;
-      int currentIndex;
+      int currentIndex, collisionX, collisionY;
       ColorHistogram *histogram;
       bool imgChanged;
 

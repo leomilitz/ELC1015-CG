@@ -1,8 +1,9 @@
 Trabalho 1 de Computação Gráfica - Leonardo Militz
 
-Image Viewer
+LM - Image Viewer
 
-O programa é um visualizador de multiplas imagens simultâneas, com possibilidade manipulação de cor, escala, rotação, e com visualização de um histograma de cores.
+O programa é um visualizador de multiplas imagens simultâneas, com possibilidade manipulação de 
+cor, escala, rotação, e com visualização de um histograma de cores.
 
 ----------------------------------------------
 
@@ -17,6 +18,10 @@ Funções Implementadas:
           canais corretamente.
 	* Invert: inverte a cor da imagem. 
 	* BGR <-> RGB: Converte a imagem de formato RGB para BGR.
+	* Brightness: Controla o brilho da imagem, para mais claro ou para mais escuro.
+	* Contrast: Controla o contraste da imagem, para menor contraste ou para maior.
+
+- Controles da disposição dos pixels da imagem:
 	* Flip Hor.: Faz o flip horizontal da imagem.
 	* Flip Ver.: Faz o flip vertical da imagem.
 	* Rotate Left: Gira a imagem 90 graus para a esquerda.
@@ -24,8 +29,6 @@ Funções Implementadas:
 	* Scale 200%: Escala de 2x na imagem.
 	* Scale 50%: Escala de 1/2x na imagem. Pode ser aplicada duas vezes, fazendo uma
 	  escala de 1/4x.
-	* Brightness: Controla o brilho da imagem, para mais claro ou para mais escuro.
-	* Contrast: Controla o contraste da imagem, para menor contraste ou para maior.
 
 - Histograma de cores que mostra a recorrencia das cores nos canais RGB e luminância da imagem
   selecionada.

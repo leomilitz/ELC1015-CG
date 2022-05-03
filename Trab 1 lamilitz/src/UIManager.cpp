@@ -4,21 +4,26 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    this->screenWidth  = screenWidth;
    this->screenHeight = screenHeight;
 
-   bgLineThickness      = 5;
-   btnSpacingX    = 0.01*screenWidth;
-   btnSpacingY    = 0.02*screenHeight;
-   btnHeight      = screenHeight*0.0417;
-   btnBigWidth    = screenWidth*0.2845;
-   btnMedWidth    = (btnBigWidth - btnSpacingX)/2;
-   btnSwitch      = (btnBigWidth - 2*btnSpacingX)/3;
-   btnSmallWidth  = (btnBigWidth - 3*btnSpacingX)/4;
-   collisionX     = btnBigWidth + bgLineThickness + btnSpacingX*3;
-   collisionY     = screenHeight - btnHeight - btnSpacingY - bgLineThickness;
+   bgLineThickness = 6;
+   btnSpacingX     = 0.01*screenWidth;
+   btnSpacingY     = 0.02*screenHeight;
+   btnHeight       = screenHeight*0.0417;
+   btnBigWidth     = screenWidth*0.2845;
+   btnMedWidth     = (btnBigWidth - btnSpacingX)/2;
+   btnSwitch       = (btnBigWidth - 2*btnSpacingX)/3;
+   btnSmallWidth   = (btnBigWidth - 3*btnSpacingX)/4;
+   collisionX      = btnBigWidth + bgLineThickness + btnSpacingX*3;
+   collisionY      = screenHeight - btnHeight - btnSpacingY - bgLineThickness;
+
+   const char* tooltipText = "Keyboard: 1,2,3 to add images;\n\nMouse: Click the buttons to\ninteract with the selected image;";
 
    btnManager = new ButtonManager();
    sldManager = new SliderManager();
    imgEditor  = new ImageEditor(new ColorHistogram(btnSpacingX, btnSpacingY, screenWidth*0.2834, screenHeight*0.3666));
+   help       = new Tooltip(new Vector2(collisionX + 2*btnBigWidth + btnSmallWidth, collisionY + btnHeight), 12,
+                           tooltipText, btnBigWidth + btnSmallWidth*1.4, btnSmallWidth*1.25, -1, true, "?");
 
+   imgEditor->setCollisions(collisionX, collisionY);
    uiCreate();
 }
 
@@ -41,11 +46,12 @@ void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
 }
 
 void UIManager::uiRender() {
-   btnManager->renderButtons(mouseX, mouseY, mouseState);
    imgEditor->renderImages();
+   drawBackground();
+   help->renderTooltip(new Vector2(mouseX, mouseY), true);
+   btnManager->renderButtons(mouseX, mouseY, mouseState);
    sldManager->renderSliders();
    imageChangeControl();
-   drawBackground();
 }
 
 void UIManager::drawBackground() {

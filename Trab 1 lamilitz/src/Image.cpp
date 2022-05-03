@@ -158,24 +158,18 @@ void Image::imgDragAround(Vector2* posMouse) {
 }
 
 void Image::imgDrawSelectionOutline() {
-   for (int i=1; i <= outline; i++) {
+   for (int i = 0; i <= outline; i++) {
       float alpha = 1.0 - ((float) i / outline);
       CV::color(1.0, 0.2, 0.2, alpha);
-      CV::line(pos1->x - i, pos1->y - i, pos1->x - i, pos2->y + i); // lado esquerdo
-      CV::line(pos1->x - i, pos2->y + i, pos2->x + i, pos2->y + i); // cima
-      CV::line(pos2->x + i, pos2->y + i, pos2->x + i, pos1->y - i); // direita
-      CV::line(pos2->x + i, pos1->y - i, pos1->x - i, pos1->y - i); // baixo
+      CV::rect(pos1->x - i, pos1->y - i, pos2->x + i, pos2->y + i);
    }
 }
 
 void Image::imgDrawHoveringOutline() {
-   for (int i=1; i <= 3; i++) {
+   for (int i = 0; i <= 3; i++) {
       float alpha = 1.0 - ((float) i / outline);
       CV::color(0.2, 0.2, 1, alpha);
-      CV::line(pos1->x - i, pos1->y - i, pos1->x - i, pos2->y + i); // lado esquerdo
-      CV::line(pos1->x - i, pos2->y + i, pos2->x + i, pos2->y + i); // cima
-      CV::line(pos2->x + i, pos2->y + i, pos2->x + i, pos1->y - i); // direita
-      CV::line(pos2->x + i, pos1->y - i, pos1->x - i, pos1->y - i); // baixo
+      CV::rect(pos1->x - i, pos1->y - i, pos2->x + i, pos2->y + i);
    }
 }
 

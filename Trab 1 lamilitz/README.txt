@@ -45,6 +45,7 @@ Funções Implementadas:
 	* Display do nome da imagem selecionada;
 	* Pode-se deletar a imagem selecionada para adicionar outra;
 	* Pode-se abrir as imagens com os botões 1, 2 e 3 do teclado;
+	* Existe uma tooltip com instruções para uso do programa;
 
 - Interface de Usuário:
 	* Botões: Classe genérica de botão com cinco cores diferentes e estados diferentes em
@@ -56,3 +57,6 @@ Funções Implementadas:
 	* Scaling da Tela: Todos elementos da interface são sincronizados com o tamanho da tela,
 	  então mesmo que o usuário queira mudar o tamanho da tela, a interface de usuário irá
 	  acompanhar a escala corretamente.
+	* Tooltip: Classe genérica de tooltip que pode ser usada tanto de forma invisível, visível
+	  e com hitbox circular ou retangular, garantindo a reusabilidade tanto como botão, quanto
+	  descrição de componentes que já existem.

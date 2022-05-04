@@ -1,50 +1,67 @@
 #include "Tooltip.h"
 
-Tooltip::Tooltip(Vector2* p1, Vector2* p2, const char* text, int width, int height,
-                 int direction, bool visible, const char* btnText) {
+Tooltip::Tooltip(int x1, int y1, int x2, int y2, std::string text, int width, int direction, bool visible, std::string btnText)
+:UIComponent(x1, y1, x2, y2, btnText, [](){})  {
    this->radius = 0;
-   this->p1 = p1;
-   this->p2 = p2;
-   this->text = text;
    this->width = width;
-   this->height = height;
    this->visible = visible;
-   this->btnText = btnText;
+   this->text = text;
    this->splitTooltipText();
+   this->height = TEXT_OFFSET_Y*splitText.size()*1.2;
+   this->isHovering = false;
+   this->posMouse = new Vector2(0,0);
+   this->type = tooltip;
    (direction != 1) ? this->direction = -1 : this->direction = direction;
 }
 
-Tooltip::Tooltip(Vector2* center, int radius, const char* text, int width, int height,
-                 int direction, bool visible, const char* btnText) {
-   this->p1 = center;
-   this->text = text;
+Tooltip::Tooltip(int x, int y, int radius, std::string text, int width, int direction, bool visible, std::string btnText)
+:UIComponent(x, y, 0, 0, btnText, [](){}) {
    this->width = width;
-   this->height = height;
    this->radius = radius;
    this->visible = visible;
-   this->btnText = btnText;
+   this->text = text;
    this->splitTooltipText();
+   this->height = TEXT_OFFSET_Y*splitText.size()*1.2;
+   this->isHovering = false;
+   this->posMouse = new Vector2(0,0);
+   this->type = tooltip;
    (direction != 1) ? this->direction = -1 : this->direction = direction;
 }
 
-void Tooltip::renderTooltip(Vector2* posMouse, bool visible) {
+void Tooltip::inputManagement(int mouseX, int mouseY, int *mouseState) {
+   posMouse->x = mouseX; posMouse->y = mouseY;
+
+   if (radius && pos1->distance(*posMouse) <= radius) {
+      isHovering = true;
+      return;
+   }
+
+   if (!radius && *posMouse >= *pos1 && *posMouse <= *pos2) {
+      isHovering = true;
+      return;
+   }
+
+   isHovering = false;
+}
+
+void Tooltip::render() {
    bool canDrawTooltip = false;
    int outline = 7;
 
-   if (!radius && *posMouse >= *p1 && *posMouse <= *p2) {
+   if (!radius && isHovering) {
       for (int i = 0; i < outline; i++) {
          float alpha = 1.0 - ((float) i/(outline));
          CV::color(1, 1, 1, alpha);
-         CV::rect(p1->x-i, p1->y-i, p2->x+i, p2->y+i);
+         CV::rect(pos1->x-i, pos1->y-i, pos2->x+i, pos2->y+i);
       }
       canDrawTooltip = true;
    }
 
-   if (radius > 0 && p1->distance(*posMouse) <= radius) {
+   if (radius > 0 && isHovering) {
       for (int i = 0; i < outline; i++) {
          float alpha = 1.0 - ((float) i/(outline));
          CV::color(1, 1, 1, alpha);
-         CV::circle(p1->x, p1->y, radius + i, 15);
+         CV::circle(pos1->x, pos1->y, radius + i, 15);
       }
       canDrawTooltip = true;
    }
@@ -52,24 +69,24 @@ void Tooltip::renderTooltip(Vector2* posMouse, bool visible) {
    if (visible) {
       if (!radius) {
          CV::color(0.8, 0.8, 0.8);
-         CV::rectFill(p1->x-2, p1->y-2, p2->x+2, p2->y+2);
+         CV::rectFill(pos1->x-2, pos1->y-2, pos2->x+2, pos2->y+2);
          CV::color(0.6, 0.6, 0.6);
-         CV::rectFill(*p1, *p2);
-         CV::text((p1->x + p2->x)/2 - (text.size()*CHARSIZE/2), (((p1->y + p2->y)/2) - (CHARSIZE/2) + 1), text.c_str());
+         CV::rectFill(*pos1, *pos2);
+         CV::text((pos1->x + pos2->x)/2 - (caption.size()*CHARSIZE/2), (((pos1->y + pos2->y)/2) - (CHARSIZE/2) + 1), caption.c_str());
       } else {
          CV::color(0.8, 0.8, 0.8);
-         CV::circleFill(p1->x, p1->y, radius + 2, 15);
+         CV::circleFill(pos1->x, pos1->y, radius + 2, 15);
          CV::color(0.6, 0.6, 0.6);
-         CV::circleFill(p1->x, p1->y, radius, 15);
+         CV::circleFill(pos1->x, pos1->y, radius, 15);
          CV::color(1,1,1);
-         CV::text(p1->x - radius/3, p1->y - radius/3, btnText.c_str());
+         CV::text(pos1->x - radius/3, pos1->y - radius/3, caption.c_str());
       }
    }
 
-   if (canDrawTooltip) drawTooltip(posMouse);
+   if (canDrawTooltip) drawTooltip();
 }
 
-void Tooltip::drawTooltip(Vector2* posMouse) {
+void Tooltip::drawTooltip() {
    CV::color(0.7, 0.7, 0.7);
    CV::rectFill(posMouse->x - direction*2, posMouse->y - direction*2, posMouse->x + (width + 2)*direction, posMouse->y + (height + 2)*direction);
    CV::color(0.5, 0.5, 0.5);

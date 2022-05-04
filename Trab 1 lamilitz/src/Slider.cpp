@@ -1,38 +1,37 @@
 #include "Slider.h"
 
-Slider::Slider(int startValue, int endValue, int x, int y, int length, std::string &caption, std::function<void()> &action) {
+Slider::Slider(int startValue, int endValue, int x, int y, int length, int height, std::string caption, std::function<void()> action)
+:UIComponent(x, y, x + length, y, caption, action) {
    this->startValue = startValue;
    this->endValue = endValue;
    this->length = length;
-   this->caption = caption;
    this->currentPosition = 0.5;
-   this->action = std::bind(action);
-   this->startPos = new Vector2(x, y);
    this->btnLength = 12;
    this->btnHeight = 20;
-   this->btnPos1 = new Vector2((startPos->x + length + btnLength)*currentPosition, 0);
-   this->btnPos2 = new Vector2(btnPos1->x + btnLength, startPos->y - (btnHeight/2));
+   this->btnPos1 = new Vector2((pos2->x + btnLength)*currentPosition, 0);
+   this->btnPos2 = new Vector2(btnPos1->x + btnLength, pos1->y - (height/2));
    this->currentValue = (startValue + endValue)/2;
    this->offset = new Vector2(0,0);
    this->charSize = 10;
    this->isHolding = false;
    this->canGetValue = false;
+   this->type = slider;
 }
 
 void Slider::updatePosition(int x) {
    btnPos1->x = x;
-   btnPos1->y = startPos->y - (btnHeight/2);
+   btnPos1->y = pos1->y - (btnHeight/2);
    btnPos2->x = btnPos1->x + btnLength;
-   btnPos2->y = startPos->y + (btnHeight/2);
+   btnPos2->y = pos1->y + (btnHeight/2);
    currentValue = startValue + (currentPosition * (abs(startValue) + abs(endValue)));
-   currentPosition = (btnPos1->x - startPos->x)/length;
+   currentPosition = (btnPos1->x - pos1->x)/length;
 }
 
 void Slider::sliderDrag(Vector2* posMouse) {
    if (isHolding) {
       Vector2 newPos = *posMouse - *offset;
 
-      if (newPos.x <= startPos->x + length && newPos.x >= startPos->x) {
+      if (newPos.x <= pos1->x + length && newPos.x >= pos1->x) {
          updatePosition(newPos.x);
          canGetValue = true;
 
@@ -41,7 +40,7 @@ void Slider::sliderDrag(Vector2* posMouse) {
    }
 }
 
-void Slider::checkInput(int mouseX, int mouseY, int* mouseState) {
+void Slider::inputManagement(int mouseX, int mouseY, int* mouseState) {
    Vector2* posMouse = new Vector2(mouseX, mouseY);
 
    if (*btnPos1 <= *posMouse && *btnPos2 >= *posMouse) {
@@ -59,27 +58,29 @@ void Slider::checkInput(int mouseX, int mouseY, int* mouseState) {
    sliderDrag(posMouse);
 }
 
-void Slider::draw() {
+void Slider::render() {
    canGetValue = false;
 
    std::string valueStr = std::to_string((int) (currentPosition*100)) + "%";
    int txtSize = valueStr.length();
 
    CV::color(1,1,1);
-   CV::text(startPos->x + 2, startPos->y + 15, caption.c_str());
-   CV::text(startPos->x + length - (txtSize*charSize), startPos->y + 15, valueStr.c_str());
-   CV::rectFill(startPos->x, startPos->y-1, startPos->x + length, startPos->y+1);
+   CV::text(pos1->x + 2, pos1->y + 15, caption.c_str());
+   CV::text(pos1->x + length - (txtSize*charSize), pos1->y + 15, valueStr.c_str());
+   CV::rectFill(pos1->x, pos1->y-1, pos1->x + length, pos1->y+1);
 
    updatePosition(btnPos1->x);
    CV::color(0.5,0.5,0.5);
    CV::rectFill(*btnPos1, *btnPos2);
    CV::color(0.7,0.7,0.7);
-   CV::rectFill(btnPos1->x + 2, startPos->y - (btnHeight/2) + 2, btnPos1->x + btnLength - 2, startPos->y + (btnHeight/2) - 2);
+   CV::rectFill(btnPos1->x + 2, pos1->y - (btnHeight/2) + 2, btnPos1->x + btnLength - 2, pos1->y + (btnHeight/2) - 2);
 }
 
-int Slider::getValue() { return currentValue; }
+int Slider::getValue() {
+   return currentValue;
+}
 
 void Slider::setValue(int value) {
    currentPosition = (float) (value - startValue)/(abs(startValue) + abs(endValue));
-   updatePosition((int) (currentPosition * (startPos->x + length + btnLength)));
+   updatePosition((int) (currentPosition * (pos1->x + length + btnLength)));
 }

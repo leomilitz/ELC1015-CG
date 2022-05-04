@@ -30,15 +30,14 @@ class Vector2 {
 
       Vector2 operator - (const Vector2 &v) {
          Vector2 aux( x - v.x, y - v.y);
-         return( aux );
+         return(aux);
       }
 
       Vector2 operator + (const Vector2 &v) {
          Vector2 aux( x + v.x, y + v.y);
-         return( aux );
+         return(aux);
       }
 
-      //Adicionem os demais overloads de operadores aqui.
       bool operator <= (const Vector2 &v) { return( x <= v.x && y <= v.y ); }
       bool operator >= (const Vector2 &v) { return( x >= v.x && y >= v.y ); }
 };

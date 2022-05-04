@@ -1,20 +1,18 @@
 #include "Button.h"
 
-Button::Button(Vector2 *v1, Vector2 *v2, std::string &caption, std::function<void()> &action, Color color, bool canToggle) {
-   this->v1 = v1;
-   this->v2 = v2;
-   this->caption = caption;
+Button::Button(int x1, int y1, int x2, int y2, std::string caption, std::function<void()> action, Color color, bool canToggle)
+:UIComponent(x1, y1, x2, y2, caption, action) {
    this->edge = new Vector2(2, 2);
-   this->action = std::bind(action);
-   this->charHalfSize = 5;
    this->btnColor = color;
    this->isToggled = false;
    this->canToggle = canToggle;
+   this->state = standard;
+   this->type = button;
 }
 
 void Button::drawEdge(float r, float g, float b) {
    CV::color(r, g, b);
-   CV::rectFill(*v1 - *edge, *v2 + *edge);
+   CV::rectFill(*pos1 - *edge, *pos2 + *edge);
 }
 
 void Button::drawHover(){
@@ -65,18 +63,25 @@ void Button::drawDefault(){
    CV::color(r, g, b);
 }
 
-Button::State Button::checkCollision(int mouseX, int mouseY, int mouseState) {
+void Button::inputManagement(int mouseX, int mouseY, int* mouseState) {
    Vector2* mousePos = new Vector2(mouseX, mouseY);
-   if (*mousePos >= *v1 && *mousePos <= *v2 && mouseState == -2 && !isToggled)
-      return hovered;
+   if (*mousePos >= *pos1 && *mousePos <= *pos2 && *mouseState == -2 && !isToggled) {
+      state = hovered;
+      return;
+   }
 
-   if (*mousePos >= *v1 && *mousePos <= *v2 && mouseState == 1)
-      return clicked;
+   if (*mousePos >= *pos1 && *mousePos <= *pos2 && *mouseState == 1) {
+      state = clicked;
+      onClick();
+      return;
+   }
 
-   if (isToggled)
-      return toggled;
+   if (isToggled) {
+      state = toggled;
+      return;
+   }
 
-   return standard;
+    state = standard;
 }
 
 void Button::onClick() {
@@ -87,7 +92,7 @@ void Button::onClick() {
       action();
 }
 
-void Button::draw(State state) {
+void Button::render() {
    switch (state) {
       case standard:    drawDefault();    break;
       case clicked:     drawClick();      break;
@@ -97,17 +102,15 @@ void Button::draw(State state) {
 
    int captionSize = this->caption.length();
    const char* caption = this->caption.c_str();
-   CV::rectFill(*v1, *v2);
+   CV::rectFill(*pos1, *pos2);
 
    if (btnColor == light)
       CV::color(0,0,0);
    else
       CV::color(1,1,1);
 
-   CV::text((v1->x + v2->x)/2 - captionSize*charHalfSize, ((v1->y + v2->y)/2) - charHalfSize + 1, caption);
+   CV::text((pos1->x + pos2->x)/2 - captionSize*(CHARSIZE/2), ((pos1->y + pos2->y)/2) - (CHARSIZE/2) + 1, caption);
 }
-
-std::string Button::getCaption() { return caption; }
 
 void Button::setToggled(bool isToggled) {
    if (canToggle) this->isToggled = isToggled;

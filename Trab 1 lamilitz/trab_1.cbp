@@ -50,8 +50,6 @@
 		<Unit filename="src/Bmp.h" />
 		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Button.h" />
-		<Unit filename="src/ButtonManager.cpp" />
-		<Unit filename="src/ButtonManager.h" />
 		<Unit filename="src/ColorHistogram.cpp" />
 		<Unit filename="src/ColorHistogram.h" />
 		<Unit filename="src/Image.cpp" />
@@ -64,6 +62,8 @@
 		<Unit filename="src/SliderManager.h" />
 		<Unit filename="src/Tooltip.cpp" />
 		<Unit filename="src/Tooltip.h" />
+		<Unit filename="src/UIComponent.cpp" />
+		<Unit filename="src/UIComponent.h" />
 		<Unit filename="src/UIManager.cpp" />
 		<Unit filename="src/UIManager.h" />
 		<Unit filename="src/Vector2.h" />

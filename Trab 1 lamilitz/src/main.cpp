@@ -4,7 +4,7 @@
 #include "gl_canvas2d.h"
 #include "UIManager.h"
 
-#define SCREEN_WIDTH 900
+#define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 600
 
 UIManager *uiManager = NULL;

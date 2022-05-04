@@ -3,11 +3,12 @@
 ImageEditor::ImageEditor(ColorHistogram* histogram) {
    currentIndex = 0;
    this->histogram = histogram;
+   this->imgChanged = false;
 }
 
 void ImageEditor::addImage(int x, int y, std::string path) {
    if (images.size() < MAX_IMAGES) {
-      images.push_back(new Image(path, currentIndex, x, y));
+      images.push_back(new Image(x, y, path, currentIndex));
       setCurrentImage(currentIndex);
       defineImgCollisions(images[currentIndex]);
       currentIndex++;
@@ -185,7 +186,9 @@ int ImageEditor::getCurrentImageIndex() {
    return -1;
 }
 
-bool ImageEditor::listenToImageChange() { return imgChanged; }
+bool ImageEditor::listenToImageChange() {
+   return imgChanged;
+}
 
 std::vector<Image*>& ImageEditor::getImages() { return images; };
 

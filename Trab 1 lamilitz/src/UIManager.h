@@ -2,26 +2,31 @@
    User Interface Manager
    Autor: Leonardo Militz
 
-   Essa classe recebe todas as funções de render e input da main, e integra as
-   outras classes de gerenciamento de interface de usuário. Nessa classe são
-   adicionados os botões, sliders, background, e faz os seus tamanhos padrão
-   escalarem com o tamanho da tela.
+   Essa classe recebe todas as funções de render e input da main, e gerencia
+   os componentes de interace de usuário (objetos UIComponent). Nessa classe são
+   adicionados os botões, sliders, tooltip e background, e faz os seus tamanhos
+   padrão escalarem com o tamanho da tela.
    ---------------------------------------------------------------------------
-   - imageChangeControl: Esse método recebe do image editor a flag que indica se
-   houve alguma mudança de imagem pelo usuário ou não. Se a mudança existir,
-   será buscado o estado da nova imagem selecionada, e em seguida aplica essas
-   mudanças no visual dos botões da UI.
+   - rememberComponents: Esse método é chamando quando acontece alguma mudança
+   de imagem feita pelo usuário. É buscado o estado da nova imagem selecionada,
+   e em seguida aplica essas mudanças no visual dos botões/sliders da UI.
+
+   - resetComponents: Reseta o estado dos componentes para o padrão. É chamado
+   quando alguma imagem é deletada.
+
+   - getSlidersValues: Busca o valor dos sliders.
 */
 
 #ifndef UIMANAGER_H
 #define UIMANAGER_H
 
+#include <list>
 #include <vector>
 
 #include "ImageEditor.h"
-#include "ButtonManager.h"
-#include "SliderManager.h"
 #include "Tooltip.h"
+#include "Button.h"
+#include "Slider.h"
 
 class UIManager {
    public:
@@ -33,12 +38,12 @@ class UIManager {
 
    private:
       void drawBackground();
-      void imageChangeControl();
+      void rememberComponents();
+      void resetComponents();
+      int  getSlidersValues(std::string componentName);
 
-      ImageEditor*   imgEditor;
-      ButtonManager* btnManager;
-      SliderManager* sldManager;
-      Tooltip*       help;
+      std::list<UIComponent*> components;
+      ImageEditor* imgEditor;
 
       int mouseX, mouseY, mouseState;
       int screenWidth, screenHeight, collisionX, collisionY;

@@ -4,7 +4,8 @@
 
    Implementação de uma tooltip para propósitos informativos - é usado no botão help. A
    tooltip pode ser visível ou invisível, e com hitbox circular ou retangular, garantindo
-   sua versabilidade de uso.
+   sua versatilidade de uso. A classe é um UIComponent, mas não possui uma callback, já
+   que sua unica função é exibir texto.
    --------------------------------------------------------------------------------------
    splitTooltipText: Faz o split do texto ao encontrar quebras de linha.
 */
@@ -12,33 +13,34 @@
 #ifndef TOOLTIP_H
 #define TOOLTIP_H
 
-#include <string>
 #include <list>
 #include <sstream>
 
 #include "Vector2.h"
-#include "gl_canvas2d.h"
+#include "UIComponent.h"
 
 #define CHARSIZE 10
 #define TEXT_OFFSET_Y 15
 #define TEXT_OFFSET_X 5
 
-class Tooltip {
+class Tooltip: public UIComponent {
    public:
-      Tooltip(Vector2* p1, Vector2* p2, const char* text, int width, int height,
-              int direction=1, bool visible=false, const char* btnText="");
-      Tooltip(Vector2* center, int radius, const char* text, int width, int height,
-              int direction=1, bool visible=false, const char* btnText="");
+      Tooltip(int x1, int y1, int x2, int y2, std::string text, int width,
+              int direction=1, bool visible=false, std::string btnText="");
 
-      void renderTooltip(Vector2* posMouse, bool visible);
+      Tooltip(int x, int y, int radius, std::string text, int width,
+              int direction=1, bool visible=false, std::string btnText="");
+
+      void render();
+      void inputManagement(int mouseX, int mouseY, int *mouseState);
    private:
-      void drawTooltip(Vector2* posMouse);
+      void drawTooltip();
       void splitTooltipText();
 
-      Vector2 *p1, *p2;
-      std::string text, btnText;
+      Vector2 *posMouse;
+      std::string text;
       std::list<std::string> splitText;
-      bool visible;
+      bool visible, isHovering;
       int width, height, radius, direction;
 };
 

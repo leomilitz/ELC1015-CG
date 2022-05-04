@@ -10,7 +10,7 @@ std::string parseFileName(std::string &path) {
    return tokens[tokens.size()-1];
 }
 
-Image::Image(std::string& path, int idx, int x, int y) {
+Image::Image(int x, int y, std::string &path, int idx) {
    imgName = parseFileName(path);
    bmp = new Bmp(path.c_str());
    width = bmp->getWidth();
@@ -20,7 +20,8 @@ Image::Image(std::string& path, int idx, int x, int y) {
    pos2 = new Vector2(0,0);
    offset = new Vector2(0,0);
    updatePosition(x, y);
-   isCurrent = false;
+   isCurrent = true;
+   isFront = true;
    isHolding = false;
    outline = 10;
    index = idx;

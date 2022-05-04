@@ -57,7 +57,7 @@ class Image {
       enum State  { clicked, hovered, holding, standard };
       enum Filter { red, green, blue, luminance, inverted, bgr };
 
-      Image(std::string &path, int idx, int x, int y);
+      Image(int x, int y, std::string &path, int idx);
 
       void imgRender();
       void resizeImage(double scale);

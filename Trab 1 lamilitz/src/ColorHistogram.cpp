@@ -6,7 +6,7 @@ ColorHistogram::ColorHistogram(int x, int y, int length, int height) {
    this->length = length;
    this->height = height;
    sizeYScale = (float) height;
-   sizeXScale = ((float) length/255);
+   sizeXScale = ((float) length/256);
    plotRed = plotGreen = plotBlue = true;
    plotLuminance = false;
 }
@@ -37,10 +37,7 @@ void ColorHistogram::draw() {
    }
 
    CV::color(1,1,1);
-   CV::line(x-1, y-1, x+length+3, y-1);
-   CV::line(x-1, y-1, x-1, y+height+1);
-   CV::line(x+length+3, y-1, x+length+3, y+height+1);
-   CV::line(x-1, y+height+1, x+length+3, y+height+1);
+   CV::rect(x-1, y-1, x+length+3,y+height+1);
 }
 
 void ColorHistogram::setActiveChannels(bool r, bool g, bool b, bool l) {

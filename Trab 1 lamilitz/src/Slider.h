@@ -34,7 +34,7 @@ class Slider: public UIComponent {
       int value, startValue, endValue, length, charSize, btnLength, btnHeight, currentValue;
       float currentPosition;
       bool isHolding;
-      Vector2 *startPos, *btnPos1, *btnPos2, *offset;
+      Vector2 *btnPos1, *btnPos2, *offset;
 };
 
 #endif // SLIDER_H

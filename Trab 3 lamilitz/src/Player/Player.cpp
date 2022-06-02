@@ -1,17 +1,17 @@
 #include "Player.h"
 
-Player::Player(int width, int height, int spawnX, int spawnY) {
+Player::Player(int width, int height, int posX, int posY) {
    this->width  = width;
    this->height = height;
-   this->spawnX = spawnX;
-   this->spawnY = spawnY;
-   this->bike = new Bike(width, spawnX, spawnY);
+   this->posX = posX;
+   this->posY = posY;
+   this->bike = new Bike(width, posX, posY);
 }
 
 void Player::render() {
    // Placeholder
    CV::color(1,1,1);
-   CV::translate(spawnX, spawnY);
+   CV::translate(posX, posY);
    CV::rectFill(0,0, width, height);
 
    CV::color(0,0,1);

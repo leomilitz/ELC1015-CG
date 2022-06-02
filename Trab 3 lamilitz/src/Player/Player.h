@@ -6,11 +6,11 @@
 
 class Player {
    public:
-      Player(int width, int height, int spawnX, int spawnY);
+      Player(int width, int height, int posX, int posY);
       void render();
 
    private:
-      int width, height, spawnX, spawnY;
+      int width, height, posX, posY;
       Bike *bike;
 
 };

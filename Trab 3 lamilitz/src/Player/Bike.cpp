@@ -1,20 +1,20 @@
 #include "Bike.h"
 
-Bike::Bike(int length, int spawnX, int spawnY) {
+Bike::Bike(int length, int posX, int posY) {
    this->length = length;
-   this->spawnX = spawnX;
-   this->spawnY = spawnY;
+   this->posX = posX;
+   this->posY = posY;
    bodyThickness = 8;
    wheelRadius = length/6;
    bodyLength = length/3;
-   wheels.push_back(new Wheel(wheelRadius, spawnX + wheelRadius, spawnY + wheelRadius));
-   wheels.push_back(new Wheel(wheelRadius, spawnX + wheelRadius*5, spawnY + wheelRadius));
+   wheels.push_back(new Wheel(wheelRadius, posX + wheelRadius, posY + wheelRadius));
+   wheels.push_back(new Wheel(wheelRadius, posX + wheelRadius*5, posY + wheelRadius));
 }
 
 void Bike::render() {
    for (Wheel *w : wheels) w->render();
 
-   CV::translate(spawnX + wheelRadius, spawnY + wheelRadius);
+   CV::translate(posX + wheelRadius, posY + wheelRadius);
    CV::color(1,0,0);
    // Body
    float pedalX = bodyLength, pedalY = 0;

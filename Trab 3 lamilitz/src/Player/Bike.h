@@ -4,6 +4,7 @@
 #include <vector>
 #include <math.h>
 #include "Wheel.h"
+#include "Pedal.h"
 
 class Bike {
    public:
@@ -14,6 +15,7 @@ class Bike {
       float wheelRadius, bodyLength, bodyThickness;
       int length, posX, posY;
 
+      Pedal *pedalFront, *pedalBack;
       std::vector<Wheel*> wheels;
 };
 

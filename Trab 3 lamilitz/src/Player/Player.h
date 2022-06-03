@@ -3,6 +3,7 @@
 
 #include "../gl_canvas2d.h"
 #include "Bike.h"
+#include "Stickman.h"
 
 class Player {
    public:
@@ -12,6 +13,7 @@ class Player {
    private:
       int width, height, posX, posY;
       Bike *bike;
+      Stickman *stickman;
 
 };
 

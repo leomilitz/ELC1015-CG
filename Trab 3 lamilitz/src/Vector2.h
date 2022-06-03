@@ -29,12 +29,17 @@ class Vector2 {
       }
 
       Vector2 operator - (const Vector2 &v) {
-         Vector2 aux( x - v.x, y - v.y);
+         Vector2 aux(x - v.x, y - v.y);
          return(aux);
       }
 
       Vector2 operator + (const Vector2 &v) {
-         Vector2 aux( x + v.x, y + v.y);
+         Vector2 aux(x + v.x, y + v.y);
+         return(aux);
+      }
+
+      Vector2 operator * (const float a) {
+         Vector2 aux(x * a, y * a);
          return(aux);
       }
 

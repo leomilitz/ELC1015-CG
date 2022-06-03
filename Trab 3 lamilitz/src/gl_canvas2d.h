@@ -21,7 +21,7 @@ class CV //classe Canvas2D
 public:
     //funcoes para desenho de ponto e linha
     static void point(float x, float y); //coordeandas do ponto
-    static void point(Vector2 pos); //coordeandas do ponto
+    static void point(Vector2 pos, float size=1); //coordeandas do ponto
 
     static void line( float x1, float y1, float x2, float y2 ); //coordenadas da linha x1, y1, x2, y2
     static void line( float x1, float y1, float x2, float y2, float thickness ); //coordenadas da linha x1, y1, x2, y2, grossura

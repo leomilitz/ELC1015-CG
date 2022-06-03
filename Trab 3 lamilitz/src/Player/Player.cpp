@@ -6,6 +6,8 @@ Player::Player(int width, int height, int posX, int posY) {
    this->posX = posX;
    this->posY = posY;
    this->bike = new Bike(width, posX, posY);
+   float radius = width/6, seatX = posX + radius + radius*1.9/3, seatY = posY + radius + radius*7/3;
+   this->stickman = new Stickman(seatX, seatY, radius, posX, posY);
 }
 
 void Player::render() {
@@ -24,4 +26,5 @@ void Player::render() {
    CV::translate(0,0);
 
    bike->render();
+   stickman->render();
 }

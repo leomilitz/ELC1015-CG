@@ -33,11 +33,11 @@ void Bike::render() {
    CV::circleFill(bodyLength*0.75, 0, 4, 20);
 
    // Seat
-   float bancoX = 1.9*wheelRadius/3, bancoY = 7*wheelRadius/3;
-   CV::line(wheelRadius, wheelRadius*4/3, bancoX, bancoY, bodyThickness);
+   float seatX = 1.9*wheelRadius/3, seatY = 7*wheelRadius/3;
+   CV::line(wheelRadius, wheelRadius*4/3, seatX, seatY, bodyThickness);
    CV::color(0.2,0.2,0.2);
-   CV::line(bancoX, bancoY, wheelRadius/3, bancoY, bodyThickness);
-   CV::line(bancoX, bancoY, bancoX + wheelRadius/2, bancoY, bodyThickness);
+   CV::line(seatX, seatY, wheelRadius/3, seatY, bodyThickness);
+   CV::line(seatX, seatY, seatX + wheelRadius/2, seatY, bodyThickness);
 
    // Handle
    float handleX = bodyLength + wheelRadius*2/3, handleY = wheelRadius*8/3;

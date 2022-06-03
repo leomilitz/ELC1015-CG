@@ -52,6 +52,8 @@
 		<Unit filename="src/Button.h" />
 		<Unit filename="src/Player/Bike.cpp" />
 		<Unit filename="src/Player/Bike.h" />
+		<Unit filename="src/Player/Pedal.cpp" />
+		<Unit filename="src/Player/Pedal.h" />
 		<Unit filename="src/Player/Player.cpp" />
 		<Unit filename="src/Player/Player.h" />
 		<Unit filename="src/Player/Wheel.cpp" />

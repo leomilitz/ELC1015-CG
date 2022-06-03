@@ -55,11 +55,13 @@ void CV::point(float x, float y)
    glEnd();
 }
 
-void CV::point(Vector2 p)
+void CV::point(Vector2 p, float size)
 {
+   glPointSize(size);
    glBegin(GL_POINTS);
       glVertex2d(p.x, p.y);
    glEnd();
+   glPointSize(1);
 }
 
 void CV::line( float x1, float y1, float x2, float y2 )

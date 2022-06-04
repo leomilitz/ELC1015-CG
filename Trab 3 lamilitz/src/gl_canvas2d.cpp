@@ -64,14 +64,6 @@ void CV::point(Vector2 p, float size)
    glPointSize(1);
 }
 
-void CV::line( float x1, float y1, float x2, float y2 )
-{
-   glBegin(GL_LINES);
-      glVertex2d(x1, y1);
-      glVertex2d(x2, y2);
-   glEnd();
-}
-
 void CV::line( float x1, float y1, float x2, float y2, float thickness )
 {
    glLineWidth(thickness);
@@ -82,6 +74,15 @@ void CV::line( float x1, float y1, float x2, float y2, float thickness )
    glLineWidth(1);
 }
 
+void CV::line( Vector2 p1, Vector2 p2, float thickness )
+{
+   glLineWidth(thickness);
+   glBegin(GL_LINES);
+      glVertex2d(p1.x, p1.y);
+      glVertex2d(p2.x, p2.y);
+   glEnd();
+   glLineWidth(1);
+}
 void CV::rect( float x1, float y1, float x2, float y2 )
 {
    glBegin(GL_LINE_LOOP);
@@ -174,7 +175,7 @@ void CV::circle( float x, float y, float radius, int div, float thickness )
    glLineWidth(1);
 }
 
-void CV::circleFill( float x, float y, float radius, int div )
+void CV::circleFill( float x, float y, float radius, int div)
 {
    float ang = 0, x1, y1;
    float inc = PI_2/div;
@@ -184,6 +185,21 @@ void CV::circleFill( float x, float y, float radius, int div )
          x1 = (cos(ang)*radius);
          y1 = (sin(ang)*radius);
          glVertex2d(x1+x, y1+y);
+         ang+=inc;
+      }
+   glEnd();
+}
+
+void CV::circleFill( Vector2 p, float radius, int div)
+{
+   float ang = 0, x1, y1;
+   float inc = PI_2/div;
+   glBegin(GL_POLYGON);
+      for(int lado = 1; lado <= div; lado++) //GL_POLYGON desenha um poligono CONVEXO preenchido.
+      {
+         x1 = (cos(ang)*radius);
+         y1 = (sin(ang)*radius);
+         glVertex2d(x1+p.x, y1+p.y);
          ang+=inc;
       }
    glEnd();

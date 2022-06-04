@@ -11,10 +11,11 @@ class Stickman
       void render();
 
    private:
-      int posX, posY;
+      int posX, posY, bikeX, bikeY;
       float radius;
       Curve* stkBack;
-      std::vector<Vector2> backCoords;
+      std::vector<Vector2*> backCoords;
+      Vector2* neck;
 };
 
 #endif // STICKMAN_H

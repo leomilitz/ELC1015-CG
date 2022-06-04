@@ -23,9 +23,8 @@ public:
     static void point(float x, float y); //coordeandas do ponto
     static void point(Vector2 pos, float size=1); //coordeandas do ponto
 
-    static void line( float x1, float y1, float x2, float y2 ); //coordenadas da linha x1, y1, x2, y2
-    static void line( float x1, float y1, float x2, float y2, float thickness ); //coordenadas da linha x1, y1, x2, y2, grossura
-    static void line( Vector2 p1, Vector2 p2 ); //coordenadas da linha (p1, p2)
+    static void line( float x1, float y1, float x2, float y2, float thickness=1 ); //coordenadas da linha x1, y1, x2, y2, grossura
+    static void line( Vector2 p1, Vector2 p2, float thickness=1 ); //coordenadas da linha (p1, p2)
 
     //desenha um retangulo alinhado nos eixos x e y
     static void rect( float x1, float y1, float x2, float y2 ); //coordenadas do retangulo x1, y1, x2, y2
@@ -40,7 +39,7 @@ public:
 
     //centro e raio do circulo
     static void circle( float x, float y, float radius, int div, float thickness = 1);
-    static void circle( Vector2 pos, float radius, int div );
+    static void circle( Vector2 pos, float radius, int div, float thickness = 1 );
 
     static void circleFill( float x, float y, float radius, int div );
     static void circleFill( Vector2 pos, float radius, int div );

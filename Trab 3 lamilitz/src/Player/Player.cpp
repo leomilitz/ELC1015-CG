@@ -12,7 +12,7 @@ Player::Player(int width, int height, int posX, int posY) {
 
 void Player::render() {
    // Placeholder
-   CV::color(1,1,1);
+   /*CV::color(1,1,1);
    CV::translate(posX, posY);
    CV::rectFill(0,0, width, height);
 
@@ -23,7 +23,7 @@ void Player::render() {
    for (int i = 0; i <= 7; i++)
       CV::line(0, i*width/6, width, i*width/6);
 
-   CV::translate(0,0);
+   CV::translate(0,0);*/
 
    bike->render();
    stickman->render();

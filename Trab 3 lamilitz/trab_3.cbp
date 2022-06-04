@@ -18,6 +18,7 @@
 					<Add directory="include" />
 					<Add directory="src/Player/" />
 					<Add directory="src/Player" />
+					<Add directory="src/" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -32,6 +33,7 @@
 					<Add directory="include" />
 					<Add directory="src/Player/" />
 					<Add directory="src/Player" />
+					<Add directory="src/" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -50,12 +52,16 @@
 		<Unit filename="include/GL/glut.h" />
 		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Button.h" />
+		<Unit filename="src/Curve.cpp" />
+		<Unit filename="src/Curve.h" />
 		<Unit filename="src/Player/Bike.cpp" />
 		<Unit filename="src/Player/Bike.h" />
 		<Unit filename="src/Player/Pedal.cpp" />
 		<Unit filename="src/Player/Pedal.h" />
 		<Unit filename="src/Player/Player.cpp" />
 		<Unit filename="src/Player/Player.h" />
+		<Unit filename="src/Player/Stickman.cpp" />
+		<Unit filename="src/Player/Stickman.h" />
 		<Unit filename="src/Player/Wheel.cpp" />
 		<Unit filename="src/Player/Wheel.h" />
 		<Unit filename="src/Scenery/Background.cpp" />

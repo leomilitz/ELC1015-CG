@@ -38,6 +38,11 @@ class Vector2 {
          return(aux);
       }
 
+      Vector2 operator + (const float a) {
+         Vector2 aux(x + a, y + a);
+         return(aux);
+      }
+
       Vector2 operator * (const float a) {
          Vector2 aux(x * a, y * a);
          return(aux);

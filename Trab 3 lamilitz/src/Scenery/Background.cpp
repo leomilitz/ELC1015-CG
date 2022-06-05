@@ -3,14 +3,22 @@
 Background::Background(int screenWidth, int screenHeight) {
    this->screenWidth  = screenWidth;
    this->screenHeight = screenHeight;
+   this->mountainSpeed = 0.4;
+   this->buildingSpeed = 0.9;
    createFirstMountain();
+   createFirstBuilding();
 }
 
-float getRandom(float low, float high)
-{
-    static std::default_random_engine e;
-    static std::uniform_real_distribution<> dis(low, high);
-    return dis(e);
+float getRandomInt(int low, int high) {
+   static std::default_random_engine e;
+   static std::uniform_int_distribution<int> dis(low, high);
+   return dis(e);
+}
+
+float getRandomFloat(float low, float high) {
+   static std::default_random_engine e;
+   static std::uniform_real_distribution<float> dis(low, high);
+   return dis(e);
 }
 
 void Background::drawGround() {
@@ -39,7 +47,15 @@ int Background::getOutOfBoundsMountain() {
       if (m->curve->points[2]->x < 0) return idx;
       idx++;
    }
+   return -1;
+}
 
+int Background::getOutOfBoundsBuilding() {
+   int idx = 0;
+   for (Building* b : buildings) {
+      if (b->posX + b->getWidth() < 0) return idx;
+      idx++;
+   }
    return -1;
 }
 
@@ -48,34 +64,59 @@ void Background::addMountain() {
    float lastX = mountains.back()->curve->points[2]->x;
    float lastY = mountains.back()->curve->points[2]->y;
    points.push_back(new Vector2(lastX, lastY));
-   points.push_back(new Vector2(lastX + screenWidth*0.2, lastY + screenHeight*(getRandom(0.1, 0.6))));
+   points.push_back(new Vector2(lastX + screenWidth*0.2, lastY + screenHeight*(getRandomFloat(0.3, 0.8))));
    points.push_back(new Vector2(lastX + screenWidth*0.4, lastY));
-   mountains.push_back(new Mountain(new Curve(points), 0, 0.4, 0, 1));
+   mountains.push_back(new Mountain(new Curve(points), 0, 0.4, 0, mountainSpeed));
+}
+void Background::addBuilding() {
+   int spacing = getRandomInt(0,20);
+   int lastX = buildings.back()->posX + buildings.back()->getWidth() + spacing;
+   int lastY = buildings.back()->posY;
+   int width = screenWidth*0.1;
+   int height = screenHeight*(getRandomFloat(0.13, 0.35));
+   float r,g,b;
+   r = g = b = getRandomFloat(0.4, 0.6);
+   buildings.push_back(new Building(lastX, lastY, width, height, r, g, b, buildingSpeed));
 }
 
 void Background::createFirstMountain() {
    std::vector<Vector2*> points;
+   points.push_back(new Vector2(screenWidth*0, screenHeight*0.5));
+   points.push_back(new Vector2(screenWidth*0.2, screenHeight*0.7));
+   points.push_back(new Vector2(screenWidth*0.4, screenHeight*0.5));
+   mountains.push_back(new Mountain(new Curve(points), 0, 0.4, 0, mountainSpeed));
+}
 
-   points.push_back(new Vector2(screenWidth*0, screenHeight*0.3));
-   points.push_back(new Vector2(screenWidth*0.2, screenHeight*0.5));
-   points.push_back(new Vector2(screenWidth*0.4, screenHeight*0.3));
-   mountains.push_back(new Mountain(new Curve(points), 0, 0.4, 0, 1));
+void Background::createFirstBuilding() {
+   float posX = 0, posY = screenHeight*0.2;
+   float width = screenWidth*0.1;
+   float height = screenHeight*(getRandomFloat(0.1, 0.4));
+   float r,g,b;
+   r = g = b = getRandomFloat(0.4, 0.6);
+   buildings.push_back(new Building(posX, posY, width, height, r, g, b, buildingSpeed));
 }
 
 void Background::drawMountains() {
-   if (mountains.size() < 4)
-      addMountain();
+   if (mountains.size() < 4) addMountain();
 
    if (getOutOfBoundsMountain() != -1)
       mountains.erase(mountains.begin() + getOutOfBoundsMountain());
 
-   for (Mountain* m : mountains) {
-      m->render();
-   }
+   for (Mountain* m : mountains) m->render();
+}
+
+void Background::drawBuildings() {
+   if (buildings.size() < 12) addBuilding();
+
+   if (getOutOfBoundsBuilding() != -1)
+      buildings.erase(buildings.begin() + getOutOfBoundsBuilding());
+
+   for (Building* b : buildings) b->render();
 }
 
 void Background::render() {
    drawSky();
    drawMountains();
+   drawBuildings();
    drawGround();
 }

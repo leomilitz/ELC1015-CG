@@ -19,6 +19,8 @@
 					<Add directory="src/Player/" />
 					<Add directory="src/Player" />
 					<Add directory="src/" />
+					<Add directory="Scenery" />
+					<Add directory="src/Scenery" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -34,6 +36,8 @@
 					<Add directory="src/Player/" />
 					<Add directory="src/Player" />
 					<Add directory="src/" />
+					<Add directory="Scenery" />
+					<Add directory="src/Scenery" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -66,6 +70,10 @@
 		<Unit filename="src/Player/Wheel.h" />
 		<Unit filename="src/Scenery/Background.cpp" />
 		<Unit filename="src/Scenery/Background.h" />
+		<Unit filename="src/Scenery/Building.cpp" />
+		<Unit filename="src/Scenery/Building.h" />
+		<Unit filename="src/Scenery/Mountain.cpp" />
+		<Unit filename="src/Scenery/Mountain.h" />
 		<Unit filename="src/Slider.cpp" />
 		<Unit filename="src/Slider.h" />
 		<Unit filename="src/Tooltip.cpp" />

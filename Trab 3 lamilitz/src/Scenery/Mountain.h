@@ -8,7 +8,7 @@ class Mountain
 {
    public:
       Mountain(Curve *curve, float r, float g, float b, float speed);
-      void render();
+      void render(float fps);
 
       Curve *curve;
    private:

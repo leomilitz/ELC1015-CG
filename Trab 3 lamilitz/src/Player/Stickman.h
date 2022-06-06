@@ -8,7 +8,7 @@ class Stickman
 {
    public:
       Stickman(int posX, int posY, float radius, int bikeX, int bikeY);
-      void render();
+      void render(float fps);
 
    private:
       int posX, posY, bikeX, bikeY;

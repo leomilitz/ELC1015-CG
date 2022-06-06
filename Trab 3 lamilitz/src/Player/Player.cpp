@@ -10,7 +10,7 @@ Player::Player(int width, int height, int posX, int posY) {
    this->stickman = new Stickman(seatX, seatY, radius, posX, posY);
 }
 
-void Player::render() {
+void Player::render(float fps) {
    // Placeholder
    /*CV::color(1,1,1);
    CV::translate(posX, posY);
@@ -25,6 +25,6 @@ void Player::render() {
 
    CV::translate(0,0);*/
 
-   bike->render();
-   stickman->render();
+   bike->render(fps);
+   stickman->render(fps);
 }

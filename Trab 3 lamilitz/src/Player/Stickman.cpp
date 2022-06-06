@@ -13,7 +13,7 @@ Stickman::Stickman(int posX, int posY, float radius, int bikeX, int bikeY) {
    stkBack = new Curve(backCoords);
 }
 
-void Stickman::render() {
+void Stickman::render(float fps) {
    CV::color(0,0,0);
    stkBack->renderBezier(10);
 

@@ -9,10 +9,10 @@ Building::Building(float posX, float posY, float width, float height, float r, f
    this->speed = speed;
 }
 
-void Building::render() {
+void Building::render(float fps) {
    CV::color(r,g,b);
    CV::rectFill(posX, posY, posX + width, posY + height);
-   posX -= speed;
+   posX -= speed/fps;
 }
 
 int Building::getWidth() { return width; }

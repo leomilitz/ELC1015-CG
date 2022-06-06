@@ -11,7 +11,7 @@ class Background
 {
    public:
       Background(int screenWidth, int screenHeight);
-      void render();
+      void render(float fps);
 
    private:
       void drawGround();
@@ -26,7 +26,7 @@ class Background
       int getOutOfBoundsBuilding();
 
       int screenWidth, screenHeight;
-      float mountainSpeed, buildingSpeed;
+      float mountainSpeed, buildingSpeed, fps;
 
       std::vector<Mountain*> mountains;
       std::vector<Building*> buildings;

@@ -7,7 +7,7 @@ class Building
 {
    public:
       Building(float posX, float posY, float width, float height, float r, float g, float b, float speed);
-      void render();
+      void render(float fps);
       int getWidth();
 
       float posX, posY;

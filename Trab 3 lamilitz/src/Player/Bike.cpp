@@ -9,17 +9,16 @@ Bike::Bike(int length, int posX, int posY) {
    bodyLength = length/3;
    wheels.push_back(new Wheel(wheelRadius, posX + wheelRadius, posY + wheelRadius));
    wheels.push_back(new Wheel(wheelRadius, posX + wheelRadius*5, posY + wheelRadius));
-   //pedalFront = new Pedal(posX + wheelRadius*5/4, posY + wheelRadius + wheelRadius, wheelRadius*0.75, 1);
    pedalFront = new Pedal(posX + 2.5*wheelRadius, posY + wheelRadius, wheelRadius*0.75, 1);
    pedalBack =  new Pedal(posX + 2.5*wheelRadius, posY + wheelRadius, wheelRadius*0.75, -1);
 }
 
-void Bike::render() {
+void Bike::render(float fps) {
    // Pedal Back
-   pedalBack->render();
+   pedalBack->render(fps);
 
    // Wheels
-   for (Wheel *w : wheels) w->render();
+   for (Wheel *w : wheels) w->render(fps);
 
    CV::translate(posX + wheelRadius, posY + wheelRadius);
    CV::color(1,0,0);
@@ -62,7 +61,7 @@ void Bike::render() {
    CV::translate(0,0);
 
    // Pedal Front
-   pedalFront->render();
+   pedalFront->render(fps);
    CV::translate(posX + wheelRadius, posY + wheelRadius);
    CV::color(0.1, 0.1, 0.1);
    CV::circleFill(wheelRadius*1.5, 0, wheelRadius*0.15, 15);

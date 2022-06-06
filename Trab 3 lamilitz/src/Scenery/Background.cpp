@@ -1,13 +1,13 @@
 #include "Background.h"
 
 Background::Background(int screenWidth, int screenHeight) {
+   srand(time(0));
    this->screenWidth  = screenWidth;
    this->screenHeight = screenHeight;
-   this->mountainSpeed = 0.9;
-   this->buildingSpeed = 1.6;
+   this->mountainSpeed = 80;
+   this->buildingSpeed = 200;
    createFirstMountain();
    createFirstBuilding();
-   srand(time(0));
 }
 
 float getRandomInt(int lower, int upper) {
@@ -103,7 +103,7 @@ void Background::drawMountains() {
    if (idx != -1)
       mountains.erase(mountains.begin() + idx);
 
-   for (Mountain* m : mountains) m->render();
+   for (Mountain* m : mountains) m->render(fps);
 }
 
 void Background::drawBuildings() {
@@ -114,10 +114,11 @@ void Background::drawBuildings() {
       buildings.erase(buildings.begin() + idx);
    }
 
-   for (Building* b : buildings) b->render();
+   for (Building* b : buildings) b->render(fps);
 }
 
-void Background::render() {
+void Background::render(float fps) {
+   this->fps = fps;
    drawSky();
    drawMountains();
    drawBuildings();

@@ -9,7 +9,7 @@
 class Bike {
    public:
       Bike(int length, int posX, int posY);
-      void render();
+      void render(float fps);
 
    private:
       float wheelRadius, bodyLength, bodyThickness;

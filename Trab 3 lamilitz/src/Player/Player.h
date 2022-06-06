@@ -8,7 +8,7 @@
 class Player {
    public:
       Player(int width, int height, int posX, int posY);
-      void render();
+      void render(float fps);
 
    private:
       int width, height, posX, posY;

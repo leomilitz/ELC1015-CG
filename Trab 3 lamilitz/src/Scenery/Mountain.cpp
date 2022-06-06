@@ -6,8 +6,8 @@ Mountain::Mountain(Curve *curve, float r, float g, float b, float speed) {
    this->speed = speed;
 }
 
-void Mountain::render() {
+void Mountain::render(float fps) {
    CV::color(r,g,b);
    curve->renderBezierFill();
-   curve->sumAll(-speed);
+   curve->sumAll(-speed/fps);
 }

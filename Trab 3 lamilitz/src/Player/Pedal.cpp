@@ -5,14 +5,14 @@ Pedal::Pedal(int centerX, int centerY, float armLength, int orientation) {
    this->centerY = centerY;
    this->armLength = armLength;
    this->pedalX = 0;
-   this->speed = 0.02;
+   this->speed = 4;
    switch (orientation) {
       case 1:     this->angle = PI*0.5;     break;
       default:    this->angle = PI*1.5;     break;
    }
 }
 
-void Pedal::render() {
+void Pedal::render(float fps) {
    CV::color(0.15, 0.15, 0.15);
 
    pedalX = centerX + cos(angle)*armLength;
@@ -20,7 +20,7 @@ void Pedal::render() {
    CV::line(centerX, centerY, pedalX, pedalY, 6);
    CV::line(pedalX, pedalY, pedalX + armLength*0.2, pedalY, 5);
    CV::line(pedalX, pedalY, pedalX - armLength*0.2, pedalY, 5);
-   angle -= speed;
+   angle -= speed/fps;
 }
 
 

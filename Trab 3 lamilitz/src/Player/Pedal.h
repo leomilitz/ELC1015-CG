@@ -6,11 +6,9 @@
 class Pedal {
    public:
       Pedal(int centerX, int centerY, float armLength, int orientation);
-      void render();
+      void render(float fps);
 
    private:
-      void spinPedals();
-
       float armLength, centerX, centerY, pedalX, pedalY, speed, angle;
 };
 

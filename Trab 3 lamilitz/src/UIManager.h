@@ -26,6 +26,7 @@
 #include "Scenery/Background.h"
 #include "Player/Player.h"
 #include "UIComponent.h"
+#include "Frames.h"
 
 class UIManager {
    public:
@@ -36,8 +37,6 @@ class UIManager {
       void uiCreate();
 
    private:
-      void drawBackground();
-
       std::list<UIComponent*> components;
 
       Background* background;
@@ -47,6 +46,8 @@ class UIManager {
       int screenWidth, screenHeight;
       int btnSmallWidth, btnMedWidth, btnBigWidth, btnSwitch, btnSpacingX,
           btnSpacingY, btnHeight;
+
+      Frames* frames;
 };
 
 #endif // UIMANAGER_H

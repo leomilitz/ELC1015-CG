@@ -7,18 +7,18 @@ Background::Background(int screenWidth, int screenHeight) {
    this->buildingSpeed = 1.6;
    createFirstMountain();
    createFirstBuilding();
+   srand(time(0));
 }
 
-float getRandomInt(int low, int high) {
-   static std::default_random_engine e;
-   static std::uniform_int_distribution<int> dis(low, high);
-   return dis(e);
+float getRandomInt(int lower, int upper) {
+   return (rand() % (upper - lower + 1)) + lower;
 }
 
-float getRandomFloat(float low, float high) {
-   static std::default_random_engine e;
-   static std::uniform_real_distribution<float> dis(low, high);
-   return dis(e);
+float getRandomFloat(float lower, float upper) {
+   float random = ((float) rand()) / (float) RAND_MAX;
+   float diff = upper - lower;
+   float r = random * diff;
+   return lower + r;
 }
 
 void Background::drawGround() {
@@ -64,7 +64,7 @@ void Background::addMountain() {
    float lastX = mountains.back()->curve->points[2]->x;
    float lastY = mountains.back()->curve->points[2]->y;
    points.push_back(new Vector2(lastX, lastY));
-   points.push_back(new Vector2(lastX + screenWidth*0.2, lastY + screenHeight*(getRandomFloat(0.3, 0.8))));
+   points.push_back(new Vector2(lastX + screenWidth*0.2, lastY + screenHeight*(getRandomFloat(0.25, 0.85))));
    points.push_back(new Vector2(lastX + screenWidth*0.4, lastY));
    mountains.push_back(new Mountain(new Curve(points), 0, 0.4, 0, mountainSpeed));
 }
@@ -72,7 +72,7 @@ void Background::addBuilding() {
    int spacing = getRandomInt(0,20);
    int lastX = buildings.back()->posX + buildings.back()->getWidth() + spacing;
    int lastY = buildings.back()->posY;
-   int width = screenWidth*0.1;
+   int width = screenWidth*(getRandomFloat(0.04,0.09));
    int height = screenHeight*(getRandomFloat(0.13, 0.35));
    float r,g,b;
    r = g = b = getRandomFloat(0.4, 0.6);
@@ -107,7 +107,7 @@ void Background::drawMountains() {
 }
 
 void Background::drawBuildings() {
-   if (buildings.size() < 12) addBuilding();
+   if (buildings.size() < 20) addBuilding();
 
    int idx = getOutOfBoundsBuilding();
    if (idx != -1) {

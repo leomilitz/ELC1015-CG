@@ -41,4 +41,6 @@ void Stickman::render(float fps) {
    CV::line(neck->x + radius*0.6, neck->y + radius*0.3, neck->x + radius*0.6, neck->y + radius*0.15, 5);
    CV::line(neck->x + radius*0.4, neck->y + radius*0.3, neck->x + radius*0.65, neck->y + radius*0.3, 6);
 
+
+
 }

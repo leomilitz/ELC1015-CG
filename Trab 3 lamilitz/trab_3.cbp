@@ -61,6 +61,8 @@
 		<Unit filename="src/Frames.h" />
 		<Unit filename="src/Player/Bike.cpp" />
 		<Unit filename="src/Player/Bike.h" />
+		<Unit filename="src/Player/Leg.cpp" />
+		<Unit filename="src/Player/Leg.h" />
 		<Unit filename="src/Player/Pedal.cpp" />
 		<Unit filename="src/Player/Pedal.h" />
 		<Unit filename="src/Player/Player.cpp" />

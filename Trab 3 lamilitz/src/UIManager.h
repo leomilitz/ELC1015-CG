@@ -22,6 +22,7 @@
 
 #include <list>
 #include <vector>
+#include <string>
 
 #include "Scenery/Background.h"
 #include "Player/Player.h"

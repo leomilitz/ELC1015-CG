@@ -58,6 +58,7 @@
 		<Unit filename="src/Button.h" />
 		<Unit filename="src/Curve.cpp" />
 		<Unit filename="src/Curve.h" />
+		<Unit filename="src/Frames.h" />
 		<Unit filename="src/Player/Bike.cpp" />
 		<Unit filename="src/Player/Bike.h" />
 		<Unit filename="src/Player/Pedal.cpp" />

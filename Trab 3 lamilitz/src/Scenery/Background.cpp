@@ -3,8 +3,8 @@
 Background::Background(int screenWidth, int screenHeight) {
    this->screenWidth  = screenWidth;
    this->screenHeight = screenHeight;
-   this->mountainSpeed = 0.4;
-   this->buildingSpeed = 0.9;
+   this->mountainSpeed = 0.9;
+   this->buildingSpeed = 1.6;
    createFirstMountain();
    createFirstBuilding();
 }
@@ -81,7 +81,7 @@ void Background::addBuilding() {
 
 void Background::createFirstMountain() {
    std::vector<Vector2*> points;
-   points.push_back(new Vector2(screenWidth*0, screenHeight*0.5));
+   points.push_back(new Vector2(0, screenHeight*0.5));
    points.push_back(new Vector2(screenWidth*0.2, screenHeight*0.7));
    points.push_back(new Vector2(screenWidth*0.4, screenHeight*0.5));
    mountains.push_back(new Mountain(new Curve(points), 0, 0.4, 0, mountainSpeed));
@@ -99,8 +99,9 @@ void Background::createFirstBuilding() {
 void Background::drawMountains() {
    if (mountains.size() < 4) addMountain();
 
-   if (getOutOfBoundsMountain() != -1)
-      mountains.erase(mountains.begin() + getOutOfBoundsMountain());
+   int idx = getOutOfBoundsMountain();
+   if (idx != -1)
+      mountains.erase(mountains.begin() + idx);
 
    for (Mountain* m : mountains) m->render();
 }
@@ -108,8 +109,10 @@ void Background::drawMountains() {
 void Background::drawBuildings() {
    if (buildings.size() < 12) addBuilding();
 
-   if (getOutOfBoundsBuilding() != -1)
-      buildings.erase(buildings.begin() + getOutOfBoundsBuilding());
+   int idx = getOutOfBoundsBuilding();
+   if (idx != -1) {
+      buildings.erase(buildings.begin() + idx);
+   }
 
    for (Building* b : buildings) b->render();
 }

@@ -67,3 +67,8 @@ void Bike::render(float fps) {
    CV::circleFill(wheelRadius*1.5, 0, wheelRadius*0.15, 15);
    CV::translate(0, 0);
 }
+
+Pedal* Bike::getPedal(bool isFrontPedal) {
+   if (isFrontPedal) return pedalFront;
+   return pedalBack;
+}

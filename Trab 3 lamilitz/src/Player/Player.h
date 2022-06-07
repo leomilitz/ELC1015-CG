@@ -2,8 +2,8 @@
 #define PLAYER_H
 
 #include "../gl_canvas2d.h"
+#include "Leg.h"
 #include "Bike.h"
-#include "Stickman.h"
 
 class Player {
    public:
@@ -14,6 +14,7 @@ class Player {
       int width, height, posX, posY;
       Bike *bike;
       Stickman *stickman;
+      Leg *frontLeg, *backLeg;
 
 };
 

@@ -10,6 +10,7 @@ class Bike {
    public:
       Bike(int length, int posX, int posY);
       void render(float fps);
+      Pedal* getPedal(bool isFrontPedal);
 
    private:
       float wheelRadius, bodyLength, bodyThickness;

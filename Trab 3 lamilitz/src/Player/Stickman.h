@@ -9,6 +9,7 @@ class Stickman
    public:
       Stickman(int posX, int posY, float radius, int bikeX, int bikeY);
       void render(float fps);
+      Vector2 getSeatCoords();
 
    private:
       int posX, posY, bikeX, bikeY;

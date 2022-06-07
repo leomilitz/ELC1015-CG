@@ -8,6 +8,8 @@ Player::Player(int width, int height, int posX, int posY) {
    this->bike = new Bike(width, posX, posY);
    float radius = width/6, seatX = posX + radius + radius*1.9/3, seatY = posY + radius + radius*7/3;
    this->stickman = new Stickman(seatX, seatY, radius, posX, posY);
+   this->frontLeg = new Leg(stickman, bike->getPedal(true),  radius);
+   this->backLeg  = new Leg(stickman, bike->getPedal(false), radius);
 }
 
 void Player::render(float fps) {
@@ -24,7 +26,8 @@ void Player::render(float fps) {
       CV::line(0, i*width/6, width, i*width/6);
 
    CV::translate(0,0);*/
-
+   backLeg->render(fps);
    bike->render(fps);
    stickman->render(fps);
+   frontLeg->render(fps);
 }

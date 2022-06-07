@@ -7,6 +7,8 @@ class Pedal {
    public:
       Pedal(int centerX, int centerY, float armLength, int orientation);
       void render(float fps);
+      Vector2 getPedalCoords();
+      float getSpeed();
 
    private:
       float armLength, centerX, centerY, pedalX, pedalY, speed, angle;

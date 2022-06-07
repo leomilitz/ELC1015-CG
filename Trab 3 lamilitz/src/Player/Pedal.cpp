@@ -23,4 +23,6 @@ void Pedal::render(float fps) {
    angle -= speed/fps;
 }
 
+Vector2 Pedal::getPedalCoords() { return Vector2(pedalX, pedalY); }
 
+float Pedal::getSpeed() { return speed; }

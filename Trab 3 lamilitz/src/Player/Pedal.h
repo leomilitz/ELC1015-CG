@@ -9,6 +9,7 @@ class Pedal {
       void render(float fps);
       Vector2 getPedalCoords();
       float getSpeed();
+      float getLength();
 
    private:
       float armLength, centerX, centerY, pedalX, pedalY, speed, angle;

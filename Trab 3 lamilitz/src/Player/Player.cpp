@@ -13,21 +13,10 @@ Player::Player(int width, int height, int posX, int posY) {
 }
 
 void Player::render(float fps) {
-   // Placeholder
-   /*CV::color(1,1,1);
-   CV::translate(posX, posY);
-   CV::rectFill(0,0, width, height);
-
-   CV::color(0,0,1);
-   for (int i = 0; i <= 6; i++)
-      CV::line(i*width/6, 0, i*width/6, height);
-
-   for (int i = 0; i <= 7; i++)
-      CV::line(0, i*width/6, width, i*width/6);
-
-   CV::translate(0,0);*/
+   CV::color(0.06,0.06,0.06);
    backLeg->render(fps);
    bike->render(fps);
    stickman->render(fps);
+   CV::color(0,0,0);
    frontLeg->render(fps);
 }

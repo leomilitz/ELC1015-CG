@@ -14,7 +14,7 @@ class Leg
    private:
       Stickman* stickman;
       Pedal* pedal;
-      float legSize, pedalSpeed;
+      float legSize, pedalSpeed, pedalLength, kneeAngle;
 };
 
 #endif // LEG_H

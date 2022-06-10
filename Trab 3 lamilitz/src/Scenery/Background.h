@@ -6,6 +6,7 @@
 
 #include "Mountain.h"
 #include "Building.h"
+#include "Grass.h"
 
 class Background
 {
@@ -18,18 +19,23 @@ class Background
       void drawSky();
       void drawMountains();
       void drawBuildings();
+      void drawGrass();
       void addMountain();
-      void createFirstMountain();
-      int getOutOfBoundsMountain();
       void addBuilding();
+      void addGrass();
+      void createFirstMountain();
       void createFirstBuilding();
+      void createFirstGrass();
+      int getOutOfBoundsMountain();
       int getOutOfBoundsBuilding();
+      int getOutOfBoundsGrass();
 
       int screenWidth, screenHeight;
-      float mountainSpeed, buildingSpeed, fps;
+      float mountainSpeed, buildingSpeed, grassSpeed, fps;
 
       std::vector<Mountain*> mountains;
       std::vector<Building*> buildings;
+      std::vector<Grass*>  grass;
 
       RandomUtils ru;
 };

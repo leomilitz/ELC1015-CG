@@ -5,8 +5,18 @@ Background::Background(int screenWidth, int screenHeight) {
    this->screenHeight = screenHeight;
    this->mountainSpeed = 50;
    this->buildingSpeed = 100;
+   this->grassSpeed = 500;
    createFirstMountain();
    createFirstBuilding();
+   createFirstGrass();
+}
+
+void Background::drawSky() {
+   float r = 0, g = 0.7, b = 0.85;
+   for (int i = 0; i <= screenHeight; i++) {
+      CV::color(r, g, b,((float) i / screenHeight));
+      CV::line(0, i, screenWidth, i);
+   }
 }
 
 void Background::drawGround() {
@@ -21,12 +31,13 @@ void Background::drawGround() {
    CV::rectFill(0,screenHeight*0.03, screenWidth, 0);
 }
 
-void Background::drawSky() {
-   float r = 0, g = 0.7, b = 0.85;
-   for (int i = 0; i <= screenHeight; i++) {
-      CV::color(r, g, b,((float) i / screenHeight));
-      CV::line(0, i, screenWidth, i);
+int Background::getOutOfBoundsGrass() {
+   int idx = 0;
+   for (Grass* g : grass) {
+      if (g->pos.x + g->getWidth() < 0) return idx;
+      idx++;
    }
+   return -1;
 }
 
 int Background::getOutOfBoundsMountain() {
@@ -54,7 +65,7 @@ void Background::addMountain() {
    points.push_back(new Vector2(lastX, lastY));
    points.push_back(new Vector2(lastX + screenWidth*0.2, lastY + screenHeight*(ru.getRandomFloat(0.25, 0.85))));
    points.push_back(new Vector2(lastX + screenWidth*0.4, lastY));
-   mountains.push_back(new Mountain(new Curve(points), 0, 0.4, 0, mountainSpeed));
+   mountains.push_back(new Mountain(new Curve(points), 0, 0.3, 0, mountainSpeed));
 }
 void Background::addBuilding() {
    int spacing = ru.getRandomInt(0,20);
@@ -67,12 +78,22 @@ void Background::addBuilding() {
    buildings.push_back(new Building(lastX, lastY, width, height, r, g, b, buildingSpeed));
 }
 
+void Background::addGrass() {
+   float lastX = grass.back()->pos.x + grass.back()->getWidth();
+   float lastY = grass.back()->pos.y;
+   float width = screenWidth*ru.getRandomFloat(0.01, 0.03);
+   float height = screenHeight*ru.getRandomFloat(0.009, 0.015);
+   float r = 0, b = 0;
+   float g = ru.getRandomFloat(0.5, 0.6);
+   grass.push_back(new Grass(Vector2(lastX, lastY), width, height, r, g, b, grassSpeed));
+}
+
 void Background::createFirstMountain() {
    std::vector<Vector2*> points;
    points.push_back(new Vector2(0, screenHeight*0.5));
    points.push_back(new Vector2(screenWidth*0.2, screenHeight*0.7));
    points.push_back(new Vector2(screenWidth*0.4, screenHeight*0.5));
-   mountains.push_back(new Mountain(new Curve(points), 0, 0.4, 0, mountainSpeed));
+   mountains.push_back(new Mountain(new Curve(points), 0, 0.3, 0, mountainSpeed));
 }
 
 void Background::createFirstBuilding() {
@@ -82,6 +103,15 @@ void Background::createFirstBuilding() {
    float r,g,b;
    r = g = b = ru.getRandomFloat(0.4, 0.6);
    buildings.push_back(new Building(posX, posY, width, height, r, g, b, buildingSpeed));
+}
+
+void Background::createFirstGrass() {
+   float posX = 0, posY = screenHeight*0.2;
+   float width = screenWidth*ru.getRandomFloat(0.01, 0.03);
+   float height = screenHeight*ru.getRandomFloat(0.009, 0.015);
+   float r = 0, b = 0;
+   float g = ru.getRandomFloat(0.4, 0.5);
+   grass.push_back(new Grass(Vector2(posX, posY), width, height, r, g, b, grassSpeed));
 }
 
 void Background::drawMountains() {
@@ -105,10 +135,22 @@ void Background::drawBuildings() {
    for (Building* b : buildings) b->render(fps);
 }
 
+void Background::drawGrass() {
+   if (grass.size() < 100) addGrass();
+
+   int idx = getOutOfBoundsGrass();
+   if (idx != -1) {
+      grass.erase(grass.begin() + idx);
+   }
+
+   for (Grass* g : grass) g->render(fps);
+}
+
 void Background::render(float fps) {
    this->fps = fps;
    drawSky();
    drawMountains();
    drawBuildings();
    drawGround();
+   drawGrass();
 }

@@ -10,11 +10,14 @@ class Leg
    public:
       Leg(Stickman* stickman, Pedal* pedal, float legSize);
       void render(float fps);
+      Vector2 getKneePosition();
+      float getLegSize();
 
    private:
       Stickman* stickman;
       Pedal* pedal;
-      float legSize, pedalSpeed, pedalLength, kneeAngle;
+      float legSize;
+      Vector2 knee;
 };
 
 #endif // LEG_H

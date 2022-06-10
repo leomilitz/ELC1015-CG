@@ -46,3 +46,4 @@ void Stickman::render(float fps) {
 }
 
 Vector2 Stickman::getSeatCoords() { return Vector2(posX, posY); }
+Curve*  Stickman::getBackCoords()    { return stkBack;  }

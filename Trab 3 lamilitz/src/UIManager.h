@@ -38,6 +38,8 @@ class UIManager {
       void uiCreate();
 
    private:
+      void toggleCalculations();
+
       std::list<UIComponent*> components;
 
       Background* background;
@@ -47,6 +49,8 @@ class UIManager {
       int screenWidth, screenHeight;
       int btnSmallWidth, btnMedWidth, btnBigWidth, btnSwitch, btnSpacingX,
           btnSpacingY, btnHeight;
+
+      bool showCalcs;
 
       Frames* frames;
 };

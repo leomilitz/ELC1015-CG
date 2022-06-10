@@ -4,9 +4,6 @@ Leg::Leg(Stickman* stickman, Pedal* pedal, float legSize) {
    this->stickman = stickman;
    this->pedal = pedal;
    this->legSize = legSize;
-   this->pedalSpeed = pedal->getSpeed();
-   this->pedalLength = pedal->getLength();
-   this->kneeAngle = 1.75*PI;
 }
 
 void Leg::render(float fps) {
@@ -22,8 +19,11 @@ void Leg::render(float fps) {
    float kneeY = (l/d)*(feet.y - seat.y) + (h/d)*(feet.x - seat.x) + seat.y;
 
    CV::color(0,0,0);
-   Vector2 knee = Vector2(kneeX, kneeY);
+   knee = Vector2(kneeX, kneeY);
    CV::line(seat, knee, 10);
    CV::line(knee, feet, 10);
    CV::circleFill(knee, 5, 20);
 }
+
+Vector2 Leg::getKneePosition()   { return knee; }
+float Leg::getLegSize()          { return legSize; }

@@ -32,6 +32,8 @@ void Building::drawWindows(float fps) {
 }
 
 void Building::render(float fps) {
+   CV::color(r-0.1,g-0.1,b-0.1);
+   CV::rect(posX-1, posY, posX + width + 1, posY + height + 1);
    CV::color(r,g,b);
    CV::rectFill(posX, posY, posX + width, posY + height);
    drawWindows(fps);

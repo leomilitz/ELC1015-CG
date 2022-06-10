@@ -13,6 +13,7 @@ class Background
    public:
       Background(int screenWidth, int screenHeight);
       void render(float fps);
+      void showCalculations(bool showCalcs);
 
    private:
       void drawGround();
@@ -32,6 +33,7 @@ class Background
 
       int screenWidth, screenHeight;
       float mountainSpeed, buildingSpeed, grassSpeed, fps;
+      bool showCalcs;
 
       std::vector<Mountain*> mountains;
       std::vector<Building*> buildings;

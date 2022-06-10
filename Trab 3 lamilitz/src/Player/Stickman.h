@@ -10,6 +10,7 @@ class Stickman
       Stickman(int posX, int posY, float radius, int bikeX, int bikeY);
       void render(float fps);
       Vector2 getSeatCoords();
+      Curve* getBackCoords();
 
    private:
       int posX, posY, bikeX, bikeY;

@@ -72,3 +72,8 @@ Pedal* Bike::getPedal(bool isFrontPedal) {
    if (isFrontPedal) return pedalFront;
    return pedalBack;
 }
+
+Vector2 Bike::getPedalCoords(bool isFrontPedal) {
+   if (isFrontPedal) return pedalFront->getPedalCoords();
+   return pedalBack->getPedalCoords();
+}

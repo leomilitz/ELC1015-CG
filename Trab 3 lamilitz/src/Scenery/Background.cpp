@@ -9,6 +9,7 @@ Background::Background(int screenWidth, int screenHeight) {
    createFirstMountain();
    createFirstBuilding();
    createFirstGrass();
+   showCalcs = false;
 }
 
 void Background::drawSky() {
@@ -115,7 +116,7 @@ void Background::createFirstGrass() {
 }
 
 void Background::drawMountains() {
-   if (mountains.size() < 4) addMountain();
+   if (mountains.size() < screenWidth*0.003) addMountain();
 
    int idx = getOutOfBoundsMountain();
    if (idx != -1)
@@ -125,23 +126,21 @@ void Background::drawMountains() {
 }
 
 void Background::drawBuildings() {
-   if (buildings.size() < 20) addBuilding();
+   if (buildings.size() < screenWidth*0.02) addBuilding();
 
    int idx = getOutOfBoundsBuilding();
-   if (idx != -1) {
+   if (idx != -1)
       buildings.erase(buildings.begin() + idx);
-   }
 
    for (Building* b : buildings) b->render(fps);
 }
 
 void Background::drawGrass() {
-   if (grass.size() < 100) addGrass();
+   if (grass.size() < screenWidth*0.08) addGrass();
 
    int idx = getOutOfBoundsGrass();
-   if (idx != -1) {
+   if (idx != -1)
       grass.erase(grass.begin() + idx);
-   }
 
    for (Grass* g : grass) g->render(fps);
 }
@@ -153,4 +152,16 @@ void Background::render(float fps) {
    drawBuildings();
    drawGround();
    drawGrass();
+
+   if (showCalcs) {
+      CV::color(1,0,0);
+      for (Mountain* m : mountains) {
+         for (Vector2* v : m->curve->points)
+            CV::circleFill(*v, 5, 15);
+      }
+   }
+}
+
+void Background::showCalculations(bool showCalcs) {
+   this->showCalcs = showCalcs;
 }

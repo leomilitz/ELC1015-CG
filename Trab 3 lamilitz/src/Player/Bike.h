@@ -11,6 +11,7 @@ class Bike {
       Bike(int length, int posX, int posY);
       void render(float fps);
       Pedal* getPedal(bool isFrontPedal);
+      Vector2 getPedalCoords(bool isFrontPedal);
 
    private:
       float wheelRadius, bodyLength, bodyThickness;

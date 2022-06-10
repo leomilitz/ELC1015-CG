@@ -1,24 +1,12 @@
 #include "Background.h"
 
 Background::Background(int screenWidth, int screenHeight) {
-   srand(time(0));
    this->screenWidth  = screenWidth;
    this->screenHeight = screenHeight;
-   this->mountainSpeed = 80;
-   this->buildingSpeed = 200;
+   this->mountainSpeed = 50;
+   this->buildingSpeed = 100;
    createFirstMountain();
    createFirstBuilding();
-}
-
-float getRandomInt(int lower, int upper) {
-   return (rand() % (upper - lower + 1)) + lower;
-}
-
-float getRandomFloat(float lower, float upper) {
-   float random = ((float) rand()) / (float) RAND_MAX;
-   float diff = upper - lower;
-   float r = random * diff;
-   return lower + r;
 }
 
 void Background::drawGround() {
@@ -64,18 +52,18 @@ void Background::addMountain() {
    float lastX = mountains.back()->curve->points[2]->x;
    float lastY = mountains.back()->curve->points[2]->y;
    points.push_back(new Vector2(lastX, lastY));
-   points.push_back(new Vector2(lastX + screenWidth*0.2, lastY + screenHeight*(getRandomFloat(0.25, 0.85))));
+   points.push_back(new Vector2(lastX + screenWidth*0.2, lastY + screenHeight*(ru.getRandomFloat(0.25, 0.85))));
    points.push_back(new Vector2(lastX + screenWidth*0.4, lastY));
    mountains.push_back(new Mountain(new Curve(points), 0, 0.4, 0, mountainSpeed));
 }
 void Background::addBuilding() {
-   int spacing = getRandomInt(0,20);
+   int spacing = ru.getRandomInt(0,20);
    int lastX = buildings.back()->posX + buildings.back()->getWidth() + spacing;
    int lastY = buildings.back()->posY;
-   int width = screenWidth*(getRandomFloat(0.04,0.09));
-   int height = screenHeight*(getRandomFloat(0.13, 0.35));
+   int width = screenWidth*(ru.getRandomFloat(0.04,0.09));
+   int height = screenHeight*(ru.getRandomFloat(0.13, 0.35));
    float r,g,b;
-   r = g = b = getRandomFloat(0.4, 0.6);
+   r = g = b = ru.getRandomFloat(0.4, 0.6);
    buildings.push_back(new Building(lastX, lastY, width, height, r, g, b, buildingSpeed));
 }
 
@@ -90,9 +78,9 @@ void Background::createFirstMountain() {
 void Background::createFirstBuilding() {
    float posX = 0, posY = screenHeight*0.2;
    float width = screenWidth*0.1;
-   float height = screenHeight*(getRandomFloat(0.1, 0.4));
+   float height = screenHeight*(ru.getRandomFloat(0.1, 0.4));
    float r,g,b;
-   r = g = b = getRandomFloat(0.4, 0.6);
+   r = g = b = ru.getRandomFloat(0.4, 0.6);
    buildings.push_back(new Building(posX, posY, width, height, r, g, b, buildingSpeed));
 }
 

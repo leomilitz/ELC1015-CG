@@ -2,6 +2,8 @@
 #define BUILDING_H
 
 #include "../gl_canvas2d.h"
+#include "../RandomUtils.h"
+#include <vector>
 
 class Building
 {
@@ -13,8 +15,14 @@ class Building
       float posX, posY;
 
    private:
-      float width, height;
+      void drawWindows(float fps);
+      void createWindows();
+
+      float width, height, windowWidth, windowHeight, windowSpacing;
       float r, g, b, speed;
+
+      std::vector<Vector2*> windows;
+      RandomUtils ru;
 };
 
 #endif // BUILDING_H

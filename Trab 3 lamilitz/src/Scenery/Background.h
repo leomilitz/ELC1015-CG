@@ -1,9 +1,9 @@
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 
-#include <stdlib.h>
-#include <time.h>
 #include "../gl_canvas2d.h"
+#include "../RandomUtils.h"
+
 #include "Mountain.h"
 #include "Building.h"
 
@@ -30,6 +30,8 @@ class Background
 
       std::vector<Mountain*> mountains;
       std::vector<Building*> buildings;
+
+      RandomUtils ru;
 };
 
 #endif // BACKGROUND_H

@@ -3,6 +3,7 @@
 
 #include "gl_canvas2d.h"
 #include "UIManager.h"
+#include "RandomUtils.h"
 
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 600
@@ -26,6 +27,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
 }
 
 int main(void) {
+   srand(time(0));
    uiManager = new UIManager(SCREEN_WIDTH, SCREEN_HEIGHT);
    CV::init(SCREEN_WIDTH, SCREEN_HEIGHT, "LM - Bike Dude");
    CV::run();

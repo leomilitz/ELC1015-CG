@@ -6,7 +6,7 @@ Player::Player(int width, int height, int posX, int posY) {
    this->posX = posX;
    this->posY = posY;
    this->bike = new Bike(width, posX, posY);
-   float radius = width/6, seatX = posX + radius + radius*1.9/3, seatY = posY + radius + radius*7/3;
+   float radius = width/6, seatX = posX + radius + radius*1.9/3, seatY = posY + radius*0.1 + radius*10/3;
    this->stickman = new Stickman(seatX, seatY, radius, posX, posY);
    this->frontLeg = new Leg(stickman, bike->getPedal(true),  radius*3.5);
    this->backLeg  = new Leg(stickman, bike->getPedal(false), radius*3.5);

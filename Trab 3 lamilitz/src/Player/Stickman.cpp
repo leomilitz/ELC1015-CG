@@ -22,12 +22,15 @@ void Stickman::render(float fps) {
    CV::color(0.06, 0.06, 0.06);
    CV::line(neck->x, neck->y, posX + radius*1.5, posY + radius*0.45, 10);
    CV::line(posX + radius*1.5, posY + radius*0.45, handleX, handleY, 10);
+   CV::circleFill(posX + radius*1.5, posY + radius*0.45, 5, 15);
+   CV::circleFill(handleX, handleY, 5, 15);
+
 
    // Front Arm
    CV::color(0,0,0);
    CV::line(neck->x, neck->y, posX + radius, posY + radius*0.4, 10);
-   CV::circleFill(posX + radius, posY + radius*0.4, 5, 15);
    CV::line(posX + radius, posY + radius*0.4, handleX, handleY, 10);
+   CV::circleFill(posX + radius, posY + radius*0.4, 5, 15);
    CV::circleFill(handleX, handleY, 5, 15);
 
    // Head

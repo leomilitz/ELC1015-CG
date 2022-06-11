@@ -3,6 +3,8 @@
 # LM - Bike Dude
 Um programa para visualizar um stickman pedalando em uma bicicleta. O cenário é gerado de forma aleatória e se move com parallax.
 
+![](gifs/presentation.gif)
+
 ## Instruções de Uso
 - Tecla **1** do teclado para visualizar os cálculos utilizados.
 - Setas direcionais esquerda e direita do teclado para diminuir e aumentar a velocidade da bicicleta.

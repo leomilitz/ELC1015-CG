@@ -23,8 +23,7 @@
 
 #define CHARSIZE 10
 
-class UIComponent
-{
+class UIComponent {
    public:
       enum UIComponentType { button, slider, tooltip, notype };
 

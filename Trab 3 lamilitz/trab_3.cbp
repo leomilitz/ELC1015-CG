@@ -21,6 +21,7 @@
 					<Add directory="src/" />
 					<Add directory="Scenery" />
 					<Add directory="src/Scenery" />
+					<Add directory="src" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -38,6 +39,7 @@
 					<Add directory="src/" />
 					<Add directory="Scenery" />
 					<Add directory="src/Scenery" />
+					<Add directory="src" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -54,8 +56,6 @@
 			<Add library="../lib/freeglut.lib" />
 		</Linker>
 		<Unit filename="include/GL/glut.h" />
-		<Unit filename="src/Button.cpp" />
-		<Unit filename="src/Button.h" />
 		<Unit filename="src/Curve.cpp" />
 		<Unit filename="src/Curve.h" />
 		<Unit filename="src/Frames.h" />
@@ -71,14 +71,16 @@
 		<Unit filename="src/Player/Stickman.h" />
 		<Unit filename="src/Player/Wheel.cpp" />
 		<Unit filename="src/Player/Wheel.h" />
+		<Unit filename="src/RandomUtils.cpp" />
+		<Unit filename="src/RandomUtils.h" />
 		<Unit filename="src/Scenery/Background.cpp" />
 		<Unit filename="src/Scenery/Background.h" />
 		<Unit filename="src/Scenery/Building.cpp" />
 		<Unit filename="src/Scenery/Building.h" />
+		<Unit filename="src/Scenery/Grass.cpp" />
+		<Unit filename="src/Scenery/Grass.h" />
 		<Unit filename="src/Scenery/Mountain.cpp" />
 		<Unit filename="src/Scenery/Mountain.h" />
-		<Unit filename="src/Slider.cpp" />
-		<Unit filename="src/Slider.h" />
 		<Unit filename="src/Tooltip.cpp" />
 		<Unit filename="src/Tooltip.h" />
 		<Unit filename="src/UIComponent.cpp" />

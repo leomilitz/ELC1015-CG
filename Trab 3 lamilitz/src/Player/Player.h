@@ -1,3 +1,13 @@
+/*
+   Player
+   Autor: Leonardo Militz
+
+   Classe que junta a bicicleta, o stickman e suas pernas.
+   ---------------------------------------------------------------------------
+   - showCalculations: Mostra as joints do corpo do stickman, e mostra a intersecção
+     de circulos utilizada para fazer as pernas do stickman acompanhar os pedais.
+*/
+
 #ifndef PLAYER_H
 #define PLAYER_H
 

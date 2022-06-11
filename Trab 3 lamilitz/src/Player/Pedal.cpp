@@ -29,5 +29,5 @@ void Pedal::setSpeedMultiplier(float multiplier) {
 }
 
 Vector2 Pedal::getPedalCoords() { return Vector2(pedalX, pedalY); }
-float Pedal::getSpeed() { return speed; }
+
 float Pedal::getLength() { return armLength; }

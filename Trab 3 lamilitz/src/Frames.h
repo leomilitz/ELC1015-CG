@@ -14,13 +14,12 @@
 #define UPDATE_RATE 30   //milisegundos
 
 ////////////////////////////////////////////////////////////////////////////////////////
-class Frames{
+class Frames {
    clock_t t1, t2;
    long    cont_frames;
    float   fps, fps_old;
 public:
-   Frames()
-   {
+   Frames() {
       t1 = clock();
 	  cont_frames = 0;
       fps_old = 20; //valor inicial
@@ -31,8 +30,7 @@ public:
    // Retorna o fps da aplicacao. Altere o valor de UPDATE_RATE para diferentes
    // tempos de atualizacao.
    //*********************************************************************
-   float getFrames()
-   {
+   float getFrames() {
       double tempo;
 
       t2 = clock();

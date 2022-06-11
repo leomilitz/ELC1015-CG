@@ -23,10 +23,6 @@ void Wheel::drawSpokes() {
    angle -= speed*speedMultiplier/fps;
 }
 
-void Wheel::setSpeedMultiplier(float multiplier) {
-   speedMultiplier = multiplier;
-}
-
 void Wheel::render(float fps) {
    this->fps = fps;
    CV::translate(centerX, centerY);
@@ -36,3 +32,8 @@ void Wheel::render(float fps) {
    CV::circle(0, 0, radius+1, 23, 9);
    CV::translate(0, 0);
 }
+
+void Wheel::setSpeedMultiplier(float multiplier) {
+   speedMultiplier = multiplier;
+}
+

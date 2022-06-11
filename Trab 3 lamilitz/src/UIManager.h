@@ -5,16 +5,10 @@
    Essa classe recebe todas as funções de render e input da main, e gerencia
    os componentes de interace de usuário (objetos UIComponent). Nessa classe são
    adicionados os botões, sliders, tooltip e background, e faz os seus tamanhos
-   padrão escalarem com o tamanho da tela.
+   padrão escalarem com o tamanho da tela. Essa classe também gerencia componentes visuais
+   como o player e o cenário.
    ---------------------------------------------------------------------------
-   - rememberComponents: Esse método é chamando quando acontece alguma mudança
-   de imagem feita pelo usuário. É buscado o estado da nova imagem selecionada,
-   e em seguida aplica essas mudanças no visual dos botões/sliders da UI.
-
-   - resetComponents: Reseta o estado dos componentes para o padrão. É chamado
-   quando alguma imagem é deletada.
-
-   - getSlidersValues: Busca o valor dos sliders.
+   - toggleCalculations: Ativa e desativa a visualização dos cálculos
 */
 
 #ifndef UIMANAGER_H

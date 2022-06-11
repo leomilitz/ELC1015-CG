@@ -1,3 +1,10 @@
+/*
+   Stickman
+   Autor: Leonardo Militz
+
+   Classe que centraliza as partes da bicicleta, como o pedal frontal e dianteiro, as rodas e o corpo.
+*/
+
 #ifndef BIKE_H
 #define BIKE_H
 

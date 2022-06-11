@@ -51,7 +51,7 @@ void UIManager::uiRender() {
    background->render(fps);
    player->render(fps);
    CV::color(1,0,0);
-   CV::text(0,0, std::to_string((int)fps).c_str());
+   CV::text(5,5, std::to_string((int)fps).c_str());
 
    for (UIComponent* uiComp : components)
       uiComp->render();

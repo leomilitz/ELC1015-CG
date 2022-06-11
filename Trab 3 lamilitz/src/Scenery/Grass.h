@@ -1,3 +1,11 @@
+/*
+   Grass
+   Autor: Leonardo Militz
+
+   Classe para renderizar uma parcela de grama no cenário. Seu tamanho e cor é gerada
+   aleatóriamente na classe Background.
+*/
+
 #ifndef GRASS_H
 #define GRASS_H
 

@@ -1,16 +1,11 @@
 # Trabalho 3 de Computação Gráfica
-####  Leonardo Militz
-
------------------------------------------------------------------------
-
+### Leonardo Militz
 # LM - Bike Dude
 Um programa para visualizar um stickman pedalando em uma bicicleta. O cenário é gerado de forma aleatória e se move com parallax.
 
 ## Instruções de Uso
 - Tecla **1** do teclado para visualizar os cálculos utilizados.
 - Setas direcionais esquerda e direita do teclado para diminuir e aumentar a velocidade da bicicleta.
-
------------------------------------------------------------------------
 
 ## Desenho
 Foi atualizado no canvas 2D as funções de desenho para que possa ser selecionada a grossura das linhas com glLineWidth. Todas as partes do stickman, bicicleta e cenário foram desenhadas de forma organizada em classes separadas.
@@ -32,9 +27,7 @@ Foi atualizado no canvas 2D as funções de desenho para que possa ser seleciona
 - Foi utilizado parallax para dar uma sensação de distância entre o chão, prédios e as montanhas.
 
 ### Velocidade de Movimento dos Componentes
-Todas as velocidades do programa escalam com o FPS do programa, fazendo que a velocidade seja constante independentemente de qual máquina rodar. O FPS máximo tem cap no refresh rate da tela do usuário.
-
------------------------------------------------------------------------
+Todas as velocidades do programa escalam com o FPS do programa, fazendo que a velocidade seja constante independentemente de qual máquina rodar. O FPS máximo tem cap no refresh rate da tela do usuário.W
 
 ## Interação com o Usuário e UI
 ###  UI

@@ -1,13 +1,8 @@
 # Trabalho 1 de Computação Gráfica
-#### Leonardo Militz
-
------------------------------------------------------------------------
-
+### Leonardo Militz
 # LM - Image Viewer
 
 O programa é um visualizador de multiplas imagens simultâneas, com possibilidade manipulação de cor, escala, rotação, e com visualização de um histograma de cores.
-
------------------------------------------------------------------------
 
 ## Funções Implementadas
 

@@ -68,6 +68,13 @@ void Bike::render(float fps) {
    CV::translate(0, 0);
 }
 
+void Bike::setSpeedMultiplier(float multiplier) {
+   pedalBack->setSpeedMultiplier(multiplier);
+   pedalFront->setSpeedMultiplier(multiplier);
+   for (Wheel* w : wheels)
+      w->setSpeedMultiplier(multiplier);
+}
+
 Pedal* Bike::getPedal(bool isFrontPedal) {
    if (isFrontPedal) return pedalFront;
    return pedalBack;

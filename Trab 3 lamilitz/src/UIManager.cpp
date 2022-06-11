@@ -8,6 +8,7 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    background = new Background(screenWidth, screenHeight);
    player = new Player(screenWidth*0.35, screenHeight*0.678, screenWidth*0.32, screenHeight*0.2);
    frames = new Frames();
+   speedMultiplier = 1.0;
 }
 
 void UIManager::uiMouseInputManagement(int button, int state, int wheel, int direction, int x, int y) {
@@ -16,10 +17,24 @@ void UIManager::uiMouseInputManagement(int button, int state, int wheel, int dir
 
 void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
    if (keyUp) {
-      //printf("\nkey: %d", key);
+      if (key == 49) toggleCalculations();
+      if (key == 200 || key == 202) {
+         player->setSpeedMultiplier(1.0);
+         background->setSpeedMultiplier(1.0);
+      }
+   }
 
-      switch (key) {
-         case 49:    toggleCalculations();   break;
+   if (!keyUp) {
+      if (key == 202) {
+         player->setSpeedMultiplier(1.8);
+         background->setSpeedMultiplier(2.5);
+         return;
+      }
+
+      if (key == 200) {
+         player->setSpeedMultiplier(0.6);
+         background->setSpeedMultiplier(0.5);
+         return;
       }
    }
 }

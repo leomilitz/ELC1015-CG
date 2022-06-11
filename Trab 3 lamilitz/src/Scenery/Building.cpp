@@ -1,11 +1,12 @@
 #include "Building.h"
 
-Building::Building(float posX, float posY, float width, float height, float r, float g, float b, float speed) {
+Building::Building(float posX, float posY, float width, float height, float r, float g, float b, float speed, float speedMultiplier) {
    this->posX     = posX;
    this->posY     = posY;
    this->width    = width;
    this->height   = height;
    this->speed    = speed;
+   this->speedMultiplier = speedMultiplier;
    this->r = r; this->g = g; this->b = b;
    createWindows();
 }
@@ -27,7 +28,7 @@ void Building::drawWindows(float fps) {
    CV::color(0.9686, 1, 0.3686);
    for (Vector2* w : windows) {
       CV::rectFill(w->x, w->y, w->x + windowWidth, w->y + windowHeight);
-      w->x -= speed/fps;
+      w->x -= speed*speedMultiplier/fps;
    }
 }
 
@@ -37,7 +38,11 @@ void Building::render(float fps) {
    CV::color(r,g,b);
    CV::rectFill(posX, posY, posX + width, posY + height);
    drawWindows(fps);
-   posX -= speed/fps;
+   posX -= speed*speedMultiplier/fps;
+}
+
+void Building::setSpeedMultiplier(float multiplier) {
+   this->speedMultiplier = multiplier;
 }
 
 int Building::getWidth() { return width; }

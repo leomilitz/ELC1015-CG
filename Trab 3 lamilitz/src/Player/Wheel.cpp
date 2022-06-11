@@ -6,6 +6,7 @@ Wheel::Wheel(int radius, int centerX, int centerY, int tireThickness) {
    this->centerY = centerY;
    this->tireThickness = tireThickness;
    this->speed = 6;
+   this->speedMultiplier = 1.0;
    this->angle = 0.01;
 }
 
@@ -19,7 +20,11 @@ void Wheel::drawSpokes() {
    CV::line(0, 0, cos(PI*1.25 + angle)*radius, sin(PI*1.25 + angle)*radius, 4);     // 225 degrees
    CV::line(0, 0, cos(PI*1.5 + angle)*radius, sin(PI*1.5 + angle)*radius, 4);       // 270 degrees
    CV::line(0, 0, cos(PI*1.75 + angle)*radius, sin(PI*1.75 + angle)*radius, 4);     // 315 degrees
-   angle -= speed/fps;
+   angle -= speed*speedMultiplier/fps;
+}
+
+void Wheel::setSpeedMultiplier(float multiplier) {
+   speedMultiplier = multiplier;
 }
 
 void Wheel::render(float fps) {

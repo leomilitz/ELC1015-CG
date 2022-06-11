@@ -5,14 +5,15 @@
 
 class Grass {
    public:
-      Grass(Vector2 pos, float width, float height, float r, float g, float b, float grassSpeed);
+      Grass(Vector2 pos, float width, float height, float r, float g, float b, float speed, float speedMultiplier);
 
       void render(float fps);
+      void setSpeedMultiplier(float multiplier);
       float getWidth();
 
       Vector2 pos;
    private:
-      float speed, width, height, r, g, b;
+      float speed, speedMultiplier, width, height, r, g, b;
 };
 
 #endif // GRASS_H

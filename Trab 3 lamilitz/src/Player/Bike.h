@@ -10,6 +10,7 @@ class Bike {
    public:
       Bike(int length, int posX, int posY);
       void render(float fps);
+      void setSpeedMultiplier(float multiplier);
       Pedal* getPedal(bool isFrontPedal);
       Vector2 getPedalCoords(bool isFrontPedal);
 

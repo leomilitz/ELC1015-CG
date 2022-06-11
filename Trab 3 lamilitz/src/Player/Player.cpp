@@ -47,3 +47,7 @@ void Player::render(float fps) {
 void Player::showCalculations(bool showCalcs) {
    this->showCalcs = showCalcs;
 }
+
+void Player::setSpeedMultiplier(float multiplier) {
+   bike->setSpeedMultiplier(multiplier);
+}

@@ -8,11 +8,12 @@ class Wheel
    public:
       Wheel(int radius, int centerX, int centerY, int tireThickness=10);
       void render(float fps);
+      void setSpeedMultiplier(float multiplier);
 
    private:
       void drawSpokes();
       int radius, centerX, centerY, tireThickness;
-      float speed, angle, fps;
+      float speed, speedMultiplier, angle, fps;
 };
 
 #endif // WHEEL_H

@@ -6,6 +6,7 @@ Background::Background(int screenWidth, int screenHeight) {
    this->mountainSpeed = 50;
    this->buildingSpeed = 100;
    this->grassSpeed = 500;
+   this->speedMultiplier = 1.0;
    createFirstMountain();
    createFirstBuilding();
    createFirstGrass();
@@ -66,7 +67,7 @@ void Background::addMountain() {
    points.push_back(new Vector2(lastX, lastY));
    points.push_back(new Vector2(lastX + screenWidth*0.2, lastY + screenHeight*(ru.getRandomFloat(0.25, 0.85))));
    points.push_back(new Vector2(lastX + screenWidth*0.4, lastY));
-   mountains.push_back(new Mountain(new Curve(points), 0, 0.3, 0, mountainSpeed));
+   mountains.push_back(new Mountain(new Curve(points), 0, 0.3, 0, mountainSpeed, speedMultiplier));
 }
 void Background::addBuilding() {
    int spacing = ru.getRandomInt(0,20);
@@ -76,7 +77,7 @@ void Background::addBuilding() {
    int height = screenHeight*(ru.getRandomFloat(0.13, 0.35));
    float r,g,b;
    r = g = b = ru.getRandomFloat(0.4, 0.6);
-   buildings.push_back(new Building(lastX, lastY, width, height, r, g, b, buildingSpeed));
+   buildings.push_back(new Building(lastX, lastY, width, height, r, g, b, buildingSpeed, speedMultiplier));
 }
 
 void Background::addGrass() {
@@ -86,7 +87,7 @@ void Background::addGrass() {
    float height = screenHeight*ru.getRandomFloat(0.009, 0.015);
    float r = 0, b = 0;
    float g = ru.getRandomFloat(0.5, 0.6);
-   grass.push_back(new Grass(Vector2(lastX, lastY), width, height, r, g, b, grassSpeed));
+   grass.push_back(new Grass(Vector2(lastX, lastY), width, height, r, g, b, grassSpeed, speedMultiplier));
 }
 
 void Background::createFirstMountain() {
@@ -94,7 +95,7 @@ void Background::createFirstMountain() {
    points.push_back(new Vector2(0, screenHeight*0.5));
    points.push_back(new Vector2(screenWidth*0.2, screenHeight*0.7));
    points.push_back(new Vector2(screenWidth*0.4, screenHeight*0.5));
-   mountains.push_back(new Mountain(new Curve(points), 0, 0.3, 0, mountainSpeed));
+   mountains.push_back(new Mountain(new Curve(points), 0, 0.3, 0, mountainSpeed, speedMultiplier));
 }
 
 void Background::createFirstBuilding() {
@@ -103,7 +104,7 @@ void Background::createFirstBuilding() {
    float height = screenHeight*(ru.getRandomFloat(0.1, 0.4));
    float r,g,b;
    r = g = b = ru.getRandomFloat(0.4, 0.6);
-   buildings.push_back(new Building(posX, posY, width, height, r, g, b, buildingSpeed));
+   buildings.push_back(new Building(posX, posY, width, height, r, g, b, buildingSpeed, speedMultiplier));
 }
 
 void Background::createFirstGrass() {
@@ -112,7 +113,7 @@ void Background::createFirstGrass() {
    float height = screenHeight*ru.getRandomFloat(0.009, 0.015);
    float r = 0, b = 0;
    float g = ru.getRandomFloat(0.4, 0.5);
-   grass.push_back(new Grass(Vector2(posX, posY), width, height, r, g, b, grassSpeed));
+   grass.push_back(new Grass(Vector2(posX, posY), width, height, r, g, b, grassSpeed, speedMultiplier));
 }
 
 void Background::drawMountains() {
@@ -164,4 +165,11 @@ void Background::render(float fps) {
 
 void Background::showCalculations(bool showCalcs) {
    this->showCalcs = showCalcs;
+}
+
+void Background::setSpeedMultiplier(float multiplier) {
+   speedMultiplier = multiplier;
+   for (Mountain* m : mountains) m->setSpeedMultiplier(multiplier);
+   for (Building* b : buildings) b->setSpeedMultiplier(multiplier);
+   for (Grass* g    : grass)     g->setSpeedMultiplier(multiplier);
 }

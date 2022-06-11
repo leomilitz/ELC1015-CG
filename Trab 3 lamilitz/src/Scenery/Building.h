@@ -8,8 +8,9 @@
 class Building
 {
    public:
-      Building(float posX, float posY, float width, float height, float r, float g, float b, float speed);
+      Building(float posX, float posY, float width, float height, float r, float g, float b, float speed, float speedMultiplier);
       void render(float fps);
+      void setSpeedMultiplier(float multiplier);
       int getWidth();
 
       float posX, posY;
@@ -19,7 +20,7 @@ class Building
       void createWindows();
 
       float width, height, windowWidth, windowHeight, windowSpacing;
-      float r, g, b, speed;
+      float r, g, b, speed, speedMultiplier;
 
       std::vector<Vector2*> windows;
       RandomUtils ru;

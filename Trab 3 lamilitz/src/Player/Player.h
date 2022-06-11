@@ -11,6 +11,7 @@ class Player {
       Player(int width, int height, int posX, int posY);
       void render(float fps);
       void showCalculations(bool showCalcs);
+      void setSpeedMultiplier(float multiplier);
 
    private:
       int width, height, posX, posY;

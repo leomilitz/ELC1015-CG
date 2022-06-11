@@ -14,6 +14,7 @@ class Background
       Background(int screenWidth, int screenHeight);
       void render(float fps);
       void showCalculations(bool showCalcs);
+      void setSpeedMultiplier(float multiplier);
 
    private:
       void drawGround();
@@ -32,7 +33,7 @@ class Background
       int getOutOfBoundsGrass();
 
       int screenWidth, screenHeight;
-      float mountainSpeed, buildingSpeed, grassSpeed, fps;
+      float mountainSpeed, buildingSpeed, grassSpeed, speedMultiplier, fps;
       bool showCalcs;
 
       std::vector<Mountain*> mountains;

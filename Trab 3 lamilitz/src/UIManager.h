@@ -51,6 +51,7 @@ class UIManager {
           btnSpacingY, btnHeight;
 
       bool showCalcs;
+      float speedMultiplier;
 
       Frames* frames;
 };

@@ -13,7 +13,7 @@
 #ifndef TOOLTIP_H
 #define TOOLTIP_H
 
-#include <list>
+#include <vector>
 #include <sstream>
 
 #include "Vector2.h"
@@ -26,10 +26,10 @@
 class Tooltip: public UIComponent {
    public:
       Tooltip(int x1, int y1, int x2, int y2, std::string text, int width,
-              int direction=1, bool visible=false, std::string btnText="");
+              int directionV=1, int directionH=1, bool visible=false, std::string btnText="");
 
       Tooltip(int x, int y, int radius, std::string text, int width,
-              int direction=1, bool visible=false, std::string btnText="");
+              int directionV=1, int directionH=1, bool visible=false, std::string btnText="");
 
       void render();
       void inputManagement(int mouseX, int mouseY, int *mouseState);
@@ -39,9 +39,9 @@ class Tooltip: public UIComponent {
 
       Vector2 *posMouse;
       std::string text;
-      std::list<std::string> splitText;
+      std::vector<std::string> splitText;
       bool visible, isHovering;
-      int width, height, radius, direction;
+      int width, height, radius, directionV, directionH;
 };
 
 #endif // TOOLTIP_H

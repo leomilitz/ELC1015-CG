@@ -4,15 +4,23 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    this->screenWidth  = screenWidth;
    this->screenHeight = screenHeight;
    this->showCalcs = false;
+   this->speedMultiplier = 1.0;
+
+   float tooltipX = screenWidth*0.03;
+   float tooltipY = screenHeight*0.95;
+   const char* tooltipText = "Keyboard Controls:\n\n- Left and right arrows to control speed\n- Press \"1\" to view the calculations";
+   components.push_back(new Tooltip(tooltipX, tooltipY, 12, tooltipText, screenWidth*0.41, -1, 1, true, "?"));
 
    background = new Background(screenWidth, screenHeight);
    player = new Player(screenWidth*0.35, screenHeight*0.678, screenWidth*0.32, screenHeight*0.2);
    frames = new Frames();
-   speedMultiplier = 1.0;
 }
 
 void UIManager::uiMouseInputManagement(int button, int state, int wheel, int direction, int x, int y) {
    mouseX = x; mouseY = y; mouseState = state;
+
+   for (UIComponent* uiComp : components)
+      uiComp->inputManagement(mouseX, mouseY, &mouseState);
 }
 
 void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
@@ -22,9 +30,7 @@ void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
          player->setSpeedMultiplier(1.0);
          background->setSpeedMultiplier(1.0);
       }
-   }
-
-   if (!keyUp) {
+   } else {
       if (key == 202) {
          player->setSpeedMultiplier(1.8);
          background->setSpeedMultiplier(2.5);
@@ -40,12 +46,15 @@ void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
 }
 
 void UIManager::uiRender() {
-   float fps = frames->getFrames();
    CV::clear(1,1,1);
+   float fps = frames->getFrames();
    background->render(fps);
    player->render(fps);
    CV::color(1,0,0);
    CV::text(0,0, std::to_string((int)fps).c_str());
+
+   for (UIComponent* uiComp : components)
+      uiComp->render();
 }
 
 void UIManager::toggleCalculations() {

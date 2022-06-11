@@ -27,6 +27,7 @@
 #include "Scenery/Background.h"
 #include "Player/Player.h"
 #include "UIComponent.h"
+#include "Tooltip.h"
 #include "Frames.h"
 
 class UIManager {
@@ -41,7 +42,6 @@ class UIManager {
       void toggleCalculations();
 
       std::list<UIComponent*> components;
-
       Background* background;
       Player* player;
 

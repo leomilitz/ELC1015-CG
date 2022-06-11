@@ -1,6 +1,6 @@
 #include "Tooltip.h"
 
-Tooltip::Tooltip(int x1, int y1, int x2, int y2, std::string text, int width, int direction, bool visible, std::string btnText)
+Tooltip::Tooltip(int x1, int y1, int x2, int y2, std::string text, int width, int directionV, int directionH, bool visible, std::string btnText)
 :UIComponent(x1, y1, x2, y2, btnText, [](){})  {
    this->radius = 0;
    this->width = width;
@@ -11,10 +11,11 @@ Tooltip::Tooltip(int x1, int y1, int x2, int y2, std::string text, int width, in
    this->isHovering = false;
    this->posMouse = new Vector2(0,0);
    this->type = tooltip;
-   (direction != 1) ? this->direction = -1 : this->direction = direction;
+   (directionV != 1) ? this->directionV = -1 : this->directionV = 1;
+   (directionH != 1) ? this->directionH = -1 : this->directionH = 1;
 }
 
-Tooltip::Tooltip(int x, int y, int radius, std::string text, int width, int direction, bool visible, std::string btnText)
+Tooltip::Tooltip(int x, int y, int radius, std::string text, int width, int directionV, int directionH, bool visible, std::string btnText)
 :UIComponent(x, y, 0, 0, btnText, [](){}) {
    this->width = width;
    this->radius = radius;
@@ -25,7 +26,8 @@ Tooltip::Tooltip(int x, int y, int radius, std::string text, int width, int dire
    this->isHovering = false;
    this->posMouse = new Vector2(0,0);
    this->type = tooltip;
-   (direction != 1) ? this->direction = -1 : this->direction = direction;
+   (directionV != 1) ? this->directionV = -1 : this->directionV = 1;
+   (directionH != 1) ? this->directionH = -1 : this->directionH = 1;
 }
 
 void Tooltip::inputManagement(int mouseX, int mouseY, int *mouseState) {
@@ -88,14 +90,20 @@ void Tooltip::render() {
 
 void Tooltip::drawTooltip() {
    CV::color(0.7, 0.7, 0.7);
-   CV::rectFill(posMouse->x - direction*2, posMouse->y - direction*2, posMouse->x + (width + 2)*direction, posMouse->y + (height + 2)*direction);
+   CV::rectFill(posMouse->x - directionH*2, posMouse->y - directionV*2, posMouse->x + (width + 2)*directionH, posMouse->y + (height + 2)*directionV);
    CV::color(0.5, 0.5, 0.5);
-   CV::rectFill(posMouse->x, posMouse->y, posMouse->x - width, posMouse->y + height * direction);
+   CV::rectFill(posMouse->x, posMouse->y, posMouse->x + width*directionH, posMouse->y + (height * directionV));
    CV::color(1,1,1);
-   int posY = 1;
+
+   int posY;
+   (directionV == 1) ? posY = splitText.size() : posY = 1;
+
+   int posXOffset;
+   (directionH == 1) ? posXOffset = 0 : posXOffset = -width;
+
    for (std::string txt : splitText) {
-      CV::text(posMouse->x - width + TEXT_OFFSET_X, posMouse->y - TEXT_OFFSET_Y*posY, txt.c_str());
-      posY++;
+      CV::text(posMouse->x + TEXT_OFFSET_X + posXOffset, posMouse->y + directionV*TEXT_OFFSET_Y*posY, txt.c_str());
+      (directionV == 1) ? posY-- : posY++;
    }
 }
 

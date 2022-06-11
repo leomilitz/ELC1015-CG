@@ -21,7 +21,6 @@
 #define UIMANAGER_H
 
 #include <list>
-#include <vector>
 #include <string>
 
 #include "Scenery/Background.h"
@@ -47,8 +46,6 @@ class UIManager {
 
       int mouseX, mouseY, mouseState;
       int screenWidth, screenHeight;
-      int btnSmallWidth, btnMedWidth, btnBigWidth, btnSwitch, btnSpacingX,
-          btnSpacingY, btnHeight;
 
       bool showCalcs;
       float speedMultiplier;

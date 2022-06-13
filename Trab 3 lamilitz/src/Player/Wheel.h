@@ -19,7 +19,7 @@ class Wheel {
    private:
       void drawSpokes();
       int radius, centerX, centerY, tireThickness;
-      float speed, speedMultiplier, angle, fps;
+      float speed, speedMultiplier, angle;
 };
 
 #endif // WHEEL_H

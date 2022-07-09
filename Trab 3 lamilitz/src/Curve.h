@@ -25,6 +25,8 @@ class Curve {
       void sumAll(float value);
 
       std::vector<Vector2*> points;
+   private:
+      double computeBinominal(int n, int k);
 };
 
 #endif // CURVE_H

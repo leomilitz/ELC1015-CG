@@ -52,6 +52,8 @@
 		<Unit filename="src/Curve.h" />
 		<Unit filename="src/Node.cpp" />
 		<Unit filename="src/Node.h" />
+		<Unit filename="src/SweepCurve.cpp" />
+		<Unit filename="src/SweepCurve.h" />
 		<Unit filename="src/Tooltip.cpp" />
 		<Unit filename="src/Tooltip.h" />
 		<Unit filename="src/UIComponent.cpp" />
@@ -59,6 +61,7 @@
 		<Unit filename="src/UIManager.cpp" />
 		<Unit filename="src/UIManager.h" />
 		<Unit filename="src/Vector2.h" />
+		<Unit filename="src/Vector3.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />

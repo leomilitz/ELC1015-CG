@@ -9,14 +9,17 @@
 class SweepCurve
 {
    public:
-      SweepCurve(Curve* curve);
+      SweepCurve(Curve* curve, float x, float y);
       virtual ~SweepCurve();
+
+      void render(float fps);
 
    private:
       std::vector<Vector3*> points;
       Curve* curve;
-      float pointDivisor;
       int sweepDivisor;
+      float fps;
+      float posX, posY;
 };
 
 #endif // SWEEPCURVE_H

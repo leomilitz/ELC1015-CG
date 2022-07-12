@@ -13,8 +13,10 @@ class SweepCurve
       virtual ~SweepCurve();
 
    private:
-      Curve* curve;
       std::vector<Vector3*> points;
+      Curve* curve;
+      float pointDivisor;
+      int sweepDivisor;
 };
 
 #endif // SWEEPCURVE_H

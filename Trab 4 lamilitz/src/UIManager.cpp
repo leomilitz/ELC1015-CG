@@ -54,12 +54,13 @@ void UIManager::uiCreate() {
 }
 
 void UIManager::updateCurveCoordinates() {
-   std::vector<Vector2*> curve;
+   std::vector<Vector3*> curve;
 
    for (UIComponent* uiComp : components) {
       if (uiComp->getType() == UIComponent::node) {
          Node* n = dynamic_cast<Node*>(uiComp);
-         curve.push_back(n->getCoordinates());
+         Vector2* coord = n->getCoordinates();
+         curve.push_back(new Vector3(coord->x, coord->y, 0));
       }
    }
 

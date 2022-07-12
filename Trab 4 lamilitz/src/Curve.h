@@ -14,18 +14,20 @@
 #define CURVE_H
 
 #include "gl_canvas2d.h"
-#include "Vector2.h"
+#include "Vector3.h"
 #include <vector>
 
 class Curve {
    public:
-      Curve(std::vector<Vector2*> points);
+      Curve(std::vector<Vector3*> points);
       Curve();
 
       void renderBezier(float pointSize=1);
-      void setPoints(std::vector<Vector2*> points);
+      void setPoints(std::vector<Vector3*> points);
+      std::vector<Vector3*> getDiscreteCurve(float discStep);
 
-      std::vector<Vector2*> points;
+      std::vector<Vector3*> points;
+      float step;
    private:
       double computeBinominal(int n, int k);
 };

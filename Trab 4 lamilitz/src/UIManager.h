@@ -29,6 +29,7 @@
 #include "Frames.h"
 #include "Button.h"
 #include "Node.h"
+#include "Vector3.h"
 
 #define NODE_MAX 6
 

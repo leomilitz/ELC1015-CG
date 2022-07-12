@@ -13,6 +13,7 @@ class SweepCurve
       virtual ~SweepCurve();
 
       void render(float fps);
+      void setCurve(Curve* curve);
 
    private:
       std::vector<Vector3*> points;

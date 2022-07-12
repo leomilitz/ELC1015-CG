@@ -30,6 +30,7 @@
 #include "Button.h"
 #include "Node.h"
 #include "Vector3.h"
+#include "SweepCurve.h"
 
 #define NODE_MAX 6
 
@@ -42,13 +43,14 @@ class UIManager {
       void uiCreate();
 
    private:
-      void showFps();
+      void showFps(float fps);
       void drawBackground();
       void addNode();
       void updateCurveCoordinates();
 
       std::list<UIComponent*> components;
       Curve* modelingCurve;
+      SweepCurve* sweepCurve;
       Frames* frames;
 
       int mouseX, mouseY, mouseState;

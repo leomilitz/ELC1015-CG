@@ -16,6 +16,7 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    nodeCounter = 0;
    frames = new Frames();
    modelingCurve = new Curve();
+   sweepCurve = new SweepCurve(modelingCurve, screenWidth*0.5, screenWidth*0.5);
 
    uiCreate();
 }
@@ -33,12 +34,13 @@ void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
 
 void UIManager::drawBackground() {
    CV::color(1,1,1);
-   CV::line(screenWidth*0.30, 0, screenWidth*0.30, screenHeight, screenWidth*0.003);
-   CV::line(0, screenHeight - btnHeight*2, screenWidth*0.30, screenHeight - btnHeight*2, screenWidth*0.003);
+   CV::line(screenWidth*0.48, 0, screenWidth*0.48, screenHeight, screenWidth*0.003);
+   CV::line(0, screenHeight - btnHeight*2, screenWidth*0.48, screenHeight - btnHeight*2, screenWidth*0.003);
 }
 
 void UIManager::uiRender() {
-   showFps();
+   float fps = frames->getFrames();
+   showFps(fps);
    drawBackground();
 
    for (UIComponent* uiComp : components)
@@ -46,6 +48,7 @@ void UIManager::uiRender() {
 
    updateCurveCoordinates();
    modelingCurve->renderBezier();
+   sweepCurve->render(fps);
 }
 
 void UIManager::uiCreate() {
@@ -65,19 +68,19 @@ void UIManager::updateCurveCoordinates() {
    }
 
    modelingCurve->setPoints(curve);
+   sweepCurve->setCurve(modelingCurve);
 }
 
 void UIManager::addNode() {
    if (nodeCounter <= NODE_MAX) {
-      Node* n = new Node(screenWidth*0.15, screenHeight*0.5, nodeRadius);
-      n->setLimit(screenWidth*0.3, screenHeight*0.97 - btnHeight*2);
+      Node* n = new Node(screenWidth*0.25, screenHeight*0.5, nodeRadius);
+      n->setLimit(screenWidth*0.48, screenHeight*0.97 - btnHeight*2);
       components.push_back(n);
       nodeCounter++;
    }
 }
 
-void UIManager::showFps() {
-   float fps = frames->getFrames();
+void UIManager::showFps(float fps) {
    CV::color(1,0,0);
-   CV::text(screenWidth*0.31,5, std::to_string((int)fps).c_str());
+   CV::text(screenWidth*0.49,5, std::to_string((int)fps).c_str());
 }

@@ -16,6 +16,8 @@ class SweepCurve
       void setCurve(Curve* curve);
 
    private:
+      std::vector<std::vector<Vector3*>> createSweepMesh(std::vector<Vector3*> points);
+
       std::vector<Vector3*> points;
       Curve* curve;
       int sweepDivisor;

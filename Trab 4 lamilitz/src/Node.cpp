@@ -23,27 +23,23 @@ void Node::nodeDragAround(Vector2* posMouse) {
          return;
       }
 
-      if (newPos.x + radius >= limit.x) {
-         if (newPos.y + radius < limit.y && newPos.x - radius > 0)
-            updatePosition(pos1->x, newPos.y);
+      if ((newPos.x + radius) > limit.x && (newPos.y + radius) < limit.y && (newPos.y - radius) > 0) {
+         updatePosition(pos1->x, newPos.y);
          return;
       }
 
-      if (newPos.y + radius >= limit.y) {
-         if (newPos.x + radius < limit.x && newPos.y - radius > 0)
-            updatePosition(newPos.x, pos1->y);
+      if ((newPos.y + radius) > limit.y && (newPos.x + radius) < limit.x && (newPos.x - radius) > 0) {
+         updatePosition(newPos.x, pos1->y);
          return;
       }
 
-      if (newPos.x - radius <= 0) {
-         if (newPos.y - radius > 0 && newPos.x + radius < limit.x)
-            updatePosition(pos1->x, newPos.y);
+      if ((newPos.x - radius) < 0 && (newPos.y + radius) < limit.y && (newPos.y - radius) > 0) {
+         updatePosition(pos1->x, newPos.y);
          return;
       }
 
-      if (newPos.y - radius <= 0) {
-         if (newPos.x - radius > 0 && newPos.y + radius < limit.y)
-            updatePosition(newPos.x, pos1->y);
+      if ((newPos.y - radius) < 0 && (newPos.x + radius) < limit.x && (newPos.x - radius) > 0) {
+         updatePosition(newPos.x, pos1->y);
          return;
       }
    }

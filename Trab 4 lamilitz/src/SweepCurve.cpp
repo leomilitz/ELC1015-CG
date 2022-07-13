@@ -7,6 +7,10 @@ SweepCurve::SweepCurve(Curve* curve, float x, float y) {
    posY = y;
 }
 
+std::vector<std::vector<Vector3*>> SweepCurve::createSweepMesh(std::vector<Vector3*> points) {
+
+}
+
 void SweepCurve::render(float fps) {
    this->fps = fps;
 

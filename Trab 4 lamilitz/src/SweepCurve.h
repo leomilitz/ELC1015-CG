@@ -13,7 +13,7 @@ class SweepCurve
       virtual ~SweepCurve();
 
       void render(float fps);
-      void inputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY);
+      void inputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY, int div);
       void setCurve(Curve* curve);
 
    private:
@@ -30,7 +30,9 @@ class SweepCurve
       Curve* curve;
       int sweepDivisor;
       float fps;
-      float posX, posY, dim;
+      float posX, posY, dist;
+      int mouseX, mouseY;
+      bool isRotating;
 
 };
 

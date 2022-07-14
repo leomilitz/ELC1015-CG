@@ -27,7 +27,7 @@ void UIManager::uiMouseInputManagement(int button, int state, int wheel, int dir
    for (UIComponent* uiComp : components)
       uiComp->inputManagement(mouseX, mouseY, &mouseState);
 
-   sweepCurve->inputManagement(button, &mouseState, wheel, direction, mouseX, mouseY);
+   sweepCurve->inputManagement(button, &mouseState, wheel, direction, mouseX, mouseY, screenWidth*0.5);
 }
 
 void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {

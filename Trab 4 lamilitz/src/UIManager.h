@@ -58,7 +58,6 @@ class UIManager {
       int btnSmallWidth, btnMedWidth, btnBigWidth, btnSwitch, btnSpacingX,
           btnSpacingY, btnHeight, nodeRadius;
       int nodeCounter;
-      bool changedCurve;
 };
 
 #endif // UIMANAGER_H

@@ -26,6 +26,8 @@ void UIManager::uiMouseInputManagement(int button, int state, int wheel, int dir
 
    for (UIComponent* uiComp : components)
       uiComp->inputManagement(mouseX, mouseY, &mouseState);
+
+   sweepCurve->inputManagement(button, &mouseState, wheel, direction, mouseX, mouseY);
 }
 
 void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
@@ -33,6 +35,8 @@ void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
 }
 
 void UIManager::drawBackground() {
+   CV::color(0,0,0);
+   CV::rectFill(0, 0, screenWidth*0.48, screenHeight);
    CV::color(1,1,1);
    CV::line(screenWidth*0.48, 0, screenWidth*0.48, screenHeight, screenWidth*0.003);
    CV::line(0, screenHeight - btnHeight*2, screenWidth*0.48, screenHeight - btnHeight*2, screenWidth*0.003);
@@ -41,14 +45,14 @@ void UIManager::drawBackground() {
 void UIManager::uiRender() {
    float fps = frames->getFrames();
    showFps(fps);
+
+   updateCurveCoordinates();
+   sweepCurve->render(fps);
    drawBackground();
+   modelingCurve->renderBezier();
 
    for (UIComponent* uiComp : components)
       uiComp->render();
-
-   updateCurveCoordinates();
-   modelingCurve->renderBezier();
-   sweepCurve->render(fps);
 }
 
 void UIManager::uiCreate() {

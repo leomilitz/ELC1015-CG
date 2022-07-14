@@ -103,6 +103,14 @@ std::vector<std::vector<Vector3>> SweepCurve::createMesh() {
    return matrix;
 }
 
+void SweepCurve::inputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY) {
+   // Zoom com a roda do mouse
+   if (direction == 1)
+      dim += 0.1;
+   else if (direction == -1)
+      dim -= 0.1;
+}
+
 void SweepCurve::render(float fps) {
    this->fps = fps;
 
@@ -114,6 +122,7 @@ void SweepCurve::render(float fps) {
    CV::color(1,1,1);
    drawWireFrame();
    drawMesh();
+   CV::translate(0,0);
 }
 
 void SweepCurve::setCurve(Curve* curve) {

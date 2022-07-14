@@ -26,16 +26,16 @@ class SweepCurve
       void drawMesh();
       void drawWireFrame();
       std::vector<std::vector<Vector3>> createMesh();
-      std::vector<Vector3> calculateSweep(float angle, float radius);
+      std::vector<Vector3> calculateSweep(float angleX, float angleY, float radius);
 
       std::vector<Vector3*> points;
       std::vector<std::vector<Vector3>> mesh;
       Curve* curve;
       int sweepDivisor;
       float fps;
-      float posX, posY, dist;
+      float posX, posY, dist, angleX, angleY;
       int mouseX, mouseY;
-      bool isRotating, isOrtho;
+      bool isRotating, isOrtho, isHolding;
 
 };
 

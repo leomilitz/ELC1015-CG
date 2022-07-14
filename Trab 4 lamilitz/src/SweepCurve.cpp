@@ -5,9 +5,12 @@ SweepCurve::SweepCurve(Curve* curve, float x, float y) {
    sweepDivisor = 30;
    posX = x;
    posY = y;
-   dist = 50;
+   dist = 30;
+   angleX = 0;
+   angleY = 0;
    isRotating = false;
-   isOrtho = false;
+   isHolding  = false;
+   isOrtho    = false;
 }
 
 Vector3 SweepCurve::getMidPoint(std::vector<Vector3*> &points) {
@@ -39,11 +42,12 @@ Vector2 SweepCurve::createProjection(Vector3 p) {
 }
 
 void SweepCurve::drawMesh() {
-   CV::color(1,0,0);
    for (unsigned int i = 0; i < mesh.size(); i++) {
       for (unsigned int j = 0; j < mesh[i].size(); j++) {
+
          Vector2 projCtrl = createProjection(mesh[i][j]);
          CV::translate(posX, posY);
+         CV::color(1,0,0);
          CV::point(projCtrl, 3);
       }
    }
@@ -78,12 +82,12 @@ void SweepCurve::drawWireFrame() {
    }
 }
 
-std::vector<Vector3> SweepCurve::calculateSweep(float angle, float radius) {
+std::vector<Vector3> SweepCurve::calculateSweep(float angleX, float angleY, float radius) {
    std::vector<Vector3> curve;
 
    for (Vector3* p : points) {
-      float x = p->x*cos(angle);
-      float z = radius + p->z*sin(angle);
+      float x = p->x*cos(angleX);
+      float z = radius + p->z*sin(angleX);
       curve.push_back(Vector3(x, p->y, z));
    }
 
@@ -99,13 +103,15 @@ std::vector<std::vector<Vector3>> SweepCurve::createMesh() {
    }
 
    for (int i = 0; i <= sweepDivisor; i++) {
-      float angle = i*PI*2/sweepDivisor;
-      if (isRotating) {
-         angle += mouseX/mid.y;
+      angleX = i*PI*2/sweepDivisor;
+      angleY = 0.0;
+      if (isRotating && isHolding) {
+         angleX += mouseX/mid.y;
+         angleY += mouseY/mid.x;
       }
       float radius = 0;
-      if (!isOrtho) radius = mid.x*0.25;
-      matrix.push_back(calculateSweep(angle, radius));
+      if (!isOrtho) radius = mid.x*0.125;
+      matrix.push_back(calculateSweep(angleX, angleY, radius));
    }
 
    return matrix;
@@ -119,6 +125,7 @@ void SweepCurve::inputManagement(int button, int *state, int wheel, int directio
    if (isOrtho)
       increaseVal = 0.1;
 
+   //printf("\nbtn %d | state: %d", button, *state);
 
    // Zoom com a roda do mouse
    if (direction == 1) {
@@ -129,9 +136,15 @@ void SweepCurve::inputManagement(int button, int *state, int wheel, int directio
    }
 
    if (mouseX > div) {
-      isRotating = true;
-   } else {
+      if (button == 0 && *state == 0) {
+         isRotating = true;
+         isHolding = true;
+      }
+   }
+
+   if (button == 0 && *state == 1) {
       isRotating = false;
+      isHolding = false;
    }
 }
 
@@ -157,19 +170,19 @@ std::string SweepCurve::changePerspective() {
    isOrtho = !isOrtho;
 
    if (isOrtho) {
-      dist = dist/50;
+      dist = dist/30;
       return "Orthographic";
    } else {
-      dist = dist*50;
+      dist = dist*30;
       return "Perspective";
    }
 }
 
 std::string SweepCurve::addSweepDivisor(int div) {
-    int newDiv = sweepDivisor + div;
-    if (newDiv >= 3 && newDiv <= 50)
-        sweepDivisor = newDiv;
-    return std::to_string(sweepDivisor);
+   int newDiv = sweepDivisor + div;
+   if (newDiv >= 3 && newDiv <= 50)
+      sweepDivisor = newDiv;
+   return std::to_string(sweepDivisor);
 }
 
 SweepCurve::~SweepCurve() {}

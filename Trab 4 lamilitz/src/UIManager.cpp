@@ -16,7 +16,7 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    nodeCounter = 0;
    frames = new Frames();
    modelingCurve = new Curve();
-   sweepCurve = new SweepCurve(modelingCurve, screenWidth*0.5, screenWidth*0.5);
+   sweepCurve = new SweepCurve(modelingCurve, screenWidth*0.75, screenHeight*0.5);
 
    uiCreate();
 }
@@ -68,7 +68,9 @@ void UIManager::updateCurveCoordinates() {
    }
 
    modelingCurve->setPoints(curve);
-   sweepCurve->setCurve(modelingCurve);
+
+   if (curve.size() > 0)
+      sweepCurve->setCurve(modelingCurve);
 }
 
 void UIManager::addNode() {

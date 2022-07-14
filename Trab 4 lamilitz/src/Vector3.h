@@ -35,34 +35,42 @@ public:
         this->z = v.z;
     };
 
-    Vector3 operator+(const Vector3 v) {
+    Vector3 operator + (const Vector3 &v) {
         Vector3 aux(x + v.x, y + v.y, z + v.z);
         return (aux);
     }
 
-    Vector3 operator-(const Vector3 v) {
+    Vector3 operator - (const Vector3 &v) {
         Vector3 aux(x - v.x, y - v.y, z - v.z);
         return (aux);
     }
 
-    Vector3 operator*(const float v) {
+    Vector3 operator * (const float v) {
         Vector3 aux(x * v, y * v, z * v);
         return (aux);
     }
 
-    Vector3 operator/(const float s) {
+    Vector3 operator / (const float s) {
         Vector3 aux(x / s, y / s, z / s);
         return (aux);
     }
 
-    float operator*(const Vector3 v) {
+    float operator * (const Vector3 &v) {
         float aux = x * v.x + y * v.y + z * v.z;
         return (aux);
     }
 
-    Vector3 operator/(const Vector3 v) {
+    Vector3 operator / (const Vector3 &v) {
         Vector3 aux = Vector3(x / v.x, y / v.y, z / v.z);
         return (aux);
+    }
+
+    bool operator > (const Vector3 &v) {
+      return (x > v.x && y > v.y && z > v.z);
+    }
+
+    bool operator < (const Vector3 &v) {
+      return (x < v.x && y < v.y && z < v.z);
     }
 
     float norm() {

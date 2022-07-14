@@ -16,13 +16,21 @@ class SweepCurve
       void setCurve(Curve* curve);
 
    private:
-      std::vector<std::vector<Vector3*>> createSweepMesh(std::vector<Vector3*> points);
+      Vector3 getMidPoint(std::vector<Vector3*> &points);
+      Vector3 rotationalSweep(Vector3 point);
+      Vector2 createProjection(Vector3 p);
+      void drawMesh();
+      void drawWireFrame();
+      std::vector<std::vector<Vector3>> createMesh();
+      std::vector<Vector3> calculateSweep(float angle);
 
       std::vector<Vector3*> points;
+      std::vector<std::vector<Vector3>> mesh;
       Curve* curve;
       int sweepDivisor;
       float fps;
-      float posX, posY;
+      float posX, posY, dim;
+
 };
 
 #endif // SWEEPCURVE_H

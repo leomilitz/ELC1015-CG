@@ -2,6 +2,7 @@
 #define __VECTOR_2_H__
 
 #include <math.h>
+#include "Vector3.h"
 
 class Vector2 {
    public:
@@ -51,6 +52,10 @@ class Vector2 {
       Vector2 operator * (const float a) {
          Vector2 aux(x * a, y * a);
          return(aux);
+      }
+
+      Vector2 operator = (const Vector3 &v) {
+         return Vector2(v.x, v.y);
       }
 
       bool operator <= (const Vector2 &v) { return( x <= v.x && y <= v.y ); }

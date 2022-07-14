@@ -16,6 +16,7 @@ class SweepCurve
       void render(float fps);
       void inputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY, int div);
       void setCurve(Curve* curve);
+      std::string addSweepDivisor(int div);
       std::string changePerspective();
 
    private:

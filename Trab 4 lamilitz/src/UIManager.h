@@ -59,6 +59,7 @@ class UIManager {
           btnSpacingY, btnHeight, nodeRadius;
       int nodeCounter;
       std::string projMode;
+      std::string faceCount;
 };
 
 #endif // UIMANAGER_H

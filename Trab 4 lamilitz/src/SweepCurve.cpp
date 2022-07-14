@@ -165,4 +165,11 @@ std::string SweepCurve::changePerspective() {
    }
 }
 
+std::string SweepCurve::addSweepDivisor(int div) {
+    int newDiv = sweepDivisor + div;
+    if (newDiv >= 3 && newDiv <= 50)
+        sweepDivisor = newDiv;
+    return std::to_string(sweepDivisor);
+}
+
 SweepCurve::~SweepCurve() {}

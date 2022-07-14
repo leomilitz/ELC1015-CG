@@ -5,8 +5,6 @@ Node::Node(float x, float y, int radius):UIComponent(x, y, 0, 0, "", [](){}) {
    outline = 6;
    nodeState = standard;
    limit = Vector2(0,0);
-   isCurrent = true;
-   isFront = true;
    isHolding = false;
    offset = new Vector2(0,0);
    this->type = node;
@@ -15,7 +13,7 @@ Node::Node(float x, float y, int radius):UIComponent(x, y, 0, 0, "", [](){}) {
 Node::~Node(){ }
 
 void Node::nodeDragAround(Vector2* posMouse) {
-   if (isCurrent && isFront && isHolding) {
+   if (isHolding) {
       Vector2 newPos = *posMouse - *offset;
 
       if (newPos + radius <= limit && newPos - radius >= Vector2(0,0)) {
@@ -45,24 +43,23 @@ void Node::nodeDragAround(Vector2* posMouse) {
    }
 }
 
-void Node::inputManagement(int mouseX, int mouseY, int* mouseState) {
+void Node::inputManagement(int mouseX, int mouseY, int* mouseState, int button) {
    Vector2* posMouse = new Vector2(mouseX, mouseY);
    nodeState = standard;
 
    if (pos1->distance(*posMouse) <= this->radius) {
       nodeState = hovered;
 
-      if (*mouseState == 1) {
-         isCurrent = true;
-         isHolding = false;
-         nodeState = clicked;
-      }
-
-      if (*mouseState == 0 && !isHolding) {
+      if (button == 0 && *mouseState == 0) {
          isHolding = true;
          Vector2 _offset = *posMouse - *pos1;
          offset->x = _offset.x; offset->y = _offset.y;
+      }
+
+      if (button == 0 && *mouseState == 1) {
          nodeState = holding;
+         isHolding = false;
+         nodeState = clicked;
       }
    }
 

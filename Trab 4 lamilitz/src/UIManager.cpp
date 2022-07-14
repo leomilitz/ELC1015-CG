@@ -26,8 +26,9 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
 void UIManager::uiMouseInputManagement(int button, int state, int wheel, int direction, int x, int y) {
    mouseX = x; mouseY = y; mouseState = state;
 
-   for (UIComponent* uiComp : components)
-      uiComp->inputManagement(mouseX, mouseY, &mouseState);
+   for (UIComponent* uiComp : components) {
+      uiComp->inputManagement(mouseX, mouseY, &mouseState, button);
+   }
 
    sweepCurve->inputManagement(button, &mouseState, wheel, direction, mouseX, mouseY, screenWidth*0.5);
 }
@@ -41,7 +42,7 @@ void UIManager::drawBackground() {
    CV::rectFill(0, 0, screenWidth*0.48, screenHeight);
    CV::color(1,1,1);
    CV::line(screenWidth*0.48, 0, screenWidth*0.48, screenHeight, screenWidth*0.003);
-   CV::line(0, screenHeight - btnHeight*2, screenWidth*0.48, screenHeight - btnHeight*2, screenWidth*0.003);
+   CV::line(0, screenHeight - btnHeight*2 - 3*btnSpacingY, screenWidth*0.48, screenHeight - btnHeight*2 - 3*btnSpacingY, screenWidth*0.003);
 
    CV::text(screenWidth*0.51, screenHeight - btnHeight, ("Projection: " + projMode).c_str());
    CV::text(screenWidth*0.51, screenHeight - btnHeight*1.6, ("Faces: " + faceCount).c_str());
@@ -61,14 +62,15 @@ void UIManager::uiRender() {
 }
 
 void UIManager::uiCreate() {
-   components.push_back(new Button(btnSpacingX, screenHeight*0.98 - btnHeight, screenWidth*0.01 + btnMedWidth, screenHeight*0.98,
+   components.push_back(new Button(btnSpacingX, screenHeight - btnHeight - btnSpacingY, screenWidth*0.01 + btnMedWidth, screenHeight - btnSpacingY,
                                    "Add Node", [this](){ this->addNode(); }));
-   components.push_back(new Button(2*btnSpacingX + btnMedWidth, screenHeight*0.98 - btnHeight, btnSpacingX*2 + btnMedWidth*2, screenHeight*0.98,
+   components.push_back(new Button(2*btnSpacingX + btnMedWidth, screenHeight - btnHeight - btnSpacingY, btnSpacingX*2 + btnMedWidth*2, screenHeight - btnSpacingY,
                                    "Projection", [this](){ projMode = this->sweepCurve->changePerspective(); }));
-   components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight*0.98 - btnHeight, btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight*0.98,
+   components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - btnHeight - btnSpacingY, btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - btnSpacingY,
                                    "+F", [this](){ faceCount = this->sweepCurve->addSweepDivisor(1); }));
-   components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight*0.98 - btnHeight, btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight*0.98,
+   components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - btnHeight - btnSpacingY, btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - btnSpacingY,
                                    "-F", [this](){ faceCount = this->sweepCurve->addSweepDivisor(-1); }));
+
 }
 
 void UIManager::updateCurveCoordinates() {
@@ -91,7 +93,7 @@ void UIManager::updateCurveCoordinates() {
 void UIManager::addNode() {
    if (nodeCounter <= NODE_MAX) {
       Node* n = new Node(screenWidth*0.25, screenHeight*0.5, nodeRadius);
-      n->setLimit(screenWidth*0.48, screenHeight*0.97 - btnHeight*2);
+      n->setLimit(screenWidth*0.48, screenHeight - btnHeight*2 - 3*btnSpacingY);
       components.push_back(n);
       nodeCounter++;
    }

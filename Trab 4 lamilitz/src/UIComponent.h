@@ -32,7 +32,7 @@ class UIComponent
 
       virtual ~UIComponent();
       virtual void render();
-      virtual void inputManagement(int mouseX, int mouseY, int *mouseState);
+      virtual void inputManagement(int mouseX, int mouseY, int *mouseState, int button);
 
       UIComponentType getType();
       std::string getCaption();

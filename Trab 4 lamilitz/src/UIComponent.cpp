@@ -11,6 +11,6 @@ UIComponent::UIComponent(int x1, int y1, int x2, int y2, std::string caption, st
 UIComponent::~UIComponent() { }
 
 void UIComponent::render() {}
-void UIComponent::inputManagement(int mouseX, int mouseY, int *mouseState) {}
+void UIComponent::inputManagement(int mouseX, int mouseY, int *mouseState, int button) {}
 std::string UIComponent::getCaption() { return caption; }
 UIComponent::UIComponentType UIComponent::getType() { return type; }

@@ -11,7 +11,7 @@ class Node: public UIComponent {
       virtual ~Node();
 
       void render();
-      void inputManagement(int mouseX, int mouseY, int* mouseState);
+      void inputManagement(int mouseX, int mouseY, int* mouseState, int button);
 
       void setLimit(int x, int y);
       Vector2* getCoordinates();
@@ -22,7 +22,7 @@ class Node: public UIComponent {
       void nodeDrawSelectionOutline();
       void nodeDragAround(Vector2* posMouse);
 
-      bool isHolding, isFront, isCurrent;
+      bool isHolding;
       float radius;
       int outline;
       State nodeState;

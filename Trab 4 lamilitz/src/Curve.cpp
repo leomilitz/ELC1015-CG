@@ -55,7 +55,7 @@ std::vector<Vector3*> Curve::getDiscreteCurve(float discStep) {
             y += computeBinominal(n, i) * pow((1 - t), (n - i)) * pow(t, i) * points[i]->y;
          }
 
-         disc.push_back(new Vector3(x,y,0));
+         disc.push_back(new Vector3(x,y,1));
       }
    }
 

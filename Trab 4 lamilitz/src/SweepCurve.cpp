@@ -5,7 +5,7 @@ SweepCurve::SweepCurve(Curve* curve, float x, float y) {
    sweepDivisor = 30;
    posX = x;
    posY = y;
-   dist = 1;
+   dist = 50;
    isRotating = false;
 }
 
@@ -72,12 +72,12 @@ void SweepCurve::drawWireFrame() {
    }
 }
 
-std::vector<Vector3> SweepCurve::calculateSweep(float angle) {
+std::vector<Vector3> SweepCurve::calculateSweep(float angle, float radius) {
    std::vector<Vector3> curve;
 
    for (Vector3* p : points) {
       float x = p->x*cos(angle);
-      float z = p->z*sin(angle);
+      float z = radius + p->z*sin(angle);
       curve.push_back(Vector3(x, p->y, z));
    }
 
@@ -97,7 +97,7 @@ std::vector<std::vector<Vector3>> SweepCurve::createMesh() {
       if (isRotating) {
          angle += mouseX/mid.y;
       }
-      matrix.push_back(calculateSweep(angle));
+      matrix.push_back(calculateSweep(angle, mid.x*0.25));
    }
 
    return matrix;
@@ -109,26 +109,15 @@ void SweepCurve::inputManagement(int button, int *state, int wheel, int directio
 
    // Zoom com a roda do mouse
    if (direction == 1)
-      dist += 0.1;
+      dist += 1;
    else if (direction == -1)
-      dist -= 0.1;
-
-    //printf("\nButton: %d | state: %d, wheel: %d | direction: %d", button, *state, wheel, direction);
-   /*
-   if (button == 0 && state == 0 && mouseX > div) {
-      isRotating = true;
-   }*/
+      dist -= 1;
 
    if (mouseX > div) {
       isRotating = true;
    } else {
       isRotating = false;
    }
-
-   /*
-   for (Vector3* p : points) {
-
-   }*/
 }
 
 void SweepCurve::render(float fps) {

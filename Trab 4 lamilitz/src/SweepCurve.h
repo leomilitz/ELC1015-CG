@@ -23,7 +23,7 @@ class SweepCurve
       void drawMesh();
       void drawWireFrame();
       std::vector<std::vector<Vector3>> createMesh();
-      std::vector<Vector3> calculateSweep(float angle);
+      std::vector<Vector3> calculateSweep(float angle, float radius);
 
       std::vector<Vector3*> points;
       std::vector<std::vector<Vector3>> mesh;

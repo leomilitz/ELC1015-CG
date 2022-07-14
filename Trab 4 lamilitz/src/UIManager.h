@@ -58,6 +58,7 @@ class UIManager {
       int btnSmallWidth, btnMedWidth, btnBigWidth, btnSwitch, btnSpacingX,
           btnSpacingY, btnHeight, nodeRadius;
       int nodeCounter;
+      std::string projMode;
 };
 
 #endif // UIMANAGER_H

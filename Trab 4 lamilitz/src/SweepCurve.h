@@ -2,6 +2,7 @@
 #define SWEEPCURVE_H
 
 #include <vector>
+#include <string>
 
 #include "Curve.h"
 #include "Vector3.h"
@@ -15,6 +16,7 @@ class SweepCurve
       void render(float fps);
       void inputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY, int div);
       void setCurve(Curve* curve);
+      std::string changePerspective();
 
    private:
       Vector3 getMidPoint(std::vector<Vector3*> &points);
@@ -32,7 +34,7 @@ class SweepCurve
       float fps;
       float posX, posY, dist;
       int mouseX, mouseY;
-      bool isRotating;
+      bool isRotating, isOrtho;
 
 };
 

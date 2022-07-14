@@ -7,6 +7,7 @@ SweepCurve::SweepCurve(Curve* curve, float x, float y) {
    posY = y;
    dist = 50;
    isRotating = false;
+   isOrtho = false;
 }
 
 Vector3 SweepCurve::getMidPoint(std::vector<Vector3*> &points) {
@@ -27,7 +28,12 @@ Vector3 SweepCurve::getMidPoint(std::vector<Vector3*> &points) {
 
 Vector2 SweepCurve::createProjection(Vector3 p) {
    float z = p.z;
-   if (p.z == 0) z = 1;
+
+   if (p.z == 0)
+      z = 1;
+
+   if (isOrtho)
+      z = 1;
 
    return Vector2(p.x*dist/z , p.y*dist/z);
 }
@@ -97,7 +103,9 @@ std::vector<std::vector<Vector3>> SweepCurve::createMesh() {
       if (isRotating) {
          angle += mouseX/mid.y;
       }
-      matrix.push_back(calculateSweep(angle, mid.x*0.25));
+      float radius = 0;
+      if (!isOrtho) radius = mid.x*0.25;
+      matrix.push_back(calculateSweep(angle, radius));
    }
 
    return matrix;
@@ -107,11 +115,18 @@ void SweepCurve::inputManagement(int button, int *state, int wheel, int directio
    this->mouseX = mouseX;
    this->mouseY = mouseY;
 
+   float increaseVal = 1;
+   if (isOrtho)
+      increaseVal = 0.1;
+
+
    // Zoom com a roda do mouse
-   if (direction == 1)
-      dist += 1;
-   else if (direction == -1)
-      dist -= 1;
+   if (direction == 1) {
+      dist += increaseVal;
+   }
+   else if (direction == -1) {
+      dist -= increaseVal;
+   }
 
    if (mouseX > div) {
       isRotating = true;
@@ -136,6 +151,18 @@ void SweepCurve::render(float fps) {
 
 void SweepCurve::setCurve(Curve* curve) {
    this->curve = curve;
+}
+
+std::string SweepCurve::changePerspective() {
+   isOrtho = !isOrtho;
+
+   if (isOrtho) {
+      dist = dist/50;
+      return "Orthographic";
+   } else {
+      dist = dist*50;
+      return "Perspective";
+   }
 }
 
 SweepCurve::~SweepCurve() {}

@@ -31,6 +31,7 @@
 #include "Node.h"
 #include "Vector3.h"
 #include "SweepCurve.h"
+#include "Tooltip.h"
 
 #define NODE_MAX 6
 

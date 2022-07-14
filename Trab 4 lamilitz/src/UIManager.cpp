@@ -62,19 +62,32 @@ void UIManager::uiRender() {
 }
 
 void UIManager::uiCreate() {
-   components.push_back(new Button(btnSpacingX, screenHeight - btnHeight - btnSpacingY, screenWidth*0.01 + btnMedWidth, screenHeight - btnSpacingY,
+   components.push_back(new Button(btnSpacingX, screenHeight - btnHeight - btnSpacingY,
+                                   screenWidth*0.01 + btnMedWidth, screenHeight - btnSpacingY,
                                    "Add Node", [this](){ this->addNode(); }));
-   components.push_back(new Button(2*btnSpacingX + btnMedWidth, screenHeight - btnHeight - btnSpacingY, btnSpacingX*2 + btnMedWidth*2, screenHeight - btnSpacingY,
+
+   components.push_back(new Button(2*btnSpacingX + btnMedWidth, screenHeight - btnHeight - btnSpacingY,
+                                    btnSpacingX*2 + btnMedWidth*2, screenHeight - btnSpacingY,
                                    "Projection", [this](){ projMode = this->sweepCurve->changePerspective(); }));
-   components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - btnHeight - btnSpacingY, btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - btnSpacingY,
+
+   components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - btnHeight - btnSpacingY,
+                                   btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - btnSpacingY,
                                    "+F", [this](){ faceCount = this->sweepCurve->addSweepDivisor(1); }));
-   components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - btnHeight - btnSpacingY, btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - btnSpacingY,
+
+   components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - btnHeight - btnSpacingY,
+                                   btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - btnSpacingY,
                                    "-F", [this](){ faceCount = this->sweepCurve->addSweepDivisor(-1); }));
-   components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - 2*btnHeight - 2*btnSpacingY, btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnSpacingY - btnHeight,
+
+   components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - 2*btnHeight - 2*btnSpacingY,
+                                   btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnSpacingY - btnHeight,
                                    "+P", [this](){ this->sweepCurve->addPoints(0.033); }));
-   components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnHeight - 2*btnSpacingY, btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - 2*btnSpacingY - btnHeight,
+
+   components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnHeight - 2*btnSpacingY,
+                                   btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - 2*btnSpacingY - btnHeight,
                                    "-P", [this](){ this->sweepCurve->addPoints(-0.033); }));
 
+   const char* tooltipText = "Mouse controls:\nHold left click to move nodes\nor rotate the 3D figure.";
+   components.push_back(new Tooltip(screenWidth*0.98, screenHeight*0.97, 12, tooltipText, screenWidth*0.3, -1, -1, true, "?"));
 }
 
 void UIManager::updateCurveCoordinates() {

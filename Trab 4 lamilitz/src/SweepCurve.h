@@ -16,6 +16,7 @@ class SweepCurve
       void render(float fps);
       void inputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY, int div);
       void setCurve(Curve* curve);
+      void addPoints(float div);
       std::string addSweepDivisor(int div);
       std::string changePerspective();
 
@@ -32,7 +33,7 @@ class SweepCurve
       std::vector<std::vector<Vector3>> mesh;
       Curve* curve;
       int sweepDivisor;
-      float fps;
+      float fps, pointInc;
       float posX, posY, dist, angleX, angleY;
       int mouseX, mouseY;
       bool isRotating, isOrtho, isHolding;

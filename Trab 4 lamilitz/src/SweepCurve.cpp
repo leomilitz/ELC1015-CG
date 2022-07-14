@@ -3,6 +3,7 @@
 SweepCurve::SweepCurve(Curve* curve, float x, float y) {
    this->curve = curve;
    sweepDivisor = 30;
+   pointInc = 0.09;
    posX = x;
    posY = y;
    dist = 30;
@@ -153,12 +154,11 @@ void SweepCurve::render(float fps) {
 
    if (curve->points.size() <= 1) return;
 
-   points = curve->getDiscreteCurve(0.08);
+   points = curve->getDiscreteCurve(pointInc);
    mesh = createMesh();
 
    CV::color(1,1,1);
    drawWireFrame();
-   drawMesh();
    CV::translate(0,0);
 }
 
@@ -183,6 +183,14 @@ std::string SweepCurve::addSweepDivisor(int div) {
    if (newDiv >= 3 && newDiv <= 50)
       sweepDivisor = newDiv;
    return std::to_string(sweepDivisor);
+}
+
+void SweepCurve::addPoints(float div) {
+   float newPointDiv = pointInc + div;
+
+   if (newPointDiv > 0.01 && newPointDiv < 0.33) {
+      pointInc = newPointDiv;
+   }
 }
 
 SweepCurve::~SweepCurve() {}

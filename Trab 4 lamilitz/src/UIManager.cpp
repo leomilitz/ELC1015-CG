@@ -70,6 +70,10 @@ void UIManager::uiCreate() {
                                    "+F", [this](){ faceCount = this->sweepCurve->addSweepDivisor(1); }));
    components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - btnHeight - btnSpacingY, btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - btnSpacingY,
                                    "-F", [this](){ faceCount = this->sweepCurve->addSweepDivisor(-1); }));
+   components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - 2*btnHeight - 2*btnSpacingY, btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnSpacingY - btnHeight,
+                                   "+P", [this](){ this->sweepCurve->addPoints(0.033); }));
+   components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnHeight - 2*btnSpacingY, btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - 2*btnSpacingY - btnHeight,
+                                   "-P", [this](){ this->sweepCurve->addPoints(-0.033); }));
 
 }
 

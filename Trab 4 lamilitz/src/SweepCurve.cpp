@@ -18,6 +18,7 @@ SweepCurve::SweepCurve(Curve* curve, float x, float y, float cameraOffset) {
    isHolding  = false;
    isOrtho    = false;
    speed = 1.5;
+   sweepMode = translateY;
 }
 
 Vector3 SweepCurve::getMidPoint(std::vector<Vector3*> &points) {
@@ -139,7 +140,11 @@ std::vector<std::vector<Vector3>> SweepCurve::createMesh() {
       float distFromY = points[i]->x;
       points[i]->x = points[i]->x - mid.x;
       points[i]->y = points[i]->y - mid.y;
-      points[i]->x = points[i]->z = distFromY;
+
+      switch (sweepMode) {
+         case translateY:  points[i]->x = points[i]->z = distFromY;  break;
+         case selfRotate:  points[i]->z = points[i]->x;              break;
+      }
    }
 
    for (int i = 0; i <= sweepDivisor; i++) {
@@ -216,6 +221,22 @@ std::string SweepCurve::changePerspective() {
    }
 }
 
+std::string SweepCurve::changeSweepMode() {
+   std::string modeString = "";
+   switch (sweepMode) {
+      case translateY:
+         sweepMode = selfRotate;
+         modeString = "Self Rotate";
+         break;
+      case selfRotate:
+         sweepMode  = translateY;
+         modeString = "Translate Y";
+         break;
+   }
+
+   return modeString;
+}
+
 std::string SweepCurve::addSweepDivisor(int div) {
    int newDiv = sweepDivisor + div;
    if (newDiv >= 3 && newDiv <= 50)
@@ -227,7 +248,8 @@ std::string SweepCurve::addPoints(float div) {
    float newPointDiv = pointInc + div;
    if (newPointDiv > 0.01 && newPointDiv < 0.33)
       pointInc = newPointDiv;
-   return std::to_string((int)floor(1/pointInc));
+   return std::to_string((int) floor(1/pointInc));
 }
+
 
 SweepCurve::~SweepCurve() {}

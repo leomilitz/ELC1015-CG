@@ -4,7 +4,7 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    this->screenWidth  = screenWidth;
    this->screenHeight = screenHeight;
 
-   btnSpacingX   = screenWidth*0.01;
+   btnSpacingX   = screenWidth*0.02;
    btnSpacingY   = screenHeight*0.02;
    btnHeight     = screenHeight*0.0417;
    btnBigWidth   = screenWidth*0.2845;
@@ -20,6 +20,7 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    projMode = "Perspective";
    faceCount = "30";
    pointCount = "11";
+   sweepMode = "Translate Y";
 
    uiCreate();
 }
@@ -48,9 +49,10 @@ void UIManager::drawBackground() {
    CV::line(screenWidth*0.48, 0, screenWidth*0.48, screenHeight, screenWidth*0.003);
    CV::line(0, screenHeight - btnHeight*2 - 3*btnSpacingY, screenWidth*0.48, screenHeight - btnHeight*2 - 3*btnSpacingY, screenWidth*0.003);
 
-   CV::text(screenWidth*0.51, screenHeight - btnHeight, ("Projection: " + projMode).c_str());
-   CV::text(screenWidth*0.51, screenHeight - btnHeight*1.6, ("Faces: "  + faceCount).c_str());
-   CV::text(screenWidth*0.64, screenHeight - btnHeight*1.6,  ("Points: " + pointCount).c_str());
+   CV::text(screenWidth*0.51, screenHeight - btnHeight,     ("Projection: " + projMode).c_str());
+   CV::text(screenWidth*0.51, screenHeight - btnHeight*1.6, ("Sweep Mode: " + sweepMode).c_str());
+   CV::text(screenWidth*0.51, screenHeight - btnHeight*2.2, ("Faces: "      + faceCount).c_str());
+   CV::text(screenWidth*0.64, screenHeight - btnHeight*2.2, ("Points: "     + pointCount).c_str());
 }
 
 void UIManager::uiRender() {
@@ -68,7 +70,7 @@ void UIManager::uiRender() {
 
 void UIManager::uiCreate() {
    components.push_back(new Button(btnSpacingX, screenHeight - btnHeight - btnSpacingY,
-                                   screenWidth*0.01 + btnMedWidth, screenHeight - btnSpacingY,
+                                   btnSpacingX + btnMedWidth, screenHeight - btnSpacingY,
                                    "Add Node", [this](){ this->addNode(); }));
 
    components.push_back(new Button(2*btnSpacingX + btnMedWidth, screenHeight - btnHeight - btnSpacingY,
@@ -82,6 +84,10 @@ void UIManager::uiCreate() {
    components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - btnHeight - btnSpacingY,
                                    btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - btnSpacingY,
                                    "-F", [this](){ faceCount = this->sweepCurve->addSweepDivisor(-1); }));
+
+   components.push_back(new Button(btnSpacingX, screenHeight - 2*btnHeight - 2*btnSpacingY,
+                                   btnSpacingX + btnBigWidth, screenHeight - 2*btnSpacingY - btnHeight,
+                                   "Sweep Mode", [this](){ sweepMode = this->sweepCurve->changeSweepMode(); }));
 
    components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - 2*btnHeight - 2*btnSpacingY,
                                    btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnSpacingY - btnHeight,

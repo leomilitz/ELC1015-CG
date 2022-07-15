@@ -1,13 +1,15 @@
 #include "SweepCurve.h"
 
-SweepCurve::SweepCurve(Curve* curve, float x, float y, float cameraOffset) {
+SweepCurve::SweepCurve(Curve* curve, float x, float y, float cameraOffset, float axisOffset) {
    this->curve = curve;
    this->cameraOffset = cameraOffset;
-   dist = cameraOffset;
+   this->axisOffset = axisOffset;
+   this->posX = x;
+   this->posY = y;
+   this->dist = cameraOffset;
    sweepDivisor = 30;
+   sweepLaps = 1;
    pointInc = 0.09;
-   posX = x;
-   posY = y;
    angleX = 0;
    angleY = 0;
    mouseX = 0;
@@ -15,10 +17,10 @@ SweepCurve::SweepCurve(Curve* curve, float x, float y, float cameraOffset) {
    thetaX = 0;
    thetaY = 0;
    isRotating = false;
-   isHolding  = false;
-   isOrtho    = false;
+   isHolding = false;
+   isOrtho = false;
    speed = 1.5;
-   sweepMode = translateY;
+   rotationMode = translateAxis;
 }
 
 Vector3 SweepCurve::getMidPoint(std::vector<Vector3*> &points) {
@@ -124,9 +126,10 @@ std::vector<Vector3> SweepCurve::calculateSweep(float angle) {
 
    for (Vector3* p : points) {
       float x = p->x*cos(angle);
+      float y = p->y;
       float z = p->z*sin(angle);
 
-      curve.push_back(Vector3(x, p->y, z));
+      curve.push_back(Vector3(x, y, z));
    }
 
    return curve;
@@ -137,17 +140,17 @@ std::vector<std::vector<Vector3>> SweepCurve::createMesh() {
 
    Vector3 mid = getMidPoint(points);
    for (unsigned int i = 0; i < points.size(); i++) {
-      float distFromY = points[i]->x;
+      float distFromAxis = points[i]->x - axisOffset;
       points[i]->x = points[i]->x - mid.x;
       points[i]->y = points[i]->y - mid.y;
 
-      switch (sweepMode) {
-         case translateY:  points[i]->x = points[i]->z = distFromY;  break;
-         case selfRotate:  points[i]->z = points[i]->x;              break;
+      switch (rotationMode) {
+         case translateAxis:  points[i]->x = points[i]->z = distFromAxis;  break;
+         case selfRotate:     points[i]->z = points[i]->x;                 break;
       }
    }
 
-   for (int i = 0; i <= sweepDivisor; i++) {
+   for (int i = 0; i <= sweepDivisor*sweepLaps; i++) {
       float angle = i*PI*2/sweepDivisor;
       matrix.push_back(calculateSweep(angle));
    }
@@ -221,16 +224,16 @@ std::string SweepCurve::changePerspective() {
    }
 }
 
-std::string SweepCurve::changeSweepMode() {
+std::string SweepCurve::changeRotationMode() {
    std::string modeString = "";
-   switch (sweepMode) {
-      case translateY:
-         sweepMode = selfRotate;
+   switch (rotationMode) {
+      case translateAxis:
+         rotationMode = selfRotate;
          modeString = "Self Rotate";
          break;
       case selfRotate:
-         sweepMode  = translateY;
-         modeString = "Translate Y";
+         rotationMode  = translateAxis;
+         modeString = "Translate Axis";
          break;
    }
 

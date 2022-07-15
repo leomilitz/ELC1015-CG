@@ -11,7 +11,7 @@ class SweepCurve
 {
    public:
 
-      SweepCurve(Curve* curve, float x, float y, float cameraOffset);
+      SweepCurve(Curve* curve, float x, float y, float cameraOffset, float axisOffset);
       virtual ~SweepCurve();
 
       void render(float fps);
@@ -20,10 +20,10 @@ class SweepCurve
       std::string addPoints(float div);
       std::string addSweepDivisor(int div);
       std::string changePerspective();
-      std::string changeSweepMode();
+      std::string changeRotationMode();
 
    private:
-      enum SweepMode { selfRotate, translateY };
+      enum RotationMode { selfRotate, translateAxis };
 
       Vector3 getMidPoint(std::vector<Vector3*> &points);
       Vector3 rotationalSweep(Vector3 point);
@@ -43,8 +43,8 @@ class SweepCurve
       float posX, posY, dist, angleX, angleY;
       int mouseX, mouseY, mouseOffsetX, mouseOffsetY;
       bool isRotating, isOrtho, isHolding;
-      float speed, cameraOffset;
-      SweepMode sweepMode;
+      float speed, sweepLaps, cameraOffset, axisOffset;
+      RotationMode rotationMode;
 
 };
 

@@ -16,11 +16,11 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    nodeCounter = 0;
    frames = new Frames();
    modelingCurve = new Curve();
-   sweepCurve = new SweepCurve(modelingCurve, screenWidth*0.75, screenHeight*0.5, screenWidth);
+   sweepCurve = new SweepCurve(modelingCurve, screenWidth*0.75, screenHeight*0.5, screenWidth, nodeRadius);
    projMode = "Perspective";
    faceCount = "30";
    pointCount = "11";
-   sweepMode = "Translate Y";
+   rotationMode = "Translate Axis";
 
    uiCreate();
 }
@@ -49,10 +49,9 @@ void UIManager::drawBackground() {
    CV::line(screenWidth*0.48, 0, screenWidth*0.48, screenHeight, screenWidth*0.003);
    CV::line(0, screenHeight - btnHeight*2 - 3*btnSpacingY, screenWidth*0.48, screenHeight - btnHeight*2 - 3*btnSpacingY, screenWidth*0.003);
 
-   CV::text(screenWidth*0.51, screenHeight - btnHeight,     ("Projection: " + projMode).c_str());
-   CV::text(screenWidth*0.51, screenHeight - btnHeight*1.6, ("Sweep Mode: " + sweepMode).c_str());
-   CV::text(screenWidth*0.51, screenHeight - btnHeight*2.2, ("Faces: "      + faceCount).c_str());
-   CV::text(screenWidth*0.64, screenHeight - btnHeight*2.2, ("Points: "     + pointCount).c_str());
+   CV::text(screenWidth*0.5, screenHeight - btnHeight,     ("Projection:    " + projMode).c_str());
+   CV::text(screenWidth*0.5, screenHeight - btnHeight*1.6, ("Rotation Mode: " + rotationMode).c_str());
+   CV::text(screenWidth*0.5, screenHeight - btnHeight*2.2, ("Faces: " + faceCount + "      Points: " + pointCount).c_str());
 }
 
 void UIManager::uiRender() {
@@ -87,7 +86,7 @@ void UIManager::uiCreate() {
 
    components.push_back(new Button(btnSpacingX, screenHeight - 2*btnHeight - 2*btnSpacingY,
                                    btnSpacingX + btnBigWidth, screenHeight - 2*btnSpacingY - btnHeight,
-                                   "Sweep Mode", [this](){ sweepMode = this->sweepCurve->changeSweepMode(); }));
+                                   "Rotation Mode", [this](){ rotationMode = this->sweepCurve->changeRotationMode(); }));
 
    components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - 2*btnHeight - 2*btnSpacingY,
                                    btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnSpacingY - btnHeight,

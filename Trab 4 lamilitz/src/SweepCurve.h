@@ -10,7 +10,7 @@
 class SweepCurve
 {
    public:
-      SweepCurve(Curve* curve, float x, float y);
+      SweepCurve(Curve* curve, float x, float y, float cameraOffset);
       virtual ~SweepCurve();
 
       void render(float fps);
@@ -23,20 +23,23 @@ class SweepCurve
    private:
       Vector3 getMidPoint(std::vector<Vector3*> &points);
       Vector3 rotationalSweep(Vector3 point);
+      Vector3 rotateX3D(Vector3 p);
+      Vector3 rotateY3D(Vector3 p);
       Vector2 createProjection(Vector3 p);
       void drawMesh();
       void drawWireFrame();
       std::vector<std::vector<Vector3>> createMesh();
-      std::vector<Vector3> calculateSweep(float angleX, float angleY, float radius);
+      std::vector<Vector3> calculateSweep(float angle);
 
       std::vector<Vector3*> points;
       std::vector<std::vector<Vector3>> mesh;
       Curve* curve;
       int sweepDivisor;
-      float fps, pointInc;
+      float fps, pointInc, thetaX, thetaY;
       float posX, posY, dist, angleX, angleY;
-      int mouseX, mouseY;
+      int mouseX, mouseY, mouseOffsetX, mouseOffsetY;
       bool isRotating, isOrtho, isHolding;
+      float speed, cameraOffset;
 
 };
 

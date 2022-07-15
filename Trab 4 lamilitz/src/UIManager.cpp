@@ -16,7 +16,7 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    nodeCounter = 0;
    frames = new Frames();
    modelingCurve = new Curve();
-   sweepCurve = new SweepCurve(modelingCurve, screenWidth*0.75, screenHeight*0.5);
+   sweepCurve = new SweepCurve(modelingCurve, screenWidth*0.75, screenHeight*0.5, screenWidth);
    projMode = "Perspective";
    faceCount = "30";
    pointCount = "11";
@@ -85,11 +85,11 @@ void UIManager::uiCreate() {
 
    components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - 2*btnHeight - 2*btnSpacingY,
                                    btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnSpacingY - btnHeight,
-                                   "+P", [this](){ pointCount = this->sweepCurve->addPoints(0.033); }));
+                                   "+P", [this](){ pointCount = this->sweepCurve->addPoints(-0.033); }));
 
    components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnHeight - 2*btnSpacingY,
                                    btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - 2*btnSpacingY - btnHeight,
-                                   "-P", [this](){ pointCount = this->sweepCurve->addPoints(-0.033); }));
+                                   "-P", [this](){ pointCount = this->sweepCurve->addPoints(0.033); }));
 
    std::string tooltipText = "Mouse controls:\n- Hold left click to move nodes\nor rotate the 3D figure.\n";
    tooltipText += "\n-------------------------------\n";
@@ -104,7 +104,7 @@ void UIManager::updateCurveCoordinates() {
       if (uiComp->getType() == UIComponent::node) {
          Node* n = dynamic_cast<Node*>(uiComp);
          Vector2* coord = n->getCoordinates();
-         curve.push_back(new Vector3(coord->x, coord->y, 0));
+         curve.push_back(new Vector3(coord->x, coord->y, 1));
       }
    }
 

@@ -32,7 +32,7 @@ class Tooltip: public UIComponent {
               int directionV=1, int directionH=1, bool visible=false, std::string btnText="");
 
       void render();
-      void inputManagement(int mouseX, int mouseY, int *mouseState, int button);
+      void mouseInputManagement(int mouseX, int mouseY, int *mouseState, int button);
    private:
       void drawTooltip();
       void splitTooltipText();

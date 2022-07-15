@@ -47,6 +47,7 @@ class UIManager {
       void showFps(float fps);
       void drawBackground();
       void addNode();
+      void removeNode();
       void updateCurveCoordinates();
 
       std::list<UIComponent*> components;
@@ -59,8 +60,7 @@ class UIManager {
       int btnSmallWidth, btnMedWidth, btnBigWidth, btnSwitch, btnSpacingX,
           btnSpacingY, btnHeight, nodeRadius;
       int nodeCounter;
-      std::string projMode;
-      std::string faceCount;
+      std::string projMode, faceCount, pointCount;
 };
 
 #endif // UIMANAGER_H

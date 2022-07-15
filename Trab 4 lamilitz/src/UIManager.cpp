@@ -19,6 +19,7 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    sweepCurve = new SweepCurve(modelingCurve, screenWidth*0.75, screenHeight*0.5);
    projMode = "Perspective";
    faceCount = "30";
+   pointCount = "11";
 
    uiCreate();
 }
@@ -26,15 +27,18 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
 void UIManager::uiMouseInputManagement(int button, int state, int wheel, int direction, int x, int y) {
    mouseX = x; mouseY = y; mouseState = state;
 
-   for (UIComponent* uiComp : components) {
-      uiComp->inputManagement(mouseX, mouseY, &mouseState, button);
-   }
+   for (UIComponent* uiComp : components)
+      uiComp->mouseInputManagement(mouseX, mouseY, &mouseState, button);
 
-   sweepCurve->inputManagement(button, &mouseState, wheel, direction, mouseX, mouseY, screenWidth*0.5);
+   sweepCurve->mouseInputManagement(button, &mouseState, wheel, direction, mouseX, mouseY, screenWidth*0.5);
 }
 
 void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
+   for (UIComponent* uiComp : components)
+      uiComp->keyboardInputManagement(key, keyUp);
 
+   if ((key == 127 || key == 100) && keyUp)
+      removeNode();
 }
 
 void UIManager::drawBackground() {
@@ -45,7 +49,8 @@ void UIManager::drawBackground() {
    CV::line(0, screenHeight - btnHeight*2 - 3*btnSpacingY, screenWidth*0.48, screenHeight - btnHeight*2 - 3*btnSpacingY, screenWidth*0.003);
 
    CV::text(screenWidth*0.51, screenHeight - btnHeight, ("Projection: " + projMode).c_str());
-   CV::text(screenWidth*0.51, screenHeight - btnHeight*1.6, ("Faces: " + faceCount).c_str());
+   CV::text(screenWidth*0.51, screenHeight - btnHeight*1.6, ("Faces: "  + faceCount).c_str());
+   CV::text(screenWidth*0.64, screenHeight - btnHeight*1.6,  ("Points: " + pointCount).c_str());
 }
 
 void UIManager::uiRender() {
@@ -80,14 +85,16 @@ void UIManager::uiCreate() {
 
    components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - 2*btnHeight - 2*btnSpacingY,
                                    btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnSpacingY - btnHeight,
-                                   "+P", [this](){ this->sweepCurve->addPoints(0.033); }));
+                                   "+P", [this](){ pointCount = this->sweepCurve->addPoints(0.033); }));
 
    components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnHeight - 2*btnSpacingY,
                                    btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - 2*btnSpacingY - btnHeight,
-                                   "-P", [this](){ this->sweepCurve->addPoints(-0.033); }));
+                                   "-P", [this](){ pointCount = this->sweepCurve->addPoints(-0.033); }));
 
-   const char* tooltipText = "Mouse controls:\nHold left click to move nodes\nor rotate the 3D figure.";
-   components.push_back(new Tooltip(screenWidth*0.98, screenHeight*0.97, 12, tooltipText, screenWidth*0.3, -1, -1, true, "?"));
+   std::string tooltipText = "Mouse controls:\n- Hold left click to move nodes\nor rotate the 3D figure.\n";
+   tooltipText += "\n-------------------------------\n";
+   tooltipText += "\nKeyboard Controls:\n- Hover on a node with your\nmouse and press D or DEL\nto delete it.";
+   components.push_back(new Tooltip(screenWidth*0.98, screenHeight*0.97, 12, tooltipText, screenWidth*0.32, -1, -1, true, "?"));
 }
 
 void UIManager::updateCurveCoordinates() {
@@ -113,6 +120,18 @@ void UIManager::addNode() {
       n->setLimit(screenWidth*0.48, screenHeight - btnHeight*2 - 3*btnSpacingY);
       components.push_back(n);
       nodeCounter++;
+   }
+}
+
+void UIManager::removeNode() {
+   for (UIComponent* uiComp : components) {
+      if (uiComp->getType() == UIComponent::node) {
+         Node* n = dynamic_cast<Node*>(uiComp);
+         if (n->getState() == Node::hovered) {
+            components.remove(uiComp);
+            nodeCounter--;
+         }
+      }
    }
 }
 

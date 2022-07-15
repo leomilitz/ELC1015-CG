@@ -14,9 +14,9 @@ class SweepCurve
       virtual ~SweepCurve();
 
       void render(float fps);
-      void inputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY, int div);
+      void mouseInputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY, int div);
       void setCurve(Curve* curve);
-      void addPoints(float div);
+      std::string addPoints(float div);
       std::string addSweepDivisor(int div);
       std::string changePerspective();
 

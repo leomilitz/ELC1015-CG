@@ -10,7 +10,9 @@ Node::Node(float x, float y, int radius):UIComponent(x, y, 0, 0, "", [](){}) {
    this->type = node;
 }
 
-Node::~Node(){ }
+Node::~Node(){
+
+}
 
 void Node::nodeDragAround(Vector2* posMouse) {
    if (isHolding) {
@@ -43,7 +45,7 @@ void Node::nodeDragAround(Vector2* posMouse) {
    }
 }
 
-void Node::inputManagement(int mouseX, int mouseY, int* mouseState, int button) {
+void Node::mouseInputManagement(int mouseX, int mouseY, int* mouseState, int button) {
    Vector2* posMouse = new Vector2(mouseX, mouseY);
    nodeState = standard;
 
@@ -88,3 +90,4 @@ void Node::setLimit(int x, int y) {
 }
 
 Vector2* Node::getCoordinates() { return pos1; }
+Node::NodeState Node::getState() { return nodeState; }

@@ -118,7 +118,7 @@ std::vector<std::vector<Vector3>> SweepCurve::createMesh() {
    return matrix;
 }
 
-void SweepCurve::inputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY, int div) {
+void SweepCurve::mouseInputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY, int div) {
    this->mouseX = mouseX;
    this->mouseY = mouseY;
 
@@ -185,12 +185,11 @@ std::string SweepCurve::addSweepDivisor(int div) {
    return std::to_string(sweepDivisor);
 }
 
-void SweepCurve::addPoints(float div) {
+std::string SweepCurve::addPoints(float div) {
    float newPointDiv = pointInc + div;
-
-   if (newPointDiv > 0.01 && newPointDiv < 0.33) {
+   if (newPointDiv > 0.01 && newPointDiv < 0.33)
       pointInc = newPointDiv;
-   }
+   return std::to_string((int)floor(1/pointInc));
 }
 
 SweepCurve::~SweepCurve() {}

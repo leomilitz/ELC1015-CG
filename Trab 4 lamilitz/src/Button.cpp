@@ -63,7 +63,7 @@ void Button::drawDefault(){
    CV::color(r, g, b);
 }
 
-void Button::inputManagement(int mouseX, int mouseY, int* mouseState, int button) {
+void Button::mouseInputManagement(int mouseX, int mouseY, int* mouseState, int button) {
    Vector2* mousePos = new Vector2(mouseX, mouseY);
    if (*mousePos >= *pos1 && *mousePos <= *pos2 && *mouseState == -2 && !isToggled) {
       state = hovered;

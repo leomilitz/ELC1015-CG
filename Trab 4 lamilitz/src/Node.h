@@ -4,17 +4,17 @@
 #include "UIComponent.h"
 
 class Node: public UIComponent {
-   enum State  { clicked, hovered, holding, standard };
-
    public:
+      enum NodeState { clicked, hovered, holding, standard };
       Node(float x, float y, int radius);
       virtual ~Node();
 
       void render();
-      void inputManagement(int mouseX, int mouseY, int* mouseState, int button);
+      void mouseInputManagement(int mouseX, int mouseY, int* mouseState, int button);
 
       void setLimit(int x, int y);
       Vector2* getCoordinates();
+      NodeState getState();
 
    private:
       void updatePosition(int x, int y);
@@ -25,7 +25,7 @@ class Node: public UIComponent {
       bool isHolding;
       float radius;
       int outline;
-      State nodeState;
+      NodeState nodeState;
       Vector2* offset;
       Vector2 limit;
 };

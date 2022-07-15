@@ -30,7 +30,7 @@ Tooltip::Tooltip(int x, int y, int radius, std::string text, int width, int dire
    (directionH != 1) ? this->directionH = -1 : this->directionH = 1;
 }
 
-void Tooltip::inputManagement(int mouseX, int mouseY, int *mouseState, int button) {
+void Tooltip::mouseInputManagement(int mouseX, int mouseY, int *mouseState, int button) {
    posMouse->x = mouseX; posMouse->y = mouseY;
 
    if (radius && pos1->distance(*posMouse) <= radius) {

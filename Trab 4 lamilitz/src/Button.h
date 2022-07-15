@@ -21,7 +21,7 @@ class Button: public UIComponent {
 
       Button(int x1, int y1, int x2, int y2, std::string caption, std::function<void()> action, Color color=grey, bool canToggle=false);
       void render();
-      void inputManagement(int mouseX, int mouseY, int *mouseState, int button);
+      void mouseInputManagement(int mouseX, int mouseY, int *mouseState, int button);
       void setToggled(bool isToggled);
 
    private:

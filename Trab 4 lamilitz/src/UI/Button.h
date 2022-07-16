@@ -1,13 +1,13 @@
-/*
-   Button
-   Autor: Leonardo Militz
-
-   Classe genérica derivada de UIComponent que implementa um botão na API Canvas2D.
-   O botão possui quatro visuais diferentes: clicked, hovered, standard e toggled.
-   Cada um desses visuais será renderizado de forma diferente dependendo do estado do mouse
-   em relação ao botão. Existem também 5 estilos de botão: grey, red, green, blue e light.
-   O texto em display do botão é centralizado com base no seu tamanho.
-*/
+/**
+ *  Button
+ *  Autor: Leonardo Militz
+ *
+ *  Classe genérica derivada de UIComponent que implementa um botão na API Canvas2D.
+ *  O botão possui quatro visuais diferentes: clicked, hovered, standard e toggled.
+ *  Cada um desses visuais será renderizado de forma diferente dependendo do estado do mouse
+ *  em relação ao botão. Existem também 5 estilos de botão: grey, red, green, blue e light.
+ *  O texto em display do botão é centralizado com base no seu tamanho.
+ */
 
 #ifndef BUTTON_H
 #define BUTTON_H

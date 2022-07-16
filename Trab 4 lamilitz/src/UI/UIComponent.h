@@ -1,16 +1,17 @@
-/*
-   UIComponent
-
-   Classe genérica de um componente da interface de usuário. Ele estabelece
-   as funções de renderização e de gerenciamento de input como virtuais para
-   que as classes filhas possam se aproveitar do polimorfismo. Esse componente
-   pode guardar uma função lambda como callback para ser chamada de forma
-   genérica cada vez que um componente chama sua respectiva ação; essas funções
-   callback são definidas de forma segura e reutilizável devido à biblioteca
-   "functional" do C++, que permite que uma ação seja vinculada (binded) ao objeto.
-   ------------------------------------------------------------------------
-   Classes derivadas: Button, Tooltip, Slider
-*/
+/**
+ *  UIComponent
+ *  Autor: Leonardo Militz
+ *
+ *  Classe genérica de um componente da interface de usuário. Ele estabelece
+ *  as funções de renderização e de gerenciamento de input como virtuais para
+ *  que as classes filhas possam se aproveitar do polimorfismo. Esse componente
+ *  pode guardar uma função lambda como callback para ser chamada de forma
+ *  genérica cada vez que um componente chama sua respectiva ação; essas funções
+ *  callback são definidas de forma segura e reutilizável devido à biblioteca
+ *  "functional" do C++, que permite que uma ação seja vinculada (binded) ao objeto.
+ *  ------------------------------------------------------------------------
+ *  Classes derivadas: Button, Tooltip, Slider, Node
+ */
 
 #ifndef UICOMPONENT_H
 #define UICOMPONENT_H

@@ -4,26 +4,25 @@ SweepCurve::SweepCurve(Curve* curve, float x, float y, Vector2 cameraOffset, flo
    this->curve = curve;
    this->cameraOffset = cameraOffset;
    this->axisOffset = axisOffset;
-   this->posX = x;
-   this->posY = y;
-   this->dist = cameraOffset.x;
-   sweepDivisor = 30;
-   sweepLaps = 1;
-   pointInc = 0.09;
-   angleX = 0;
-   angleY = 0;
+   dist = cameraOffset.x;
+   posX = x;
+   posY = y;
    mouseX = 0;
    mouseY = 0;
    thetaX = 0;
    thetaY = 0;
+   sweepDivisor = 30;
+   sweepLaps = 1;
+   pointInc = 0.09;
    translationValue = 0;
-   isRotating = false;
    isHolding = false;
    isOrtho = false;
    speed = 1.5;
    cameraSpeed = 10;
    rotationMode = translateAxis;
 }
+
+SweepCurve::~SweepCurve() {}
 
 Vector3 SweepCurve::getMidPoint(std::vector<Vector3*> &points) {
    Vector3 minCoord = *points[0];
@@ -45,16 +44,8 @@ Vector2 SweepCurve::createProjection(Vector3 p) {
    float z = p.z;
    float offset = 0;
 
-   if (p.z == 0) {
-      z = 1;
-   }
-
-   if (isOrtho) {
-      z = 1;
-      offset = 0;
-   } else {
-      offset = cameraOffset.x;
-   }
+   if (p.z == 0) z = 1;
+   isOrtho ? z = 1 : offset = cameraOffset.x;
 
    return Vector2(p.x*dist/(z + offset) , p.y*dist/(z + offset));
 }
@@ -62,6 +53,7 @@ Vector2 SweepCurve::createProjection(Vector3 p) {
 void SweepCurve::drawWireFrame() {
    CV::color(1,1,1);
    CV::translate(posX, posY);
+
    float row = mesh.size();
    for (unsigned int i = 0; i < row; i++) {
       float col = mesh[i].size();
@@ -73,8 +65,8 @@ void SweepCurve::drawWireFrame() {
 
          Vector2 ctrlProj = createProjection(mesh[i][j]);
          if (i < row - 1 && j < col - 1) {
-            Vector2 hProjNext = createProjection(mesh[i+1][j]);
-            Vector2 vProjNext = createProjection(mesh[i][j+1]);
+            Vector2 hProjNext    = createProjection(mesh[i+1][j]);
+            Vector2 vProjNext    = createProjection(mesh[i][j+1]);
             Vector2 ctrlProjDiag = createProjection(mesh[i+1][j+1]);
             CV::line(ctrlProj, hProjNext);
             CV::line(ctrlProj, vProjNext);
@@ -88,6 +80,7 @@ void SweepCurve::drawWireFrame() {
             CV::line(ctrlProj, createProjection(mesh[i][j+1]));
       }
    }
+
    thetaX = 0; thetaY = 0;
 }
 
@@ -147,11 +140,9 @@ std::vector<std::vector<Vector3>> SweepCurve::createMesh() {
 }
 
 void SweepCurve::mouseInputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY, int div) {
-   float increaseVal = cameraOffset.x*0.1;
-   if (isOrtho)
-      increaseVal = cameraOffset.x*0.0001;
+   float increaseVal = (isOrtho) ? cameraOffset.x*0.0001 : cameraOffset.x*0.1;
 
-   // Zoom com a roda do mouse
+   /** Zoom com a roda do mouse */
    float newDist = 0;
    if (direction == 1)
       newDist = dist + increaseVal;
@@ -161,20 +152,18 @@ void SweepCurve::mouseInputManagement(int button, int *state, int wheel, int dir
    if (newDist > 0 && newDist < cameraOffset.x*3)
       dist = newDist;
 
-   if (mouseX > div) {
-      if (button == 0 && *state == 0) {
-         isRotating = true;
-         isHolding = true;
-      }
-   }
+   if (mouseX > div && button == 0 && *state == 0)
+      isHolding = true;
 
-   if (button == 0 && *state == 1) {
-      isRotating = false;
+   if (button == 0 && *state == 1)
       isHolding = false;
-   }
 
    if (isHolding) {
-      // Diferença entre a posição do mouse no frame atual pro frame anterior.
+      /**
+       * Faz a diferença entre a posição do mouse no frame atual pro frame anterior.
+       * Com isso, é possível identificar a direção em que o mouse está se movendo
+       * para calcular a rotação.
+       */
       thetaX = mouseX - this->mouseX;
       thetaY = mouseY - this->mouseY;
    }
@@ -185,27 +174,22 @@ void SweepCurve::mouseInputManagement(int button, int *state, int wheel, int dir
 
 void SweepCurve::keyboardInputManagement(int key, bool keyUp) {
    float addVal = 0;
-
    if (key == 201)
       addVal = posY + cameraSpeed;
 
    if (key == 203)
       addVal = posY - cameraSpeed;
 
-   if (addVal > 0 && addVal < cameraOffset.y) {
+   if (addVal > 0 && addVal < cameraOffset.y)
       posY = addVal;
-   }
 }
 
 void SweepCurve::render(float fps) {
    this->fps = fps;
-
    if (curve->points.size() <= 1) return;
-
    points = curve->getDiscreteCurve(pointInc);
 
-   if (!isHolding)
-      mesh = createMesh();
+   if (!isHolding) mesh = createMesh();
 
    CV::color(1,1,1);
    drawWireFrame();
@@ -260,21 +244,14 @@ std::string SweepCurve::addPoints(float div) {
 
 std::string SweepCurve::translateY(int value) {
    int newValue = translationValue + value;
-   if (newValue >= -10 && newValue <= 10) {
+   if (newValue >= -10 && newValue <= 10)
       translationValue = newValue;
-   }
-
    return std::to_string((int) floor(translationValue));
 }
 
 std::string SweepCurve::addSweepLaps(int value) {
    int newValue = sweepLaps + value;
-   if (newValue >= 1 && newValue <= 4) {
+   if (newValue >= 1 && newValue <= 4)
       sweepLaps = newValue;
-   }
-
    return std::to_string(sweepLaps);
 }
-
-
-SweepCurve::~SweepCurve() {}

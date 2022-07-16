@@ -10,8 +10,9 @@ Curve::Curve() {
    this->step = 0.001;
 }
 
-double Curve::computeBinominal(int n, int k) {
+Curve::~Curve() {};
 
+double Curve::computeBinominal(int n, int k) {
     double value = 1.0;
 
     for (int i = 1; i <= k; i++)

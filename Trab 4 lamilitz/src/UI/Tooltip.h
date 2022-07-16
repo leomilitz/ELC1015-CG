@@ -1,14 +1,14 @@
-/*
-   Tooltip
-   Autor: Leonardo Militz
-
-   Implementação de uma tooltip para propósitos informativos - é usado no botão help. A
-   tooltip pode ser visível ou invisível, e com hitbox circular ou retangular, garantindo
-   sua versatilidade de uso. A classe é um UIComponent, mas não possui uma callback, já
-   que sua unica função é exibir texto.
-   --------------------------------------------------------------------------------------
-   splitTooltipText: Faz o split do texto ao encontrar quebras de linha.
-*/
+/**
+ *  Tooltip
+ *  Autor: Leonardo Militz
+ *
+ *  Implementação de uma tooltip para propósitos informativos - é usado no botão help. A
+ *  tooltip pode ser visível ou invisível, e com hitbox circular ou retangular, garantindo
+ *  sua versatilidade de uso. A classe é um UIComponent, mas não possui uma callback, já
+ *  que sua unica função é exibir texto.
+ *  --------------------------------------------------------------------------------------
+ *  - splitTooltipText: Faz o split do texto ao encontrar quebras de linha.
+ */
 
 #ifndef TOOLTIP_H
 #define TOOLTIP_H

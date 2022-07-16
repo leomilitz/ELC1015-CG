@@ -10,9 +10,7 @@ Node::Node(float x, float y, int radius):UIComponent(x, y, 0, 0, "", [](){}) {
    this->type = node;
 }
 
-Node::~Node(){
-
-}
+Node::~Node(){}
 
 void Node::nodeDragAround(Vector2* posMouse) {
    if (isHolding) {
@@ -71,14 +69,6 @@ void Node::mouseInputManagement(int mouseX, int mouseY, int* mouseState, int but
 void Node::render() {
    CV::color(1,1,1);
    CV::circleFill(*pos1, radius, 20);
-}
-
-void Node::nodeDrawHoveringOutline() {
-   for (int i = 0; i <= outline; i++) {
-      float alpha = 1.0 - ((float) i / outline);
-      CV::color(1.0, 0.2, 0.2, alpha);
-      CV::circle(*pos1, radius + i, 20);
-   }
 }
 
 void Node::updatePosition(int x, int y) {

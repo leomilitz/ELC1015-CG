@@ -22,7 +22,7 @@ Tooltip::Tooltip(int x, int y, int radius, std::string text, int width, int dire
    this->visible = visible;
    this->text = text;
    this->splitTooltipText();
-   this->height = TEXT_OFFSET_Y*splitText.size()*1.2;
+   this->height = TEXT_OFFSET_Y*splitText.size();
    this->isHovering = false;
    this->posMouse = new Vector2(0,0);
    this->type = tooltip;
@@ -90,9 +90,9 @@ void Tooltip::render() {
 
 void Tooltip::drawTooltip() {
    CV::color(0.7, 0.7, 0.7);
-   CV::rectFill(posMouse->x - directionH*2, posMouse->y - directionV*2, posMouse->x + (width + 2)*directionH, posMouse->y + (height + 2)*directionV);
+   CV::rectFill(posMouse->x - directionH*2, posMouse->y - directionV*2, posMouse->x + (width + 2)*directionH, posMouse->y + (height + TEXT_OFFSET_Y) * directionV);
    CV::color(0.5, 0.5, 0.5);
-   CV::rectFill(posMouse->x, posMouse->y, posMouse->x + width*directionH, posMouse->y + (height * directionV));
+   CV::rectFill(posMouse->x, posMouse->y, posMouse->x + width*directionH, posMouse->y + ((height + TEXT_OFFSET_Y) * directionV));
    CV::color(1,1,1);
 
    int posY;

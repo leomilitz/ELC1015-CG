@@ -1,12 +1,12 @@
 #include "SweepCurve.h"
 
-SweepCurve::SweepCurve(Curve* curve, float x, float y, float cameraOffset, float axisOffset) {
+SweepCurve::SweepCurve(Curve* curve, float x, float y, Vector2 cameraOffset, float axisOffset) {
    this->curve = curve;
    this->cameraOffset = cameraOffset;
    this->axisOffset = axisOffset;
    this->posX = x;
    this->posY = y;
-   this->dist = cameraOffset;
+   this->dist = cameraOffset.x;
    sweepDivisor = 30;
    sweepLaps = 1;
    pointInc = 0.09;
@@ -21,6 +21,7 @@ SweepCurve::SweepCurve(Curve* curve, float x, float y, float cameraOffset, float
    isHolding = false;
    isOrtho = false;
    speed = 1.5;
+   cameraSpeed = 10;
    rotationMode = translateAxis;
 }
 
@@ -52,7 +53,7 @@ Vector2 SweepCurve::createProjection(Vector3 p) {
       z = 1;
       offset = 0;
    } else {
-      offset = cameraOffset;
+      offset = cameraOffset.x;
    }
 
    return Vector2(p.x*dist/(z + offset) , p.y*dist/(z + offset));
@@ -146,9 +147,9 @@ std::vector<std::vector<Vector3>> SweepCurve::createMesh() {
 }
 
 void SweepCurve::mouseInputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY, int div) {
-   float increaseVal = cameraOffset*0.1;
+   float increaseVal = cameraOffset.x*0.1;
    if (isOrtho)
-      increaseVal = cameraOffset*0.0001;
+      increaseVal = cameraOffset.x*0.0001;
 
    // Zoom com a roda do mouse
    float newDist = 0;
@@ -157,7 +158,7 @@ void SweepCurve::mouseInputManagement(int button, int *state, int wheel, int dir
    else if (direction == -1)
       newDist = dist - increaseVal;
 
-   if (newDist > 0 && newDist < cameraOffset*3)
+   if (newDist > 0 && newDist < cameraOffset.x*3)
       dist = newDist;
 
    if (mouseX > div) {
@@ -180,6 +181,20 @@ void SweepCurve::mouseInputManagement(int button, int *state, int wheel, int dir
 
    this->mouseX = mouseX;
    this->mouseY = mouseY;
+}
+
+void SweepCurve::keyboardInputManagement(int key, bool keyUp) {
+   float addVal = 0;
+
+   if (key == 201)
+      addVal = posY + cameraSpeed;
+
+   if (key == 203)
+      addVal = posY - cameraSpeed;
+
+   if (addVal > 0 && addVal < cameraOffset.y) {
+      posY = addVal;
+   }
 }
 
 void SweepCurve::render(float fps) {
@@ -205,10 +220,10 @@ std::string SweepCurve::changePerspective() {
    isOrtho = !isOrtho;
 
    if (isOrtho) {
-      dist = dist / cameraOffset;
+      dist = dist / cameraOffset.x;
       return "Orthographic";
    } else {
-      dist = dist * cameraOffset;
+      dist = dist * cameraOffset.x;
       return "Perspective";
    }
 }

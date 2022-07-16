@@ -16,7 +16,7 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    nodeCounter = 0;
    frames = new Frames();
    modelingCurve = new Curve();
-   sweepCurve = new SweepCurve(modelingCurve, screenWidth*0.75, screenHeight*0.5, screenWidth, nodeRadius);
+   sweepCurve = new SweepCurve(modelingCurve, screenWidth*0.75, screenHeight*0.5, Vector2(screenWidth, screenHeight), nodeRadius);
    projMode       = "Perspective";
    faceCount      = "30";
    pointCount     = "11";
@@ -50,6 +50,8 @@ void UIManager::uiKeyboardInputManagement(int key, bool keyUp) {
 
    if ((key == 127 || key == 100) && keyUp)
       removeNode();
+
+   sweepCurve->keyboardInputManagement(key, keyUp);
 }
 
 void UIManager::drawBackground() {

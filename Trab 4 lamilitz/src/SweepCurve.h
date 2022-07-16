@@ -9,11 +9,12 @@
 
 class SweepCurve {
    public:
-      SweepCurve(Curve* curve, float x, float y, float cameraOffset, float axisOffset);
+      SweepCurve(Curve* curve, float x, float y, Vector2 cameraOffset, float axisOffset);
       virtual ~SweepCurve();
 
       void render(float fps);
       void mouseInputManagement(int button, int *state, int wheel, int direction, int mouseX, int mouseY, int div);
+      void keyboardInputManagement(int key, bool keyUp);
       void setCurve(Curve* curve);
       std::string addPoints(float div);
       std::string addSweepDivisor(int div);
@@ -42,7 +43,8 @@ class SweepCurve {
       float posX, posY, dist, angleX, angleY;
       int mouseX, mouseY, mouseOffsetX, mouseOffsetY, sweepLaps;
       bool isRotating, isOrtho, isHolding;
-      float speed, cameraOffset, axisOffset, translationValue;
+      float speed, cameraSpeed, axisOffset, translationValue;
+      Vector2 cameraOffset;
       RotationMode rotationMode;
 };
 

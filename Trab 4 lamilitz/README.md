@@ -34,4 +34,5 @@ em seguida, aplicar ao mesmo tempo um *rotational/transational sweep*  para gera
 
 ### Adicionais
 - Adição de mais de 4 pontos de controle.
+- Curva pode rotacionar ao redor do próprio eixo para fazer figuras diferentes.
 - Rotação da figura seguindo o movimento do mouse corretamente e com velocidade ajustada ao FPS.

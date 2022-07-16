@@ -149,7 +149,7 @@ void UIManager::updateCurveCoordinates() {
 
 void UIManager::addNode() {
    if (nodeCounter <= NODE_MAX) {
-      Node* n = new Node(screenWidth*0.25, screenHeight*0.5, nodeRadius);
+      Node* n = new Node(screenWidth*0.25, (screenHeight - btnHeight*3 - 4*btnSpacingY)*0.5, nodeRadius);
       n->setLimit(screenWidth*0.48, screenHeight - btnHeight*3 - 4*btnSpacingY);
       components.push_back(n);
       nodeCounter++;

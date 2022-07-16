@@ -19,7 +19,7 @@
 #include <string>
 
 #include "gl_canvas2d.h"
-#include "Vector2.h"
+#include "Utils/Vector2.h"
 
 #define CHARSIZE 10
 

@@ -5,7 +5,7 @@
 #include <string>
 
 #include "Curve.h"
-#include "Vector3.h"
+#include "Utils/Vector3.h"
 
 class SweepCurve {
    public:

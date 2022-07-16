@@ -2,7 +2,7 @@
 #include <GL/freeglut_ext.h>
 
 #include "gl_canvas2d.h"
-#include "UIManager.h"
+#include "UI/UIManager.h"
 
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 600

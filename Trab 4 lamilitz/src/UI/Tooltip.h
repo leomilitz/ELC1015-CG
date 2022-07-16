@@ -16,7 +16,7 @@
 #include <vector>
 #include <sstream>
 
-#include "Vector2.h"
+#include "Utils/Vector2.h"
 #include "UIComponent.h"
 
 #define CHARSIZE 10

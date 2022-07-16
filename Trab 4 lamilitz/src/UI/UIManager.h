@@ -24,13 +24,13 @@
 #include <vector>
 #include <string>
 
-#include "Curve.h"
+#include "Figures/Curve.h"
+#include "Figures/SweepCurve.h"
+#include "Utils/Frames.h"
+#include "Utils/Frames.h"
 #include "UIComponent.h"
-#include "Frames.h"
 #include "Button.h"
 #include "Node.h"
-#include "Vector3.h"
-#include "SweepCurve.h"
 #include "Tooltip.h"
 
 #define NODE_MAX 6

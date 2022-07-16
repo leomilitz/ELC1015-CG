@@ -17,10 +17,12 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    frames = new Frames();
    modelingCurve = new Curve();
    sweepCurve = new SweepCurve(modelingCurve, screenWidth*0.75, screenHeight*0.5, screenWidth, nodeRadius);
-   projMode = "Perspective";
-   faceCount = "30";
-   pointCount = "11";
-   rotationMode = "Translate Axis";
+   projMode       = "Perspective";
+   faceCount      = "30";
+   pointCount     = "11";
+   rotationMode   = "Translate Axis";
+   yTranslation   = "0";
+   sweepLapCount  = "1";
 
    uiCreate();
 }
@@ -47,11 +49,14 @@ void UIManager::drawBackground() {
    CV::rectFill(0, 0, screenWidth*0.48, screenHeight);
    CV::color(1,1,1);
    CV::line(screenWidth*0.48, 0, screenWidth*0.48, screenHeight, screenWidth*0.003);
-   CV::line(0, screenHeight - btnHeight*2 - 3*btnSpacingY, screenWidth*0.48, screenHeight - btnHeight*2 - 3*btnSpacingY, screenWidth*0.003);
+   CV::line(0, screenHeight - btnHeight*3 - 4*btnSpacingY, screenWidth*0.48, screenHeight - btnHeight*3 - 4*btnSpacingY, screenWidth*0.003);
 
    CV::text(screenWidth*0.5, screenHeight - btnHeight,     ("Projection:    " + projMode).c_str());
    CV::text(screenWidth*0.5, screenHeight - btnHeight*1.6, ("Rotation Mode: " + rotationMode).c_str());
-   CV::text(screenWidth*0.5, screenHeight - btnHeight*2.2, ("Faces: " + faceCount + "      Points: " + pointCount).c_str());
+   CV::text(screenWidth*0.5, screenHeight - btnHeight*2.2, ("Faces:         " + faceCount).c_str());
+   CV::text(screenWidth*0.5, screenHeight - btnHeight*2.8, ("Y Translation: " + yTranslation).c_str());
+   CV::text(screenWidth*0.5, screenHeight - btnHeight*3.4, ("Points:        " + pointCount).c_str());
+   CV::text(screenWidth*0.5, screenHeight - btnHeight*4.0, ("Sweep Laps:    " + sweepLapCount).c_str());
 }
 
 void UIManager::uiRender() {
@@ -69,20 +74,16 @@ void UIManager::uiRender() {
 
 void UIManager::uiCreate() {
    components.push_back(new Button(btnSpacingX, screenHeight - btnHeight - btnSpacingY,
-                                   btnSpacingX + btnMedWidth, screenHeight - btnSpacingY,
-                                   "Add Node", [this](){ this->addNode(); }));
-
-   components.push_back(new Button(2*btnSpacingX + btnMedWidth, screenHeight - btnHeight - btnSpacingY,
-                                    btnSpacingX*2 + btnMedWidth*2, screenHeight - btnSpacingY,
-                                   "Projection", [this](){ projMode = this->sweepCurve->changePerspective(); }));
+                                   btnSpacingX + btnBigWidth, screenHeight - btnSpacingY,
+                                   "Projection Type", [this](){ projMode = this->sweepCurve->changePerspective(); }));
 
    components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - btnHeight - btnSpacingY,
                                    btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - btnSpacingY,
-                                   "+F", [this](){ faceCount = this->sweepCurve->addSweepDivisor(1); }));
+                                   "+Face", [this](){ faceCount = this->sweepCurve->addSweepDivisor(1); }));
 
    components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - btnHeight - btnSpacingY,
                                    btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - btnSpacingY,
-                                   "-F", [this](){ faceCount = this->sweepCurve->addSweepDivisor(-1); }));
+                                   "-Face", [this](){ faceCount = this->sweepCurve->addSweepDivisor(-1); }));
 
    components.push_back(new Button(btnSpacingX, screenHeight - 2*btnHeight - 2*btnSpacingY,
                                    btnSpacingX + btnBigWidth, screenHeight - 2*btnSpacingY - btnHeight,
@@ -90,11 +91,32 @@ void UIManager::uiCreate() {
 
    components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - 2*btnHeight - 2*btnSpacingY,
                                    btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnSpacingY - btnHeight,
-                                   "+P", [this](){ pointCount = this->sweepCurve->addPoints(-0.033); }));
+                                   "+Pnt", [this](){ pointCount = this->sweepCurve->addPoints(-0.033); }));
 
    components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - 2*btnHeight - 2*btnSpacingY,
                                    btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - 2*btnSpacingY - btnHeight,
-                                   "-P", [this](){ pointCount = this->sweepCurve->addPoints(0.033); }));
+                                   "-Pnt", [this](){ pointCount = this->sweepCurve->addPoints(0.033); }));
+
+   components.push_back(new Button(btnSpacingX, screenHeight - btnHeight*3 - btnSpacingY*3,
+                                   btnSpacingX + btnMedWidth, screenHeight - btnHeight*2 - btnSpacingY*3,
+                                   "Add Node", [this](){ this->addNode(); }));
+
+   components.push_back(new Button(btnSpacingX*2 + btnMedWidth, screenHeight - btnHeight*3 - btnSpacingY*3,
+                                   btnSpacingX*2 + btnMedWidth + btnSmallWidth, screenHeight - btnHeight*2 - btnSpacingY*3,
+                                   "+Laps", [this]() { sweepLapCount = this->sweepCurve->addSweepLaps(1); }));
+
+   components.push_back(new Button(btnSpacingX*3 + btnMedWidth + btnSmallWidth, screenHeight - btnHeight*3 - btnSpacingY*3,
+                                   btnSpacingX*3 + btnMedWidth + btnSmallWidth*2, screenHeight - btnHeight*2 - btnSpacingY*3,
+                                   "-Laps", [this]() { sweepLapCount = this->sweepCurve->addSweepLaps(-1); }));
+
+   components.push_back(new Button(3*btnSpacingX + btnMedWidth*2, screenHeight - btnHeight*3 - btnSpacingY*3,
+                                   btnSpacingX*3 + btnMedWidth*2 + btnSmallWidth, screenHeight - btnHeight*2 - btnSpacingY*3,
+                                   "+TY", [this](){ yTranslation = this->sweepCurve->translateY(1); }));
+
+   components.push_back(new Button(4*btnSpacingX + btnMedWidth*2 + btnSmallWidth, screenHeight - btnHeight*3 - btnSpacingY*3,
+                                   btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - btnHeight*2 - btnSpacingY*3,
+                                   "-TY", [this](){ yTranslation = this->sweepCurve->translateY(-1); }));
+
 
    std::string tooltipText = "Mouse controls:\n- Hold left click to move nodes\nor rotate the 3D figure.\n";
    tooltipText += "\n-------------------------------\n";
@@ -122,7 +144,7 @@ void UIManager::updateCurveCoordinates() {
 void UIManager::addNode() {
    if (nodeCounter <= NODE_MAX) {
       Node* n = new Node(screenWidth*0.25, screenHeight*0.5, nodeRadius);
-      n->setLimit(screenWidth*0.48, screenHeight - btnHeight*2 - 3*btnSpacingY);
+      n->setLimit(screenWidth*0.48, screenHeight - btnHeight*3 - 4*btnSpacingY);
       components.push_back(n);
       nodeCounter++;
    }

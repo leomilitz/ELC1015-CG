@@ -7,10 +7,8 @@
 #include "Curve.h"
 #include "Vector3.h"
 
-class SweepCurve
-{
+class SweepCurve {
    public:
-
       SweepCurve(Curve* curve, float x, float y, float cameraOffset, float axisOffset);
       virtual ~SweepCurve();
 
@@ -21,6 +19,8 @@ class SweepCurve
       std::string addSweepDivisor(int div);
       std::string changePerspective();
       std::string changeRotationMode();
+      std::string translateY(int value);
+      std::string addSweepLaps(int value);
 
    private:
       enum RotationMode { selfRotate, translateAxis };
@@ -30,10 +30,9 @@ class SweepCurve
       Vector3 rotateX3D(Vector3 p);
       Vector3 rotateY3D(Vector3 p);
       Vector2 createProjection(Vector3 p);
-      void drawMesh();
       void drawWireFrame();
       std::vector<std::vector<Vector3>> createMesh();
-      std::vector<Vector3> calculateSweep(float angle);
+      std::vector<Vector3> calculateSweep(float angle, float translation);
 
       std::vector<Vector3*> points;
       std::vector<std::vector<Vector3>> mesh;
@@ -41,11 +40,10 @@ class SweepCurve
       int sweepDivisor;
       float fps, pointInc, thetaX, thetaY;
       float posX, posY, dist, angleX, angleY;
-      int mouseX, mouseY, mouseOffsetX, mouseOffsetY;
+      int mouseX, mouseY, mouseOffsetX, mouseOffsetY, sweepLaps;
       bool isRotating, isOrtho, isHolding;
-      float speed, sweepLaps, cameraOffset, axisOffset;
+      float speed, cameraOffset, axisOffset, translationValue;
       RotationMode rotationMode;
-
 };
 
 #endif // SWEEPCURVE_H

@@ -16,6 +16,7 @@ SweepCurve::SweepCurve(Curve* curve, float x, float y, float cameraOffset, float
    mouseY = 0;
    thetaX = 0;
    thetaY = 0;
+   translationValue = 0;
    isRotating = false;
    isHolding = false;
    isOrtho = false;
@@ -57,30 +58,18 @@ Vector2 SweepCurve::createProjection(Vector3 p) {
    return Vector2(p.x*dist/(z + offset) , p.y*dist/(z + offset));
 }
 
-void SweepCurve::drawMesh() {
-   for (unsigned int i = 0; i < mesh.size(); i++) {
-      for (unsigned int j = 0; j < mesh[i].size(); j++) {
-         Vector2 projCtrl = createProjection(mesh[i][j]);
-         CV::translate(posX, posY);
-         CV::color(1,0,0);
-         CV::point(projCtrl, 3);
-      }
-   }
-}
-
 void SweepCurve::drawWireFrame() {
    CV::color(1,1,1);
+   CV::translate(posX, posY);
    float row = mesh.size();
    for (unsigned int i = 0; i < row; i++) {
       float col = mesh[i].size();
       for (unsigned int j = 0; j < col; j++) {
-         CV::translate(0,0);
          if (isHolding) {
             mesh[i][j] = rotateX3D(mesh[i][j]);
             mesh[i][j] = rotateY3D(mesh[i][j]);
          }
 
-         CV::translate(posX, posY);
          Vector2 ctrlProj = createProjection(mesh[i][j]);
          if (i < row - 1 && j < col - 1) {
             Vector2 hProjNext = createProjection(mesh[i+1][j]);
@@ -91,13 +80,11 @@ void SweepCurve::drawWireFrame() {
             CV::line(ctrlProj, ctrlProjDiag);
          }
 
-         if (j == col - 1 && i < row - 1) {
+         if (j == col - 1 && i < row - 1)
             CV::line(ctrlProj, createProjection(mesh[i+1][j]));
-         }
 
-         if (i == row - 1 && j < col - 1) {
+         if (i == row - 1 && j < col - 1)
             CV::line(ctrlProj, createProjection(mesh[i][j+1]));
-         }
       }
    }
    thetaX = 0; thetaY = 0;
@@ -121,12 +108,12 @@ Vector3 SweepCurve::rotateY3D(Vector3 p) {
    return Vector3(x, y, z);
 }
 
-std::vector<Vector3> SweepCurve::calculateSweep(float angle) {
+std::vector<Vector3> SweepCurve::calculateSweep(float angle, float transation) {
    std::vector<Vector3> curve;
 
    for (Vector3* p : points) {
       float x = p->x*cos(angle);
-      float y = p->y;
+      float y = p->y + transation;
       float z = p->z*sin(angle);
 
       curve.push_back(Vector3(x, y, z));
@@ -142,7 +129,7 @@ std::vector<std::vector<Vector3>> SweepCurve::createMesh() {
    for (unsigned int i = 0; i < points.size(); i++) {
       float distFromAxis = points[i]->x - axisOffset;
       points[i]->x = points[i]->x - mid.x;
-      points[i]->y = points[i]->y - mid.y;
+      points[i]->y = points[i]->y - mid.y - translationValue;
 
       switch (rotationMode) {
          case translateAxis:  points[i]->x = points[i]->z = distFromAxis;  break;
@@ -152,7 +139,7 @@ std::vector<std::vector<Vector3>> SweepCurve::createMesh() {
 
    for (int i = 0; i <= sweepDivisor*sweepLaps; i++) {
       float angle = i*PI*2/sweepDivisor;
-      matrix.push_back(calculateSweep(angle));
+      matrix.push_back(calculateSweep(angle, translationValue*i));
    }
 
    return matrix;
@@ -164,12 +151,14 @@ void SweepCurve::mouseInputManagement(int button, int *state, int wheel, int dir
       increaseVal = cameraOffset*0.0001;
 
    // Zoom com a roda do mouse
-   if (direction == 1) {
-      dist += increaseVal;
-   }
-   else if (direction == -1) {
-      dist -= increaseVal;
-   }
+   float newDist = 0;
+   if (direction == 1)
+      newDist = dist + increaseVal;
+   else if (direction == -1)
+      newDist = dist - increaseVal;
+
+   if (newDist > 0 && newDist < cameraOffset*3)
+      dist = newDist;
 
    if (mouseX > div) {
       if (button == 0 && *state == 0) {
@@ -252,6 +241,24 @@ std::string SweepCurve::addPoints(float div) {
    if (newPointDiv > 0.01 && newPointDiv < 0.33)
       pointInc = newPointDiv;
    return std::to_string((int) floor(1/pointInc));
+}
+
+std::string SweepCurve::translateY(int value) {
+   int newValue = translationValue + value;
+   if (newValue >= -10 && newValue <= 10) {
+      translationValue = newValue;
+   }
+
+   return std::to_string((int) floor(translationValue));
+}
+
+std::string SweepCurve::addSweepLaps(int value) {
+   int newValue = sweepLaps + value;
+   if (newValue >= 1 && newValue <= 4) {
+      sweepLaps = newValue;
+   }
+
+   return std::to_string(sweepLaps);
 }
 
 

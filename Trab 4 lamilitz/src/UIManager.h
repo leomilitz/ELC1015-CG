@@ -60,7 +60,8 @@ class UIManager {
       int btnSmallWidth, btnMedWidth, btnBigWidth, btnSwitch, btnSpacingX,
           btnSpacingY, btnHeight, nodeRadius;
       int nodeCounter;
-      std::string projMode, rotationMode, faceCount, pointCount, yTranslation, sweepLapCount;
+      std::string projMode, rotationMode, faceCount, pointCount,
+                  yTranslation, sweepLapCount, helpTooltipText;
 };
 
 #endif // UIMANAGER_H

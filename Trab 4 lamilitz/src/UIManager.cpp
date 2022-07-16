@@ -24,6 +24,14 @@ UIManager::UIManager(int screenWidth, int screenHeight) {
    yTranslation   = "0";
    sweepLapCount  = "1";
 
+   helpTooltipText  = "Mouse controls:\n\n- Hold left click to move nodes\n  or rotate the 3D figure.\n";
+   helpTooltipText += "\n-------------------------------\n";
+   helpTooltipText += "\nKeyboard Controls:\n\n- Hover on a node with your\n  mouse and press D or DEL\n  to delete it.";
+   helpTooltipText += "\n- Down and up arrows to\n  move the camera.\n";
+   helpTooltipText += "\n-------------------------------\n";
+   helpTooltipText += "\nGlossary:\n\n- Pnt  = Number of Points.\n- Face = Number of Faces.";
+   helpTooltipText += "\n- Laps = Number of sweep\n         rotations.\n- TY   = Y Axis Translation\n         value.";
+
    uiCreate();
 }
 
@@ -117,11 +125,7 @@ void UIManager::uiCreate() {
                                    btnSpacingX*4 + btnMedWidth*2 + btnSmallWidth*2, screenHeight - btnHeight*2 - btnSpacingY*3,
                                    "-TY", [this](){ yTranslation = this->sweepCurve->translateY(-1); }));
 
-
-   std::string tooltipText = "Mouse controls:\n- Hold left click to move nodes\nor rotate the 3D figure.\n";
-   tooltipText += "\n-------------------------------\n";
-   tooltipText += "\nKeyboard Controls:\n- Hover on a node with your\nmouse and press D or DEL\nto delete it.";
-   components.push_back(new Tooltip(screenWidth*0.98, screenHeight*0.97, 12, tooltipText, screenWidth*0.32, -1, -1, true, "?"));
+   components.push_back(new Tooltip(screenWidth*0.98, screenHeight*0.97, 12, helpTooltipText, screenWidth*0.32, -1, -1, true, "?"));
 }
 
 void UIManager::updateCurveCoordinates() {
